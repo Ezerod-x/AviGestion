@@ -20,7 +20,34 @@ namespace AviGestion_.UI
         {
             InitializeComponent();
             usuarioActual = usuario;
+            AgregarBotonCerrarSesion();
             ConfigurarVisibilidadPorRol();
+        }
+
+        // Crea el botón "Cerrar Sesión" en la barra superior.
+        // Si el Designer ya tiene un btnCerrarSesion, no hace nada.
+        private void AgregarBotonCerrarSesion()
+        {
+            if (this.Controls.Find("btnCerrarSesion", true).Length > 0) return;
+
+            var btn = new Button
+            {
+                Name = "btnCerrarSesion",
+                Text = "Cerrar Sesión",
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Arial", 9F, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = Color.OliveDrab,
+                Size = new Size(140, 27),
+                Location = new Point(this.ClientSize.Width - 150, 4),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                UseVisualStyleBackColor = false
+            };
+            btn.FlatAppearance.BorderColor = Color.White;
+            btn.Click += btnCerrarSesion_Click;
+
+            this.Controls.Add(btn);
+            btn.BringToFront();
         }
 
         private void btnUsuarios_Paint(object sender, PaintEventArgs e)
@@ -46,21 +73,26 @@ namespace AviGestion_.UI
             btnStock.Visible = false;
             btnCategorias.Visible = false;
             btnVehiculos.Visible = false;
+            btnBitacora.Visible = false;
+            btnBackup.Visible = false;
+            btnFacturacion.Visible = false;
+            btnRegistrarPago.Visible = false;
             btnAyuda.Visible = true;
-            lblProductosDescripcion.Visible = false; 
-            lblStockDescripcion.Visible=false;
-            
-            
+            lblProductosDescripcion.Visible = false;
+            lblStockDescripcion.Visible = false;
+
+
 
             switch (usuarioActual.Rol)
             {
                 case "Administrador":
                     btnClientes.Visible = true;
                     btnUsuarios.Visible = true;
-                    btnStock.Visible=false;
-                    btnProductos.Visible=true;
-                    btnFacturacion.Visible=true;
-                    btnRegistrarPago.Visible=true;
+                    btnStock.Visible = false;
+                    btnFacturacion.Visible = true;
+                    btnRegistrarPago.Visible = true;
+                    btnBitacora.Visible = true;
+                    btnBackup.Visible = true;
                     break;
 
                 case "Administrador de pedidos":
@@ -73,8 +105,8 @@ namespace AviGestion_.UI
                     btnVehiculos.Visible = true;
                     btnStock.Visible = true;
                     btnCategorias.Visible = true;
-                    lblProductosDescripcion.Visible=true;
-                    lblStockDescripcion.Visible= true;  
+                    lblProductosDescripcion.Visible = true;
+                    lblStockDescripcion.Visible = true;
                     break;
             }
         }
@@ -88,7 +120,7 @@ namespace AviGestion_.UI
 
         private void btnProductos_Paint(object sender, PaintEventArgs e)
         {
-        }   
+        }
 
         private void lblProductosTitulo_Click(object sender, EventArgs e)
         {
@@ -101,7 +133,7 @@ namespace AviGestion_.UI
             this.Hide();
         }
 
-        
+
 
 
         private void FormMenu_Load(object sender, EventArgs e)
@@ -118,7 +150,7 @@ namespace AviGestion_.UI
 
         private void btnStock_Click_1(object sender, EventArgs e)
         {
-            FrmCargaStock frm = new FrmCargaStock(usuarioActual);
+            FormCargaStock frm = new FormCargaStock(usuarioActual);
             frm.Show();
             this.Hide();
         }
@@ -158,12 +190,37 @@ namespace AviGestion_.UI
 
         private void btnVehiculos_Click(object sender, EventArgs e)
         {
-            FormVehiculo frm = new FormVehiculo (usuarioActual);
+            FormVehiculo frm = new FormVehiculo(usuarioActual);
             frm.FormClosed += (s, args) => this.Show();
             frm.Show();
             this.Hide();
         }
-    }
-    }
 
+        private void btnBitacora_Click(object sender, EventArgs e)
+        {
+            FormBitacora frm = new FormBitacora(usuarioActual);
+            frm.Show();
+            this.Hide();
+        }
 
+        private void btnBackup_Click(object sender, EventArgs e)
+        {
+            FormBackup frm = new FormBackup(usuarioActual);
+            frm.Show();
+            this.Hide();
+        }
+
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            var confirmacion = MessageBox.Show("¿Desea cerrar la sesión actual?", "Cerrar sesión",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmacion != DialogResult.Yes) return;
+
+            BitacoraLogica.Registrar(usuarioActual.Nombre, "Cierre de Sesión", "Seguridad");
+
+            AviGestion_.Form1 login = new AviGestion_.Form1();
+            login.Show();
+            this.Close();
+        }
+    }
+}

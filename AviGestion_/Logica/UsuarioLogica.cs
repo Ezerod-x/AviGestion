@@ -47,5 +47,35 @@ namespace AviGestion_.Logica
         {
             usuarioDatos.Eliminar(idUsuario);
         }
+        public string RecuperarContrasena(string mail)
+        {
+            Usuario usuario = usuarioDatos.ObtenerUsuarioPorMail(mail);
+
+            if (usuario == null)
+            {
+                return null; // no existe ningún usuario con ese mail
+            }
+
+            string nuevaContrasena = GenerarContrasenaTemporal();
+
+            usuarioDatos.ActualizarContrasena(usuario.IdUsuario, nuevaContrasena);
+
+            return nuevaContrasena;
+        }
+
+        private string GenerarContrasenaTemporal()
+        {
+            const string caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+            Random random = new Random();
+            char[] resultado = new char[8];
+
+            for (int i = 0; i < resultado.Length; i++)
+            {
+                resultado[i] = caracteres[random.Next(caracteres.Length)];
+            }
+
+            return new string(resultado);
+        }
+
     }
 }

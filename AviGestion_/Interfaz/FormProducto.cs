@@ -100,7 +100,7 @@ namespace AviGestion_.UI
                     Estado = string.IsNullOrEmpty(cmbEstado.Text) ? "Activo" : cmbEstado.Text
                 };
 
-                logica.GuardarProducto(producto);
+                logica.GuardarProducto(producto, usuarioActual.Nombre);
                 MessageBox.Show("Producto guardado correctamente.", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -129,7 +129,7 @@ namespace AviGestion_.UI
 
             try
             {
-                logica.EliminarProducto(idSeleccionado);
+                logica.EliminarProducto(idSeleccionado, usuarioActual.Nombre);
                 MessageBox.Show("Producto eliminado correctamente.", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -151,6 +151,24 @@ namespace AviGestion_.UI
         {
             FormMenu menu = new FormMenu(usuarioActual);
             menu.Show();
+            this.Close();
+        }
+
+        private void btnGestionAlertas_Click(object sender, EventArgs e)
+        {
+            FormAlertas alertas = new FormAlertas(usuarioActual);
+            alertas.Show();
+            this.Close();
+        }
+
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            var confirmacion = MessageBox.Show("¿Desea cerrar la sesión actual?", "Cerrar sesión",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmacion != DialogResult.Yes) return;
+
+            AviGestion_.Form1 login = new AviGestion_.Form1();
+            login.Show();
             this.Close();
         }
 

@@ -1,4 +1,5 @@
-﻿namespace AviGestion_
+﻿
+namespace AviGestion_
 {
     partial class Form1
     {
@@ -18,6 +19,7 @@
         private void InitializeComponent()
         {
             this.pnlCard = new System.Windows.Forms.Panel();
+            this.lnkOlvidoContrasena = new System.Windows.Forms.LinkLabel();
             this.btnIngresar = new System.Windows.Forms.Button();
             this.txtContrasena = new System.Windows.Forms.TextBox();
             this.lblContrasena = new System.Windows.Forms.Label();
@@ -34,6 +36,7 @@
             // 
             this.pnlCard.BackColor = System.Drawing.Color.White;
             this.pnlCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlCard.Controls.Add(this.lnkOlvidoContrasena);
             this.pnlCard.Controls.Add(this.btnIngresar);
             this.pnlCard.Controls.Add(this.txtContrasena);
             this.pnlCard.Controls.Add(this.lblContrasena);
@@ -42,7 +45,7 @@
             this.pnlCard.Controls.Add(this.pnlEncabezado);
             this.pnlCard.Location = new System.Drawing.Point(60, 40);
             this.pnlCard.Name = "pnlCard";
-            this.pnlCard.Size = new System.Drawing.Size(360, 330);
+            this.pnlCard.Size = new System.Drawing.Size(360, 360);
             this.pnlCard.TabIndex = 0;
             // 
             // btnIngresar
@@ -57,6 +60,18 @@
             this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);
             this.btnIngresar.Text = "Iniciar Sesión";
             this.btnIngresar.UseVisualStyleBackColor = false;
+            // 
+            // lnkOlvidoContrasena
+            // 
+            this.lnkOlvidoContrasena.AutoSize = true;
+            this.lnkOlvidoContrasena.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lnkOlvidoContrasena.Location = new System.Drawing.Point(110, 295);
+            this.lnkOlvidoContrasena.Name = "lnkOlvidoContrasena";
+            this.lnkOlvidoContrasena.Size = new System.Drawing.Size(140, 13);
+            this.lnkOlvidoContrasena.TabIndex = 6;
+            this.lnkOlvidoContrasena.TabStop = true;
+            this.lnkOlvidoContrasena.Text = "¿Olvidaste tu contraseña?";
+            this.lnkOlvidoContrasena.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOlvidoContrasena_LinkClicked);
             // 
             // txtContrasena
             // 
@@ -131,7 +146,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(480, 410);
+            this.ClientSize = new System.Drawing.Size(480, 440);
             this.Controls.Add(this.pnlCard);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -157,5 +172,7 @@
         private System.Windows.Forms.Label lblContrasena;
         private System.Windows.Forms.TextBox txtContrasena;
         private System.Windows.Forms.Button btnIngresar;
+        private System.Windows.Forms.LinkLabel lnkOlvidoContrasena;
     }
 }
+

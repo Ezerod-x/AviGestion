@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using AviGestion_.Logica;
+using AviGestion_.Seguridad;
 
 namespace AviGestion_.Datos
 {
@@ -11,7 +12,7 @@ namespace AviGestion_.Datos
             var lista = new List<Producto>();
             using (SqlConnection cn = Conexion.ObtenerConexion())
             {
-                string sql = @"SELECT Id, Codigo, Descripcion, Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado 
+                string sql = @"SELECT Id, Codigo, Descripcion, Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado, DigitoVerificador 
                                FROM Productos";
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
                 {
@@ -31,7 +32,7 @@ namespace AviGestion_.Datos
             var lista = new List<Producto>();
             using (SqlConnection cn = Conexion.ObtenerConexion())
             {
-                string sql = @"SELECT Id, Codigo, Descripcion, Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado 
+                string sql = @"SELECT Id, Codigo, Descripcion, Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado, DigitoVerificador 
                                FROM Productos 
                                WHERE Codigo LIKE @filtro OR Descripcion LIKE @filtro";
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
@@ -60,7 +61,8 @@ namespace AviGestion_.Datos
                 Stock = (int)reader["Stock"],
                 StockMinimo = (int)reader["StockMinimo"],
                 StockMaximo = (int)reader["StockMaximo"],
-                Estado = reader["Estado"].ToString()
+                Estado = reader["Estado"].ToString(),
+                DigitoVerificador = (int)reader["DigitoVerificador"]
             };
         }
 
@@ -84,10 +86,11 @@ namespace AviGestion_.Datos
 
         public void Registrar(Producto p)
         {
+            p.DigitoVerificador = DigitoVerificador.Calcular(p.Codigo);
             using (SqlConnection cn = Conexion.ObtenerConexion())
             {
-                string sql = @"INSERT INTO Productos (Codigo, Descripcion, Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado) 
-                               VALUES (@codigo, @descripcion, @categoria, @precio, @stock, @stockMinimo, @stockMaximo, @estado)";
+                string sql = @"INSERT INTO Productos (Codigo, Descripcion, Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado, DigitoVerificador) 
+                               VALUES (@codigo, @descripcion, @categoria, @precio, @stock, @stockMinimo, @stockMaximo, @estado, @digito)";
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
                 {
                     cmd.Parameters.AddWithValue("@codigo", p.Codigo);
@@ -98,6 +101,7 @@ namespace AviGestion_.Datos
                     cmd.Parameters.AddWithValue("@stockMinimo", p.StockMinimo);
                     cmd.Parameters.AddWithValue("@stockMaximo", p.StockMaximo);
                     cmd.Parameters.AddWithValue("@estado", p.Estado);
+                    cmd.Parameters.AddWithValue("@digito", p.DigitoVerificador);
                     cn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -106,11 +110,12 @@ namespace AviGestion_.Datos
 
         public void Modificar(Producto p)
         {
+            p.DigitoVerificador = DigitoVerificador.Calcular(p.Codigo);
             using (SqlConnection cn = Conexion.ObtenerConexion())
             {
                 string sql = @"UPDATE Productos SET Codigo=@codigo, Descripcion=@descripcion, 
                                Categoria=@categoria, Precio=@precio, Stock=@stock, 
-                               StockMinimo=@stockMinimo, StockMaximo=@stockMaximo, Estado=@estado 
+                               StockMinimo=@stockMinimo, StockMaximo=@stockMaximo, Estado=@estado, DigitoVerificador=@digito 
                                WHERE Id=@id";
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
                 {
@@ -122,6 +127,7 @@ namespace AviGestion_.Datos
                     cmd.Parameters.AddWithValue("@stockMinimo", p.StockMinimo);
                     cmd.Parameters.AddWithValue("@stockMaximo", p.StockMaximo);
                     cmd.Parameters.AddWithValue("@estado", p.Estado);
+                    cmd.Parameters.AddWithValue("@digito", p.DigitoVerificador);
                     cmd.Parameters.AddWithValue("@id", p.Id);
                     cn.Open();
                     cmd.ExecuteNonQuery();

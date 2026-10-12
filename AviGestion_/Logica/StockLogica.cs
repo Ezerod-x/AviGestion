@@ -33,7 +33,7 @@ namespace AviGestion_.Logica
                 throw new Exception("La cantidad ingresada debe ser un número entero mayor a 0.");
         }
 
-        public ResultadoCargaStock RegistrarIngreso(Producto producto, int cantidadIngresada)
+        public ResultadoCargaStock RegistrarIngreso(Producto producto, int cantidadIngresada, string usuarioActual = "Sistema")
         {
             ValidarCantidad(cantidadIngresada);
 
@@ -48,6 +48,9 @@ namespace AviGestion_.Logica
             string estado = producto.EstadoStock;
 
             ActualizarAlertas(producto.Id, estado);
+
+            BitacoraLogica.Registrar(usuarioActual, "Modificación", "Stock",
+                $"Ingreso de {cantidadIngresada} u. a {producto.Descripcion} ({producto.Codigo}). Nuevo stock: {nuevoStock}.");
 
             return new ResultadoCargaStock
             {

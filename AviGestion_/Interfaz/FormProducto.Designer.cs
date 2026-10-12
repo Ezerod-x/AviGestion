@@ -16,6 +16,8 @@
         private void InitializeComponent()
         {
             this.pnlHeader = new System.Windows.Forms.Panel();
+            this.btnGestionAlertas = new System.Windows.Forms.Button();
+            this.btnCerrarSesion = new System.Windows.Forms.Button();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.btnEliminarProducto = new System.Windows.Forms.Button();
@@ -62,12 +64,44 @@
             // pnlHeader
             // 
             this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(46, 92, 45);
+            this.pnlHeader.Controls.Add(this.btnGestionAlertas);
+            this.pnlHeader.Controls.Add(this.btnCerrarSesion);
             this.pnlHeader.Controls.Add(this.lblTitulo);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(760, 60);
             this.pnlHeader.TabIndex = 0;
+            // 
+            // btnGestionAlertas
+            // 
+            this.btnGestionAlertas.BackColor = System.Drawing.Color.FromArgb(46, 92, 45);
+            this.btnGestionAlertas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGestionAlertas.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnGestionAlertas.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnGestionAlertas.ForeColor = System.Drawing.Color.White;
+            this.btnGestionAlertas.Location = new System.Drawing.Point(20, 16);
+            this.btnGestionAlertas.Name = "btnGestionAlertas";
+            this.btnGestionAlertas.Size = new System.Drawing.Size(180, 28);
+            this.btnGestionAlertas.TabIndex = 11;
+            this.btnGestionAlertas.Text = "🔔 Gestión de Alertas";
+            this.btnGestionAlertas.UseVisualStyleBackColor = false;
+            this.btnGestionAlertas.Click += new System.EventHandler(this.btnGestionAlertas_Click);
+            // 
+            // btnCerrarSesion
+            // 
+            this.btnCerrarSesion.BackColor = System.Drawing.Color.FromArgb(46, 92, 45);
+            this.btnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCerrarSesion.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnCerrarSesion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCerrarSesion.ForeColor = System.Drawing.Color.White;
+            this.btnCerrarSesion.Location = new System.Drawing.Point(610, 16);
+            this.btnCerrarSesion.Name = "btnCerrarSesion";
+            this.btnCerrarSesion.Size = new System.Drawing.Size(130, 28);
+            this.btnCerrarSesion.TabIndex = 12;
+            this.btnCerrarSesion.Text = "Cerrar Sesión";
+            this.btnCerrarSesion.UseVisualStyleBackColor = false;
+            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
             // 
             // lblTitulo
             // 
@@ -485,6 +519,8 @@
         }
 
         private System.Windows.Forms.Panel pnlHeader;
+        private System.Windows.Forms.Button btnGestionAlertas;
+        private System.Windows.Forms.Button btnCerrarSesion;
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Button btnEliminarProducto;

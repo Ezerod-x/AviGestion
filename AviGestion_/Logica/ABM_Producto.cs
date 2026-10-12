@@ -1,4 +1,5 @@
 ﻿using AviGestion_.Datos;
+using AviGestion_.Seguridad;
 using System;
 using System.Collections.Generic;
 
@@ -20,7 +21,7 @@ namespace AviGestion_.Logica
             return datos.Buscar(filtro);
         }
 
-        public void GuardarProducto(Producto p)
+        public void GuardarProducto(Producto p, string usuarioActual = "Sistema")
         {
             if (string.IsNullOrWhiteSpace(p.Codigo))
                 throw new Exception("El código es obligatorio.");
@@ -43,15 +44,48 @@ namespace AviGestion_.Logica
             if (datos.ExisteCodigo(p.Codigo, p.Id))
                 throw new Exception($"Ya existe un producto registrado con el código '{p.Codigo}'.");
 
-            if (p.Id == 0)
+            bool esAlta = p.Id == 0;
+
+            // Antes de modificar, verifica que el producto no haya sido alterado
+            // por fuera del sistema (dígito verificador).
+            if (!esAlta)
+            {
+                var existente = datos.Listar().Find(x => x.Id == p.Id);
+                ValidarIntegridad(existente, usuarioActual, "modificar");
+            }
+
+            if (esAlta)
                 datos.Registrar(p);
             else
                 datos.Modificar(p);
+
+            BitacoraLogica.Registrar(usuarioActual, esAlta ? "Alta" : "Modificación", "Productos",
+                $"Código: {p.Codigo} - {p.Descripcion}");
         }
 
-        public void EliminarProducto(int id)
+        public void EliminarProducto(int id, string usuarioActual = "Sistema")
         {
+            var producto = datos.Listar().Find(x => x.Id == id);
+            ValidarIntegridad(producto, usuarioActual, "eliminar");
+
             datos.Eliminar(id);
+
+            BitacoraLogica.Registrar(usuarioActual, "Baja", "Productos",
+                producto != null ? $"Código: {producto.Codigo} - {producto.Descripcion}" : $"Id={id}");
+        }
+
+        private void ValidarIntegridad(Producto producto, string usuarioActual, string operacion)
+        {
+            if (producto == null) return;
+
+            if (!DigitoVerificador.Validar(producto.Codigo, producto.DigitoVerificador))
+            {
+                BitacoraLogica.Registrar(usuarioActual, "Bloqueo por Integridad", "Productos",
+                    $"Dígito verificador inválido al intentar {operacion} el producto Id={producto.Id} ({producto.Codigo}).");
+
+                throw new Exception("Se detectó una inconsistencia en los datos del producto (el dígito verificador no coincide). " +
+                    "El sistema bloqueó esta operación. Consulte con el administrador.");
+            }
         }
     }
 }

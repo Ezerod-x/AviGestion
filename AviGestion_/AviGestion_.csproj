@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +56,9 @@
     <Compile Include="Datos\CategoriaDatos.cs" />
     <Compile Include="Datos\ClienteDatos.cs" />
     <Compile Include="Datos\Conexion.cs" />
+    <Compile Include="Datos\DatosGestionAlerta.cs" />
+    <Compile Include="Datos\DatosBakcup.cs" />
+    <Compile Include="Datos\DatosBitacora.cs" />
     <Compile Include="Datos\DatosProducto.cs" />
     <Compile Include="Datos\DatosStock.cs" />
     <Compile Include="Datos\FacturacionDatos.cs" />
@@ -64,11 +68,35 @@
     <Compile Include="Datos\PedidoDatos.cs" />
     <Compile Include="Datos\UsuarioDatos.cs" />
     <Compile Include="Datos\VehiculoDatos.cs" />
+    <Compile Include="Interfaz\FormBackup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaz\FormBackup.Designer.cs">
+      <DependentUpon>FormBackup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\FormBitacora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaz\FormBitacora.Designer.cs">
+      <DependentUpon>FormBitacora.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\FormFacturacion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaz\FormFacturacion.Designer.cs">
       <DependentUpon>FormFacturacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\FormGestionAlertas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaz\FormGestionAlertas.Designer.cs">
+      <DependentUpon>FormGestionAlertas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\FormRecuperoContrasena.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaz\FormRecuperoContrasena.Designer.cs">
+      <DependentUpon>FormRecuperoContrasena.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaz\FormRegistrarPago.cs">
       <SubType>Form</SubType>
@@ -120,10 +148,13 @@
     </Compile>
     <Compile Include="Logica\ABM_Producto.cs" />
     <Compile Include="Logica\Alerta.cs" />
+    <Compile Include="Logica\BackupLogica.cs" />
+    <Compile Include="Logica\BitacoraLogica.cs" />
     <Compile Include="Logica\CategoriaLogica.cs" />
     <Compile Include="Logica\Cliente.cs" />
     <Compile Include="Logica\ClienteLogica.cs" />
     <Compile Include="Logica\FacturacionLogica.cs" />
+    <Compile Include="Logica\GestionAlertaLogica.cs" />
     <Compile Include="Logica\HistorialClienteLogica.cs" />
     <Compile Include="Logica\HistorialPedido.cs" />
     <Compile Include="Logica\PagoPedidoLogica.cs" />
@@ -162,6 +193,7 @@
     <Compile Include="Interfaz\FormUsuarios.Designer.cs">
       <DependentUpon>FormUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Seguridad\DigitoVerificador.cs" />
     <EmbeddedResource Include="Interfaz\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

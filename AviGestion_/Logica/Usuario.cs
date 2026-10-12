@@ -13,5 +13,6 @@ namespace AviGestion_.Logica
         public string Apellido { get; set; }
         public string Contrasena { get; set; }
         public string Rol { get; set; }
+        public string Mail { get; set; }
     }
 }

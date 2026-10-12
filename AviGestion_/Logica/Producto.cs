@@ -11,6 +11,7 @@
         public string Estado { get; set; }
         public int StockMinimo { get; set; }
         public int StockMaximo { get; set; }
+        public int DigitoVerificador { get; set; }
 
         // Propiedad calculada: no se guarda en la base, se calcula sola
         public string EstadoStock

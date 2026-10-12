@@ -1,4 +1,5 @@
-﻿using AviGestion_.Logica;
+﻿using AviGestion_.Interfaz;
+using AviGestion_.Logica;
 using AviGestion_.UI;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,12 @@ namespace AviGestion_
             {
                 MessageBox.Show("Usuario o contraseña incorrectos");
             }
+        }
+        private void lnkOlvidoContrasena_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            FormRecuperoContrasena recupero = new FormRecuperoContrasena();
+            recupero.Show();
+            this.Hide();
         }
     }
 }

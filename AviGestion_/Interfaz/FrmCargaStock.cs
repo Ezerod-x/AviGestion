@@ -4,13 +4,13 @@ using AviGestion_.Logica;
 
 namespace AviGestion_.UI
 {
-    public partial class FrmCargaStock : Form
+    public partial class FormCargaStock : Form
     {
         private StockLogica logica = new StockLogica();
         private Producto productoSeleccionado = null;
         private Usuario usuarioActual;
 
-        public FrmCargaStock(Usuario usuario)
+        public FormCargaStock(Usuario usuario)
         {
             InitializeComponent();
             usuarioActual = usuario;
@@ -110,9 +110,22 @@ namespace AviGestion_.UI
             try
             {
                 int cantidad = (int)nudCantidad.Value;
-                var resultado = logica.RegistrarIngreso(productoSeleccionado, cantidad);
+                var resultado = logica.RegistrarIngreso(productoSeleccionado, cantidad, usuarioActual.Nombre);
 
                 MessageBox.Show(resultado.Mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                if (resultado.EstadoStock == "Stock Mínimo")
+                {
+                    MessageBox.Show(
+                        $"⚠ ALERTA DE STOCK MÍNIMO\n\nEl producto \"{productoSeleccionado.Descripcion}\" quedó con {resultado.NuevoStock} unidades, en o por debajo del mínimo permitido ({productoSeleccionado.StockMinimo}).\n\nSe recomienda reponer stock a la brevedad.",
+                        "Alerta de Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (resultado.EstadoStock == "Stock Máximo")
+                {
+                    MessageBox.Show(
+                        $"⚠ ALERTA DE STOCK MÁXIMO\n\nEl producto \"{productoSeleccionado.Descripcion}\" alcanzó {resultado.NuevoStock} unidades, en o por encima del máximo permitido ({productoSeleccionado.StockMaximo}).",
+                        "Alerta de Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
 
                 LimpiarFormulario();
                 CargarGrilla();
@@ -143,6 +156,24 @@ namespace AviGestion_.UI
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             CargarGrilla(txtBuscar.Text);
+        }
+
+        private void btnGestionAlertas_Click(object sender, EventArgs e)
+        {
+            FormAlertas alertas = new FormAlertas(usuarioActual);
+            alertas.Show();
+            this.Close();
+        }
+
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            var confirmacion = MessageBox.Show("¿Desea cerrar la sesión actual?", "Cerrar sesión",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmacion != DialogResult.Yes) return;
+
+            AviGestion_.Form1 login = new AviGestion_.Form1();
+            login.Show();
+            this.Close();
         }
 
         private void LimpiarFormulario()
