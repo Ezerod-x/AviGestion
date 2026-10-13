@@ -233,6 +233,8 @@
             //
             // btnAsignarPedidos
             //
+            this.btnAsignarPedidos.TabIndex = 4;
+            this.btnAsignarPedidos.Click += new System.EventHandler(this.btnAsignarPedidos_Click);
             this.btnAsignarPedidos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.btnAsignarPedidos.Controls.Add(this.lblAsignarPedidos);
             this.btnAsignarPedidos.Location = new System.Drawing.Point(10, 160);
@@ -243,6 +245,8 @@
             // lblAsignarPedidos
             //
             this.lblAsignarPedidos.AutoSize = true;
+            this.lblAsignarPedidos.Text = "Asignar Pedidos";
+            this.lblAsignarPedidos.Click += new System.EventHandler(this.btnAsignarPedidos_Click);   // <-- agregar
             this.lblAsignarPedidos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblAsignarPedidos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.lblAsignarPedidos.Location = new System.Drawing.Point(12, 6);

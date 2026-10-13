@@ -209,6 +209,13 @@ namespace AviGestion_.UI
             frm.Show();
             this.Hide();
         }
+        private void btnAsignarPedidos_Click(object sender, EventArgs e)
+        {
+            FormAsignarPedidos frm = new FormAsignarPedidos(usuarioActual);
+            frm.FormClosed += (s, args) => this.Show();
+            frm.Show();
+            this.Hide();
+        }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {

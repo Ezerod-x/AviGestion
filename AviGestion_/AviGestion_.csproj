@@ -56,6 +56,7 @@
     <Compile Include="Datos\CategoriaDatos.cs" />
     <Compile Include="Datos\ClienteDatos.cs" />
     <Compile Include="Datos\Conexion.cs" />
+    <Compile Include="Datos\DatosAsignacion.cs" />
     <Compile Include="Datos\DatosGestionAlerta.cs" />
     <Compile Include="Datos\DatosBakcup.cs" />
     <Compile Include="Datos\DatosBitacora.cs" />
@@ -68,6 +69,12 @@
     <Compile Include="Datos\PedidoDatos.cs" />
     <Compile Include="Datos\UsuarioDatos.cs" />
     <Compile Include="Datos\VehiculoDatos.cs" />
+    <Compile Include="Interfaz\FormAsignarPedidos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaz\FormAsignarPedidos.Designer.cs">
+      <DependentUpon>FormAsignarPedidos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\FormBackup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +155,7 @@
     </Compile>
     <Compile Include="Logica\ABM_Producto.cs" />
     <Compile Include="Logica\Alerta.cs" />
+    <Compile Include="Logica\AsignacionLogica.cs" />
     <Compile Include="Logica\BackupLogica.cs" />
     <Compile Include="Logica\BitacoraLogica.cs" />
     <Compile Include="Logica\CategoriaLogica.cs" />
