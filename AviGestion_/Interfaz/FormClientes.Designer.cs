@@ -28,10 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnAtras = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvTablaClientes = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEmpresa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTelefono = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCorreo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDniCuil = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDireccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnHistorial = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
             this.grbRegistrarModificar = new System.Windows.Forms.GroupBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
@@ -48,21 +58,11 @@
             this.txtNombreNegocio = new System.Windows.Forms.TextBox();
             this.lblNombreNegocio = new System.Windows.Forms.Label();
             this.lblRegistrarModificar = new System.Windows.Forms.Label();
-            this.lblGestionClientes = new System.Windows.Forms.Label();
+            this.pnlEncabezado = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.txtBusquedaFiltrado = new System.Windows.Forms.TextBox();
             this.btnAgregarCliente = new System.Windows.Forms.Button();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colApellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEmpresa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTelefono = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCorreo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDniCuil = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDireccion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnHistorial = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colAccion = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -123,14 +123,14 @@
             this.colDireccion,
             this.btnHistorial,
             this.colAccion});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.LightGreen;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvTablaClientes.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGreen;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvTablaClientes.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvTablaClientes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTablaClientes.GridColor = System.Drawing.Color.LimeGreen;
             this.dgvTablaClientes.Location = new System.Drawing.Point(0, 0);
@@ -140,6 +140,67 @@
             this.dgvTablaClientes.TabIndex = 3;
             this.dgvTablaClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTablaClientes_CellContentClick);
             this.dgvTablaClientes.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvTablaClientes_CellMouseUp);
+            // 
+            // colId
+            // 
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colNombre
+            // 
+            this.colNombre.FillWeight = 85.88832F;
+            this.colNombre.HeaderText = "Nombre";
+            this.colNombre.Name = "colNombre";
+            // 
+            // colApellido
+            // 
+            this.colApellido.HeaderText = "Apellido";
+            this.colApellido.Name = "colApellido";
+            // 
+            // colEmpresa
+            // 
+            this.colEmpresa.FillWeight = 85.88832F;
+            this.colEmpresa.HeaderText = "Empresa";
+            this.colEmpresa.Name = "colEmpresa";
+            // 
+            // colTelefono
+            // 
+            this.colTelefono.FillWeight = 85.88832F;
+            this.colTelefono.HeaderText = "Teléfono";
+            this.colTelefono.Name = "colTelefono";
+            // 
+            // colCorreo
+            // 
+            this.colCorreo.FillWeight = 85.88832F;
+            this.colCorreo.HeaderText = "Correo electronico";
+            this.colCorreo.Name = "colCorreo";
+            // 
+            // colDniCuil
+            // 
+            this.colDniCuil.FillWeight = 85.88832F;
+            this.colDniCuil.HeaderText = "DNI/CUIL";
+            this.colDniCuil.Name = "colDniCuil";
+            // 
+            // colDireccion
+            // 
+            this.colDireccion.HeaderText = "Direccion";
+            this.colDireccion.Name = "colDireccion";
+            // 
+            // btnHistorial
+            // 
+            this.btnHistorial.HeaderText = "Historial";
+            this.btnHistorial.Name = "btnHistorial";
+            this.btnHistorial.Text = "Ver";
+            this.btnHistorial.UseColumnTextForButtonValue = true;
+            // 
+            // colAccion
+            // 
+            this.colAccion.HeaderText = "Acción";
+            this.colAccion.Name = "colAccion";
+            this.colAccion.Text = "Modificar";
+            this.colAccion.UseColumnTextForButtonValue = true;
             // 
             // grbRegistrarModificar
             // 
@@ -328,18 +389,18 @@
             this.lblRegistrarModificar.Size = new System.Drawing.Size(255, 26);
             this.lblRegistrarModificar.TabIndex = 0;
             // 
-            // lblGestionClientes
+            // pnlEncabezado
             // 
-            this.lblGestionClientes.BackColor = System.Drawing.Color.ForestGreen;
-            this.lblGestionClientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblGestionClientes.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGestionClientes.ForeColor = System.Drawing.Color.White;
-            this.lblGestionClientes.Location = new System.Drawing.Point(-4, -1);
-            this.lblGestionClientes.Name = "lblGestionClientes";
-            this.lblGestionClientes.Size = new System.Drawing.Size(906, 42);
-            this.lblGestionClientes.TabIndex = 20;
-            this.lblGestionClientes.Text = "Gestión de Clientes";
-            this.lblGestionClientes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.pnlEncabezado.BackColor = System.Drawing.Color.ForestGreen;
+            this.pnlEncabezado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pnlEncabezado.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlEncabezado.ForeColor = System.Drawing.Color.White;
+            this.pnlEncabezado.Location = new System.Drawing.Point(-4, -1);
+            this.pnlEncabezado.Name = "pnlEncabezado";
+            this.pnlEncabezado.Size = new System.Drawing.Size(906, 42);
+            this.pnlEncabezado.TabIndex = 20;
+            this.pnlEncabezado.Text = "Gestión de Clientes";
+            this.pnlEncabezado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel1
             // 
@@ -387,73 +448,12 @@
             this.btnAgregarCliente.UseVisualStyleBackColor = false;
             this.btnAgregarCliente.Click += new System.EventHandler(this.btnAgregarCliente_Click);
             // 
-            // colId
-            // 
-            this.colId.HeaderText = "Id";
-            this.colId.Name = "colId";
-            this.colId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colNombre
-            // 
-            this.colNombre.FillWeight = 85.88832F;
-            this.colNombre.HeaderText = "Nombre";
-            this.colNombre.Name = "colNombre";
-            // 
-            // colApellido
-            // 
-            this.colApellido.HeaderText = "Apellido";
-            this.colApellido.Name = "colApellido";
-            // 
-            // colEmpresa
-            // 
-            this.colEmpresa.FillWeight = 85.88832F;
-            this.colEmpresa.HeaderText = "Empresa";
-            this.colEmpresa.Name = "colEmpresa";
-            // 
-            // colTelefono
-            // 
-            this.colTelefono.FillWeight = 85.88832F;
-            this.colTelefono.HeaderText = "Teléfono";
-            this.colTelefono.Name = "colTelefono";
-            // 
-            // colCorreo
-            // 
-            this.colCorreo.FillWeight = 85.88832F;
-            this.colCorreo.HeaderText = "Correo electronico";
-            this.colCorreo.Name = "colCorreo";
-            // 
-            // colDniCuil
-            // 
-            this.colDniCuil.FillWeight = 85.88832F;
-            this.colDniCuil.HeaderText = "DNI/CUIL";
-            this.colDniCuil.Name = "colDniCuil";
-            // 
-            // colDireccion
-            // 
-            this.colDireccion.HeaderText = "Direccion";
-            this.colDireccion.Name = "colDireccion";
-            // 
-            // btnHistorial
-            // 
-            this.btnHistorial.HeaderText = "Historial";
-            this.btnHistorial.Name = "btnHistorial";
-            this.btnHistorial.Text = "Ver";
-            this.btnHistorial.UseColumnTextForButtonValue = true;
-            // 
-            // colAccion
-            // 
-            this.colAccion.HeaderText = "Acción";
-            this.colAccion.Name = "colAccion";
-            this.colAccion.Text = "Modificar";
-            this.colAccion.UseColumnTextForButtonValue = true;
-            // 
             // FormClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 520);
-            this.Controls.Add(this.lblGestionClientes);
+            this.Controls.Add(this.pnlEncabezado);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnAgregarCliente);
             this.Controls.Add(this.btnAtras);
@@ -496,7 +496,7 @@
         private System.Windows.Forms.TextBox txtNombreNegocio;
         private System.Windows.Forms.Label lblNombreNegocio;
         private System.Windows.Forms.Label lblRegistrarModificar;
-        private System.Windows.Forms.Label lblGestionClientes;
+        private System.Windows.Forms.Label pnlEncabezado;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBusquedaFiltrado;
