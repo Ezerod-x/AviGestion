@@ -265,7 +265,7 @@ namespace AviGestion_.UI
         }
         #endregion
 
-        #region Paneles del inicio (sin TableLayoutPanel)
+        #region Paneles del inicio 
         //Muestra u oculta los tres paneles del inicio.
         private void MostrarPanelesInicio(bool visible)
         {
@@ -293,9 +293,9 @@ namespace AviGestion_.UI
         #endregion
 
         #region Gráficos del inicio
-        private const bool USAR_DATOS_DEMO = false;        // false = usa la base de datos true= usa datos de ejemplo (para probar sin base)
+        private const bool USAR_DATOS_DEMO = false;        // false = usa la base de datos | true= usa datos de ejemplo (para probar sin base)
         private GraficoBarras grafStock, grafPedidos, grafProductos;
-        private readonly DashboardLogica dashboard = new DashboardLogica();
+        private readonly GraficosInicioLogica dashboard = new GraficosInicioLogica();
 
         //Crea las tres gráficas y las coloca debajo del título de cada panel.
         private void CrearGraficos()

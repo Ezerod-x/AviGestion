@@ -162,7 +162,7 @@
     <Compile Include="Logica\CategoriaLogica.cs" />
     <Compile Include="Logica\Cliente.cs" />
     <Compile Include="Logica\ClienteLogica.cs" />
-    <Compile Include="Logica\DashboardLogica.cs" />
+    <Compile Include="Logica\GraficosInicioLogica.cs" />
     <Compile Include="Logica\FacturacionLogica.cs" />
     <Compile Include="Logica\GestionAlertaLogica.cs" />
     <Compile Include="Logica\HistorialClienteLogica.cs" />

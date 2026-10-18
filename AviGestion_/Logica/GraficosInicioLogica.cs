@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace AviGestion_.Logica
 {
     //Datos que muestra el menú principal en sus graficos
-    public class DashboardLogica
+    public class GraficosInicioLogica
     {
         private const string ESTADO_ACTIVO = "Activo";          // texto del estado de un producto activo
         private const string ESTADO_CANCELADO = "Cancelado";    // texto del estado de un pedido cancelado
