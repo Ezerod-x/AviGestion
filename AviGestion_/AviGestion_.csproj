@@ -153,6 +153,7 @@
     <Compile Include="Interfaz\FrmPedidos.Designer.cs">
       <DependentUpon>FrmPedidos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\GraficoBarras.cs" />
     <Compile Include="Logica\ABM_Producto.cs" />
     <Compile Include="Logica\Alerta.cs" />
     <Compile Include="Logica\AsignacionLogica.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Logica\CategoriaLogica.cs" />
     <Compile Include="Logica\Cliente.cs" />
     <Compile Include="Logica\ClienteLogica.cs" />
+    <Compile Include="Logica\DashboardLogica.cs" />
     <Compile Include="Logica\FacturacionLogica.cs" />
     <Compile Include="Logica\GestionAlertaLogica.cs" />
     <Compile Include="Logica\HistorialClienteLogica.cs" />
@@ -237,6 +239,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Interfaz\FormMenu.resx">
       <DependentUpon>FormMenu.cs</DependentUpon>
@@ -261,6 +264,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Fondo_patron_420x300.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

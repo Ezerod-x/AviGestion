@@ -15,95 +15,112 @@ namespace AviGestion_.UI
 {
     public partial class FormMenu : Form
     {
-        #region Campos y constructor
+        #region Campos y constantes
         private Usuario usuarioActual;
-        private Form pantallaActual;                  // pantalla abierta en el panel central (null = inicio)
+        private Form pantallaActual;                           // pantalla abierta en pnlContenido (null = inicio)
         private const string TITULO_INICIO = "Menú Principal - Sistema AviGestión";
+        private static readonly Color VERDE = Color.FromArgb(46, 125, 50);
 
+        // Marco alrededor de pnlContenido y límites de tamaño
+        private const int MARGEN_X = 110, MARGEN_Y = 50;
+        private const int MIN_ANCHO = 880, MIN_ALTO = 500;
+        private const int MAX_ANCHO = 1100, MAX_ALTO = 640;
+        #endregion
+
+        #region Constructor
         public FormMenu(Usuario usuario)
         {
             InitializeComponent();
             usuarioActual = usuario;
             WindowState = FormWindowState.Maximized;
+
+            pnlFondo.Resize += (s, e) => AjustarContenido();   // recentra el panel si cambia el tamaño de la ventana
+            pnlContenido.Resize += (s, e) => DistribuirPanelesInicio();
+            CrearGraficos();
+
             AgregarBotonCerrarSesion();
-            CrearTitulosDeSeccion();
-            ConfigurarVisibilidadPorRol();
+            ConstruirMenu();                                   // arma títulos y botones según el rol
             lblUsuario.Text = usuarioActual.Nombre + " · " + usuarioActual.Rol;
+            AjustarContenido();
             MostrarInicio();
         }
         #endregion
 
-        #region Permisos por rol (igual que antes; con FlowLayoutPanel ya no quedan huecos)
-        private void ConfigurarVisibilidadPorRol()
+        #region Menú lateral: una sola lista define qué ve cada rol
+        private class ItemDeMenu
         {
-            // Por defecto, ocultamos todo excepto Inicio y Ayuda (que ven todos)
-            lblStockTitulo.Visible = true;
-            btnInicio.Visible = true;
-            btnClientes.Visible = false;
-            btnUsuarios.Visible = false;
-            btnPedidos.Visible = false;
-            btnProductos.Visible = false;
-            btnAsignarPedidos.Visible = false;
-            btnStock.Visible = false;
-            btnCategorias.Visible = false;
-            btnVehiculos.Visible = false;
-            btnBitacora.Visible = false;
-            btnBackup.Visible = false;
-            btnFacturacion.Visible = false;
-            btnRegistrarPago.Visible = false;
-            btnAyuda.Visible = true;
-            lblProductosDescripcion.Visible = false;
-            lblStockDescripcion.Visible = false;
+            public string Seccion;        // título de la sección donde aparece
+            public string Texto;          // texto del botón
+            public string Etiqueta;       // texto chico a la derecha (opcional)
+            public string Titulo;         // título del header al abrir la pantalla
+            public string[] Roles;        // roles con acceso; null = todos
+            public Func<Form> Crear;      // pantalla que abre (null si usa Accion)
+            public Action Accion;         // para ítems que no abren una pantalla (Inicio, Ayuda)
+            public Button Boton;          // se completa al construir el menú
+        }
 
-            switch (usuarioActual.Rol)
+        private readonly List<ItemDeMenu> items = new List<ItemDeMenu>();
+
+        // Define TODOS los accesos del sistema. Para cambiar quién ve qué, o para agregar una
+        // pantalla nueva, se edita solo esta lista.
+        private void DefinirItems()
+        {
+            string[] admin = { "Administrador" };
+            string[] pedidos = { "Administrador de pedidos" };
+            string[] deposito = { "Jefe de Deposito" };
+
+            items.Clear();
+            items.Add(new ItemDeMenu { Seccion = "INICIO", Texto = "Inicio", Accion = MostrarInicio });
+
+            items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Clientes", Titulo = "Gestión de Clientes", Roles = admin, Crear = () => new FormClientes(usuarioActual) });
+            items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Pedidos", Titulo = "Gestión de Pedidos", Roles = pedidos, Crear = () => new FrmPedidos() });
+            items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Facturación", Titulo = "Facturación y Despacho de Pedidos", Roles = pedidos, Crear = () => new FormFacturacion(usuarioActual) });
+            items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Registrar Pagos", Titulo = "Registrar Pago", Roles = pedidos, Crear = () => new FormRegistrarPago(usuarioActual) });
+
+            items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Productos", Etiqueta = "catálogo", Titulo = "Gestión de Productos", Roles = deposito, Crear = () => new FormProducto(usuarioActual) });
+            items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Asignar Pedidos", Titulo = "Asignar Pedidos", Roles = deposito, Crear = () => new FormAsignarPedidos(usuarioActual) });
+            items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Stock", Etiqueta = "inventario", Titulo = "Stock e Inventario", Roles = deposito, Crear = () => new FormCargaStock(usuarioActual) });
+            items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Categorías", Titulo = "Gestión de Categorías", Roles = deposito, Crear = () => new FrmCategorias() });
+            items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Vehículos", Titulo = "Gestión de Vehículos", Roles = deposito, Crear = () => new FormVehiculo(usuarioActual) });
+
+            items.Add(new ItemDeMenu { Seccion = "ADMINISTRACIÓN", Texto = "Usuarios", Titulo = "Gestión de Usuarios", Roles = admin, Crear = () => new FormUsuarios(usuarioActual) });
+            items.Add(new ItemDeMenu { Seccion = "ADMINISTRACIÓN", Texto = "Bitácora", Titulo = "Bitácora", Roles = admin, Crear = () => new FormBitacora(usuarioActual) });
+            items.Add(new ItemDeMenu { Seccion = "ADMINISTRACIÓN", Texto = "Backup", Titulo = "Backup", Roles = admin, Crear = () => new FormBackup(usuarioActual) });
+
+            items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Ayuda", Accion = () => MessageBox.Show("Ayuda en construcción.", "AviGestión") });
+        }
+
+        //Indica si el usuario actual puede ver y usar el ítem (Roles == null significa "todos").
+        private bool TieneAcceso(ItemDeMenu item)
+        {
+            if (item.Roles == null) return true;
+            string rol = (usuarioActual.Rol ?? "").Trim();
+            return item.Roles.Contains(rol, StringComparer.OrdinalIgnoreCase);
+        }
+
+        //Arma el menú lateral: crea solo los botones permitidos y, antes de cada grupo, su título.
+        // Una sección sin botones permitidos no genera ni el título. Se puede volver a llamar si cambia el rol.
+        private void ConstruirMenu()
+        {
+            DefinirItems();
+            flpSidebar.SuspendLayout();
+            flpSidebar.Controls.Clear();
+
+            foreach (var grupo in items.Where(TieneAcceso).GroupBy(i => i.Seccion))   // respeta el orden de la lista
             {
-                case "Administrador":
-                    lblSecAdministracion.Visible = true;
-                    btnClientes.Visible = true;
-                    btnUsuarios.Visible = true;
-                    btnStock.Visible = false;
-                    btnFacturacion.Visible = true;
-                    btnRegistrarPago.Visible = true;
-                    btnBitacora.Visible = true;
-                    btnBackup.Visible = true;
-                    break;
-
-                case "Administrador de pedidos":
-                    lblSecVentas.Visible = true;
-                    btnPedidos.Visible = true;
-                    break;
-
-                case "Jefe de Deposito":
-                    lblSecDeposito.Visible = true;
-                    btnProductos.Visible = true;
-                    btnAsignarPedidos.Visible = true;
-                    btnVehiculos.Visible = true;
-                    btnStock.Visible = true;
-                    btnCategorias.Visible = true;
-                    lblProductosDescripcion.Visible = true;
-                    lblStockDescripcion.Visible = true;
-                    break;
+                flpSidebar.Controls.Add(CrearTitulo(grupo.Key));
+                foreach (var item in grupo)
+                {
+                    item.Boton = CrearBoton(item);
+                    flpSidebar.Controls.Add(item.Boton);
+                }
             }
-
-            ActualizarSecciones();
+            flpSidebar.ResumeLayout();
         }
 
-        // Cada título con los botones que agrupa
-        private readonly List<KeyValuePair<Label, Control[]>> secciones =
-            new List<KeyValuePair<Label, Control[]>>();
-
-        //Crea los títulos de sección y los inserta en flpSidebar justo antes del primer botón de cada grupo.
-        private void CrearTitulosDeSeccion()
+        private Label CrearTitulo(string texto)
         {
-            AgregarTitulo("VENTAS", btnClientes, btnPedidos, btnFacturacion, btnRegistrarPago);
-            AgregarTitulo("DEPÓSITO", btnProductos, btnAsignarPedidos, btnStock, btnCategorias, btnVehiculos);
-            AgregarTitulo("ADMINISTRACIÓN", btnUsuarios, btnBitacora, btnBackup);
-            AgregarTitulo("SISTEMA", btnAyuda);
-        }
-
-        private void AgregarTitulo(string texto, params Control[] botones)
-        {
-            var lbl = new Label
+            return new Label
             {
                 Text = texto,
                 AutoSize = false,
@@ -114,108 +131,105 @@ namespace AviGestion_.UI
                 ForeColor = Color.Gray,
                 Margin = new Padding(0, 10, 0, 2)
             };
-            flpSidebar.Controls.Add(lbl);
-            flpSidebar.Controls.SetChildIndex(lbl, flpSidebar.Controls.GetChildIndex(botones[0]));
-            secciones.Add(new KeyValuePair<Label, Control[]>(lbl, botones));
         }
 
-        // Muestra el título solo si al menos uno de sus botones es visible para el rol
-        private void ActualizarSecciones()
+        private Button CrearBoton(ItemDeMenu item)
         {
-            foreach (var s in secciones)
-                s.Key.Visible = s.Value.Any(b => b.Visible);
+            var b = new Button
+            {
+                Text = item.Texto,
+                Width = 200,
+                Height = 34,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.White,
+                ForeColor = VERDE,
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(8, 0, 0, 0),
+                Margin = new Padding(0, 0, 0, 6),
+                Cursor = Cursors.Hand,
+                UseVisualStyleBackColor = false
+            };
+            b.FlatAppearance.BorderColor = Color.DimGray;
+            b.Click += (s, e) => AbrirItem(item);
+
+            if (!string.IsNullOrEmpty(item.Etiqueta))                  // "catálogo", "inventario"
+                b.Paint += (s, e) =>
+                {
+                    Color c = (b.ForeColor == Color.White) ? Color.FromArgb(220, 240, 220) : Color.Gray;
+                    using (var f = new Font("Segoe UI", 8F))
+                        TextRenderer.DrawText(e.Graphics, item.Etiqueta, f,
+                            new Rectangle(0, 0, b.Width - 10, b.Height), c,
+                            TextFormatFlags.Right | TextFormatFlags.VerticalCenter);
+                };
+            return b;
+        }
+
+        //Clic en un botón: verifica el permiso otra vez y abre la pantalla o ejecuta la acción.
+        private void AbrirItem(ItemDeMenu item)
+        {
+            if (!TieneAcceso(item)) return;                            // doble control de seguridad
+            if (item.Crear != null) AbrirEnPanel(item.Crear(), item.Titulo ?? item.Texto, item.Boton);
+            else if (item.Accion != null) item.Accion();
+        }
+
+        //Pinta de verde el botón de la pantalla abierta y deja los demás en blanco (null = ninguno).
+        private void Resaltar(Control activo)
+        {
+            foreach (var item in items)
+            {
+                if (item.Boton == null) continue;
+                bool on = (item.Boton == activo);
+                item.Boton.BackColor = on ? VERDE : Color.White;
+                item.Boton.ForeColor = on ? Color.White : VERDE;
+                item.Boton.Invalidate();                               // repinta también la etiqueta chica
+            }
         }
         #endregion
 
-        #region Botones del menú (cada uno abre su pantalla dentro del panel central)
-        private void btnInicio_Click(object sender, EventArgs e) { MostrarInicio(); }
+        #region Panel de fondo y panel de contenido
+        // Calcula el tamaño de pnlContenido según el espacio libre (con un marco fijo para que se vea
+        // el fondo decorativo, entre un mínimo y un máximo) y lo centra dentro de pnlFondo.
+        private void AjustarContenido()
+        {
+            if (pnlFondo.ClientSize.Width <= 0 || pnlFondo.ClientSize.Height <= 0) return;
 
-        private void btnClientes_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormClientes(usuarioActual), "Gestión de Clientes", btnClientes);
-        }
-
-        private void btnUsuarios_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormUsuarios(usuarioActual), "Gestión de Usuarios", btnUsuarios);
-        }
-
-        private void btnPedidos_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FrmPedidos(), "Gestión de Pedidos", btnPedidos);
-        }
-
-        private void btnProductos_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormProducto(usuarioActual), "Gestión de Productos", btnProductos);
-        }
-       
-        private void btnAsignarPedidos_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormAsignarPedidos(usuarioActual), "Asignar Pedidos", btnAsignarPedidos);
-        }
-
-        private void btnStock_Click_1(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormCargaStock(usuarioActual), "Stock e Inventario", btnStock);
-        }
-
-        private void btnCategorias_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FrmCategorias(), "Gestión de Categorías", btnCategorias);
-        }
-
-        private void btnVehiculos_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormVehiculo(usuarioActual), "Gestión de Vehículos", btnVehiculos);
-        }
-
-        private void btnFacturacion_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormFacturacion(usuarioActual), "Facturación y Despacho de Pedidos", btnFacturacion);
-        }
-
-        private void btnRegistrarPago_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormRegistrarPago(usuarioActual), "Registrar Pago", btnRegistrarPago);
-        }
-
-        private void btnBitacora_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormBitacora(usuarioActual), "Bitácora", btnBitacora);
-        }
-
-        private void btnBackup_Click(object sender, EventArgs e)
-        {
-            AbrirEnPanel(new FormBackup(usuarioActual), "Backup", btnBackup);
+            int w = Math.Max(MIN_ANCHO, Math.Min(MAX_ANCHO, pnlFondo.ClientSize.Width - 2 * MARGEN_X));
+            int h = Math.Max(MIN_ALTO, Math.Min(MAX_ALTO, pnlFondo.ClientSize.Height - 2 * MARGEN_Y));
+            pnlContenido.Size = new Size(w, h);
+            pnlContenido.Location = new Point(
+                Math.Max(0, (pnlFondo.ClientSize.Width - w) / 2),
+                Math.Max(0, (pnlFondo.ClientSize.Height - h) / 2));
         }
         #endregion
 
-        #region Pantallas incrustadas en el área central
-        /// Muestra un formulario dentro de pnlContenido (no como ventana aparte), cambia el título
-        /// del header por el de la gestión y resalta el botón del menú.
-        private void AbrirEnPanel(Form pantalla, string titulo, Control itemMenu)
+        #region Pantallas incrustadas en el panel de contenido
+        //Muestra un formulario dentro de pnlContenido (no como ventana aparte), cambia el título
+        // del header por el de la gestión y resalta el botón del menú.
+        private void AbrirEnPanel(Form pantalla, string titulo, Control botonMenu)
         {
             CerrarPantalla();
             pantallaActual = pantalla;
 
-            pantalla.TopLevel = false;                        // se muestra dentro de un panel
+            pantalla.TopLevel = false;                                 // se muestra dentro de un panel
             pantalla.FormBorderStyle = FormBorderStyle.None;
             pantalla.MaximumSize = Size.Empty;
-            pantalla.AutoScroll = true;                       // si el espacio es chico, scroll en vez de cortarse
-            pantalla.AutoScrollMinSize = pantalla.Size;       // tamaño original del diseño
+            pantalla.AutoScroll = true;                                // si el espacio es chico, scroll en vez de cortarse
+            pantalla.AutoScrollMinSize = pantalla.Size;                // tamaño original del diseño
             pantalla.Dock = DockStyle.Fill;
             OcultarEncabezadoPropio(pantalla);
 
+            MostrarPanelesInicio(false);                          // oculta los gráficos del inicio
             pnlContenido.Controls.Add(pantalla);
-            pantalla.FormClosed += Pantalla_FormClosed;       // al cerrarse ("Atrás"), vuelve al inicio
+            pantalla.FormClosed += Pantalla_FormClosed;                // al cerrarse, vuelve al inicio
             pantalla.Show();
             pantalla.BringToFront();
 
             lblTitulo.Text = titulo;
-            Resaltar(itemMenu);
+            Resaltar(botonMenu);
         }
 
+        // Cuando se cierra la pantalla incrustada, vuelve al inicio.
         private void Pantalla_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (sender == pantallaActual)
@@ -225,25 +239,25 @@ namespace AviGestion_.UI
             }
         }
 
+        // Cierra la pantalla incrustada (si hay alguna) y libera sus recursos.
         private void CerrarPantalla()
         {
             Form f = pantallaActual;
-            pantallaActual = null;                            // evita que FormClosed dispare MostrarInicio
+            pantallaActual = null;                                     // evita que FormClosed dispare MostrarInicio
             if (f != null) { f.Close(); f.Dispose(); }
         }
 
-        // Vuelve al panel de inicio: título original, sin botón resaltado y gráficos actualizados.
+        //Vuelve al panel de inicio: título original, sin botón resaltado y gráficos actualizados.
         private void MostrarInicio()
         {
             CerrarPantalla();
+            MostrarPanelesInicio(true);
             lblTitulo.Text = TITULO_INICIO;
             Resaltar(null);
             CargarGraficos();
         }
 
-        // Oculta el header propio del formulario
-        // (Si se cambia los lbl del titulo/encabezado de cada form al nombre pnlEncabezado se oculta sin necesidad de borrarlo)
-        //Ejemplo: FormClientes funciona asi
+        // Oculta el header propio del formulario (el panel que se llame "pnlEncabezado")
         private void OcultarEncabezadoPropio(Form pantalla)
         {
             Control encabezado = pantalla.Controls.Find("pnlEncabezado", true).FirstOrDefault();
@@ -251,35 +265,123 @@ namespace AviGestion_.UI
         }
         #endregion
 
-        #region Resaltado del botón activo
-        private IEnumerable<Control> ItemsMenu()
+        #region Paneles del inicio (sin TableLayoutPanel)
+        //Muestra u oculta los tres paneles del inicio.
+        private void MostrarPanelesInicio(bool visible)
         {
-            return flpSidebar.Controls.Cast<Control>().Where(c => c.Name.StartsWith("btn"));
+            pnlStockResumen.Visible = visible;
+            pnlGraficoPedidos.Visible = visible;
+            pnlGraficoProductos.Visible = visible;
         }
 
-        private void Resaltar(Control activo)
+        //Reparte los tres paneles: stock arriba (ancho completo) y los otros dos abajo, lado a lado.
+        private void DistribuirPanelesInicio()
         {
-            foreach (Control item in ItemsMenu())
-            {
-                bool esActivo = (item == activo);
-                item.BackColor = esActivo ? Color.ForestGreen : Color.White;
-                if (item is Button) item.ForeColor = esActivo ? Color.White : Color.ForestGreen;
+            const int P = 10;                                          // separación entre paneles
+            int ancho = pnlContenido.ClientSize.Width - 2 * P;
+            int alto = pnlContenido.ClientSize.Height - 2 * P;
+            if (ancho <= 0 || alto <= 0) return;
 
-                foreach (Label l in item.Controls.OfType<Label>())
-                {
-                    l.BackColor = Color.Transparent;
-                    bool esDescripcion = l.Name.Contains("Descripcion");
-                    l.ForeColor = esActivo ? Color.White : (esDescripcion ? Color.Gray : Color.ForestGreen);
-                }
-            }
+            int altoSup = (int)(alto * 0.36);
+            int altoInf = alto - altoSup - P;
+            int mitad = (ancho - P) / 2;
+
+            pnlStockResumen.SetBounds(P, P, ancho, altoSup);
+            pnlGraficoPedidos.SetBounds(P, 2 * P + altoSup, mitad, altoInf);
+            pnlGraficoProductos.SetBounds(2 * P + mitad, 2 * P + altoSup, ancho - mitad - P, altoInf);
         }
         #endregion
 
-        #region Gráficos del inicio (por ahora vacío; se completa cuando decidan usarlos)
+        #region Gráficos del inicio
+        private const bool USAR_DATOS_DEMO = false;        // false = usa la base de datos true= usa datos de ejemplo (para probar sin base)
+        private GraficoBarras grafStock, grafPedidos, grafProductos;
+        private readonly DashboardLogica dashboard = new DashboardLogica();
+
+        //Crea las tres gráficas y las coloca debajo del título de cada panel.
+        private void CrearGraficos()
+        {
+            grafStock = new GraficoBarras { MostrarLimites = true, Columnas = 2 };
+            grafPedidos = new GraficoBarras();
+            grafProductos = new GraficoBarras { ColorBarra = Color.SeaGreen };
+
+            ColocarGrafico(pnlStockResumen, grafStock);
+            ColocarGrafico(pnlGraficoPedidos, grafPedidos);
+            ColocarGrafico(pnlGraficoProductos, grafProductos);
+        }
+
+        private void ColocarGrafico(Panel panel, GraficoBarras grafico)
+        {
+            grafico.SetBounds(10, 44, panel.ClientSize.Width - 20, panel.ClientSize.Height - 54);   // 44 px = alto del título
+            grafico.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel.Controls.Add(grafico);
+        }
+
+        //Carga los datos en las tres gráficas. Si falla la base, el menú no se cae: muestra un aviso.
         private void CargarGraficos()
         {
-            // Acá se llena pnlStockResumen, pnlGraficoPedidos y pnlGraficoProductos
-            // con datos de la capa Logica (usando el PintarBarras del borrador).
+            try
+            {
+                grafStock.Datos = ObtenerStock();
+                grafPedidos.Datos = ObtenerPedidosPorCliente();
+                grafProductos.Datos = ObtenerProductosVendidos();
+            }
+            catch (Exception)
+            {
+                foreach (GraficoBarras g in new[] { grafStock, grafPedidos, grafProductos })
+                {
+                    g.Datos = new List<ItemGrafico>();
+                    g.TextoVacio = "No se pudieron cargar los datos.";
+                }
+            }
+            grafStock.Invalidate();
+            grafPedidos.Invalidate();
+            grafProductos.Invalidate();
+        }
+
+        private static ItemGrafico ItemStock(string nombre, int stock, int min, int max)
+        {
+            return new ItemGrafico { Nombre = nombre, Valor = stock, Minimo = min, Maximo = max, Texto = stock + "/" + max };
+        }
+
+        private List<ItemGrafico> ObtenerStock()
+        {
+            if (USAR_DATOS_DEMO)
+                return new List<ItemGrafico>
+            {
+                ItemStock("Huevo B1", 120, 40, 200), ItemStock("Huevo B2", 35, 40, 200),
+                ItemStock("Huevo C1", 150, 30, 150), ItemStock("Pollo entero", 90, 30, 160),
+                ItemStock("Pollo trozado", 15, 25, 100), ItemStock("Huevo SUP", 60, 20, 100)
+            };
+
+            return dashboard.StockActivo()
+                .Select(p => ItemStock(p.Descripcion, p.Stock, p.StockMinimo, p.StockMaximo))
+                .ToList();
+        }
+
+        private List<ItemGrafico> ObtenerPedidosPorCliente()
+        {
+            if (USAR_DATOS_DEMO)
+                return new List<ItemGrafico>
+            {
+                new ItemGrafico { Nombre = "Almacén El Sol", Valor = 5 },
+                new ItemGrafico { Nombre = "Rotisería Don Pepe", Valor = 3 },
+                new ItemGrafico { Nombre = "Granja Los Aromos", Valor = 2 }
+            };
+
+            return dashboard.PedidosPorCliente()
+                .Select(kv => new ItemGrafico { Nombre = kv.Key, Valor = kv.Value })
+                .ToList();
+        }
+
+        private List<ItemGrafico> ObtenerProductosVendidos()
+        {
+            // Pendiente: falta el procedimiento SP_ProductosVendidos (ver mensaje anterior). Por ahora, ejemplo.
+            return new List<ItemGrafico>
+            {
+                new ItemGrafico { Nombre = "Pollo entero", Valor = 30 },
+                new ItemGrafico { Nombre = "Huevo C1", Valor = 25 },
+                new ItemGrafico { Nombre = "Huevo B1", Valor = 20 }
+            };
         }
         #endregion
 
@@ -289,7 +391,7 @@ namespace AviGestion_.UI
             if (tecla == Keys.F11 || (tecla == Keys.Escape && FormBorderStyle == FormBorderStyle.None))
             {
                 bool completa = (FormBorderStyle == FormBorderStyle.None);
-                WindowState = FormWindowState.Normal;         // truco: sin esto no cubre la barra de tareas
+                WindowState = FormWindowState.Normal;                  // truco: sin esto no cubre la barra de tareas
                 FormBorderStyle = completa ? FormBorderStyle.Sizable : FormBorderStyle.None;
                 WindowState = FormWindowState.Maximized;
                 return true;
@@ -312,7 +414,7 @@ namespace AviGestion_.UI
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Arial", 9F, FontStyle.Bold),
                 ForeColor = Color.White,
-                BackColor = Color.OliveDrab,
+                BackColor = VERDE,
                 Size = new Size(140, 27),
                 Location = new Point(this.ClientSize.Width - 150, 4),
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
@@ -340,14 +442,9 @@ namespace AviGestion_.UI
         }
         #endregion
 
-        #region Eventos vacíos (enlazados desde el Designer: no borrar sin quitar antes el enlace)
-        private void btnUsuarios_Paint(object sender, PaintEventArgs e) { }
-        private void btnProductos_Paint(object sender, PaintEventArgs e) { }
-        private void btnCategorias_Paint(object sender, PaintEventArgs e) { }
-        private void lblProductosTitulo_Click(object sender, EventArgs e) { }
+        #region Evento enlazado desde el Designer (dejar vacío)
         private void FormMenu_Load(object sender, EventArgs e) { }
         #endregion
 
-        
     }
 }
