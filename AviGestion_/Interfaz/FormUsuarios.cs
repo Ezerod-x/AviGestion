@@ -141,5 +141,10 @@ namespace AviGestion_.UI
         {
 
         }
+
+        private void pnlHeader_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
