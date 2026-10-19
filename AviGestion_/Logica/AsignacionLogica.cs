@@ -7,7 +7,7 @@ namespace AviGestion_.Logica
     {
         // Estados de pedido usados por el tablero de asignación.
         // Si en tu base los pedidos nuevos no quedan como "Pendiente", cambialo acá.
-        public const string EstadoEspera = "Pendiente";
+        public const string EstadoEspera = "En preparación";
         public const string EstadoEnCamino = "En camino";
         public const string EstadoEntregado = "Entregado";
 
