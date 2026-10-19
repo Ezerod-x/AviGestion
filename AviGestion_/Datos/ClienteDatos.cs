@@ -49,44 +49,17 @@ namespace AviGestion_.Datos
             return lista;
         }
 
-        //public void Insertar(Cliente cliente)
-        //{
-        //    string query = @"INSERT INTO Cliente (Nombre, Apellido, Direccion, Empresa, Telefono, CorreoElectronico, DniCuil) 
-        //             VALUES (@Nombre, @Apellido, @Direccion, @Empresa, @Telefono, @CorreoElectronico, @DniCuil)";
-
-        //    using (SqlConnection con = Conexion.ObtenerConexion())
-        //    {
-        //        SqlCommand cmd = new SqlCommand(query, con);
-        //        cmd.Parameters.AddWithValue("@Nombre", cliente.Nombre ?? (object)DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@Apellido", cliente.Apellido ?? (object)DBNull.Value); // Mantiene el apellido por si lo usas
-        //        cmd.Parameters.AddWithValue("@Direccion", cliente.Direccion ?? (object)DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@Empresa", cliente.Empresa ?? (object)DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@Telefono", cliente.Telefono ?? (object)DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@CorreoElectronico", cliente.CorreoElectronico ?? (object)DBNull.Value);
-        //        cmd.Parameters.AddWithValue("@DniCuil", cliente.DniCuil ?? (object)DBNull.Value);
-
-        //        try { con.Open(); cmd.ExecuteNonQuery(); }
-        //        catch (Exception ex) { throw new Exception("Error al insertar: " + ex.Message); }
-        //    }
-        //}
-
-
         public void Insertar(Cliente cliente)
         {
             using (SqlConnection con = Conexion.ObtenerConexion())
             {
                 con.Open();
 
-                SqlCommand cmdId = new SqlCommand(
-                    "SELECT ISNULL(MAX(Id_Cliente), 0) + 1 FROM Cliente", con);
-                int nuevoId = (int)cmdId.ExecuteScalar();
-
                 string query = @"INSERT INTO Cliente 
-            (Id_Cliente, Nombre, Apellido, Direccion, Empresa, Telefono, CorreoElectronico, DniCuil) 
-            VALUES (@Id_Cliente, @Nombre, @Apellido, @Direccion, @Empresa, @Telefono, @CorreoElectronico, @DniCuil)";
+                (Nombre, Apellido, Direccion, Empresa, Telefono, CorreoElectronico, DniCuil) 
+                VALUES (@Nombre, @Apellido, @Direccion, @Empresa, @Telefono, @CorreoElectronico, @DniCuil)";
 
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@Id_Cliente", nuevoId);
                 cmd.Parameters.AddWithValue("@Nombre", cliente.Nombre ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@Apellido", cliente.Apellido ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@Direccion", cliente.Direccion ?? (object)DBNull.Value);
@@ -98,7 +71,6 @@ namespace AviGestion_.Datos
                 cmd.ExecuteNonQuery();
             }
         }
-
         public void Modificar(Cliente cliente)
         {
             string query = @"UPDATE Cliente 

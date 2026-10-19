@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grbDetalleCompra = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblLectura = new System.Windows.Forms.Label();
@@ -38,10 +37,8 @@
             this.btnCancelarFactura = new System.Windows.Forms.Button();
             this.btnConfirmarDespacho = new System.Windows.Forms.Button();
             this.lblEtiquetaFactura = new System.Windows.Forms.Label();
-            this.btnAtras = new System.Windows.Forms.Button();
             this.dgvListadoCompra = new System.Windows.Forms.DataGridView();
-            this.BotonAccion = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.lblGestionCompras = new System.Windows.Forms.Label();
+            this.lblAyuda = new System.Windows.Forms.Label();
             this.grbDetalleCompra.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListadoCompra)).BeginInit();
@@ -49,6 +46,9 @@
             // 
             // grbDetalleCompra
             // 
+            this.grbDetalleCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grbDetalleCompra.BackColor = System.Drawing.Color.White;
             this.grbDetalleCompra.Controls.Add(this.label1);
             this.grbDetalleCompra.Controls.Add(this.lblLectura);
             this.grbDetalleCompra.Controls.Add(this.lblTotalPagar);
@@ -57,17 +57,18 @@
             this.grbDetalleCompra.Controls.Add(this.btnCancelarFactura);
             this.grbDetalleCompra.Controls.Add(this.btnConfirmarDespacho);
             this.grbDetalleCompra.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.grbDetalleCompra.Location = new System.Drawing.Point(17, 328);
+            this.grbDetalleCompra.Location = new System.Drawing.Point(12, 195);
             this.grbDetalleCompra.Name = "grbDetalleCompra";
-            this.grbDetalleCompra.Size = new System.Drawing.Size(957, 228);
+            this.grbDetalleCompra.Size = new System.Drawing.Size(837, 228);
             this.grbDetalleCompra.TabIndex = 28;
             this.grbDetalleCompra.TabStop = false;
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.label1.Location = new System.Drawing.Point(18, 172);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(202, 18);
@@ -76,10 +77,11 @@
             // 
             // lblLectura
             // 
+            this.lblLectura.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLectura.AutoSize = true;
             this.lblLectura.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLectura.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblLectura.Location = new System.Drawing.Point(829, 16);
+            this.lblLectura.Location = new System.Drawing.Point(709, 16);
             this.lblLectura.Name = "lblLectura";
             this.lblLectura.Size = new System.Drawing.Size(93, 16);
             this.lblLectura.TabIndex = 22;
@@ -102,18 +104,18 @@
             this.dgvDetalle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvDetalle.BackgroundColor = System.Drawing.Color.White;
+            this.dgvDetalle.BackgroundColor = System.Drawing.Color.Beige;
             this.dgvDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDetalle.Location = new System.Drawing.Point(18, 37);
             this.dgvDetalle.Name = "dgvDetalle";
-            this.dgvDetalle.Size = new System.Drawing.Size(923, 128);
+            this.dgvDetalle.Size = new System.Drawing.Size(803, 128);
             this.dgvDetalle.TabIndex = 19;
             // 
             // lblPedidoCliente
             // 
             this.lblPedidoCliente.AutoSize = true;
             this.lblPedidoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPedidoCliente.ForeColor = System.Drawing.Color.ForestGreen;
+            this.lblPedidoCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.lblPedidoCliente.Location = new System.Drawing.Point(18, 16);
             this.lblPedidoCliente.Name = "lblPedidoCliente";
             this.lblPedidoCliente.Size = new System.Drawing.Size(52, 18);
@@ -124,12 +126,12 @@
             // 
             this.btnCancelarFactura.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancelarFactura.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelarFactura.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.btnCancelarFactura.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCancelarFactura.FlatAppearance.BorderSize = 2;
             this.btnCancelarFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelarFactura.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelarFactura.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnCancelarFactura.Location = new System.Drawing.Point(653, 185);
+            this.btnCancelarFactura.Location = new System.Drawing.Point(533, 185);
             this.btnCancelarFactura.Name = "btnCancelarFactura";
             this.btnCancelarFactura.Size = new System.Drawing.Size(107, 37);
             this.btnCancelarFactura.TabIndex = 17;
@@ -140,12 +142,12 @@
             // btnConfirmarDespacho
             // 
             this.btnConfirmarDespacho.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConfirmarDespacho.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnConfirmarDespacho.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.btnConfirmarDespacho.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnConfirmarDespacho.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnConfirmarDespacho.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirmarDespacho.ForeColor = System.Drawing.Color.White;
-            this.btnConfirmarDespacho.Location = new System.Drawing.Point(766, 185);
+            this.btnConfirmarDespacho.Location = new System.Drawing.Point(656, 185);
             this.btnConfirmarDespacho.Name = "btnConfirmarDespacho";
             this.btnConfirmarDespacho.Size = new System.Drawing.Size(175, 37);
             this.btnConfirmarDespacho.TabIndex = 18;
@@ -157,81 +159,48 @@
             // 
             this.lblEtiquetaFactura.AutoSize = true;
             this.lblEtiquetaFactura.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEtiquetaFactura.Location = new System.Drawing.Point(14, 79);
+            this.lblEtiquetaFactura.Location = new System.Drawing.Point(14, 23);
             this.lblEtiquetaFactura.Name = "lblEtiquetaFactura";
-            this.lblEtiquetaFactura.Size = new System.Drawing.Size(326, 14);
+            this.lblEtiquetaFactura.Size = new System.Drawing.Size(323, 14);
             this.lblEtiquetaFactura.TabIndex = 27;
-            this.lblEtiquetaFactura.Text = "Pedidos pendientes de facurar (últimos 30 días)";
-            // 
-            // btnAtras
-            // 
-            this.btnAtras.FlatAppearance.BorderColor = System.Drawing.Color.ForestGreen;
-            this.btnAtras.FlatAppearance.BorderSize = 2;
-            this.btnAtras.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAtras.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAtras.ForeColor = System.Drawing.Color.ForestGreen;
-            this.btnAtras.Location = new System.Drawing.Point(849, 66);
-            this.btnAtras.Name = "btnAtras";
-            this.btnAtras.Size = new System.Drawing.Size(124, 28);
-            this.btnAtras.TabIndex = 26;
-            this.btnAtras.Text = "Atrás";
-            this.btnAtras.UseVisualStyleBackColor = true;
-            this.btnAtras.Click += new System.EventHandler(this.btnAtras_Click);
+            this.lblEtiquetaFactura.Text = "Pedidos pendientes a facturar (últimos 30 días)";
             // 
             // dgvListadoCompra
             // 
             this.dgvListadoCompra.AllowUserToAddRows = false;
             this.dgvListadoCompra.AllowUserToDeleteRows = false;
             this.dgvListadoCompra.AllowUserToOrderColumns = true;
-            this.dgvListadoCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvListadoCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvListadoCompra.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvListadoCompra.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvListadoCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvListadoCompra.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.BotonAccion});
-            this.dgvListadoCompra.Location = new System.Drawing.Point(13, 100);
+            this.dgvListadoCompra.Location = new System.Drawing.Point(12, 44);
             this.dgvListadoCompra.Name = "dgvListadoCompra";
-            this.dgvListadoCompra.Size = new System.Drawing.Size(960, 222);
+            this.dgvListadoCompra.Size = new System.Drawing.Size(840, 122);
             this.dgvListadoCompra.TabIndex = 25;
-            this.dgvListadoCompra.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvListadoCompra_CellContentClick);
             // 
-            // BotonAccion
+            // lblAyuda
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            this.BotonAccion.DefaultCellStyle = dataGridViewCellStyle3;
-            this.BotonAccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BotonAccion.HeaderText = "Accion";
-            this.BotonAccion.Name = "BotonAccion";
-            this.BotonAccion.Text = "Facturar/Despachar";
-            this.BotonAccion.UseColumnTextForButtonValue = true;
-            // 
-            // lblGestionCompras
-            // 
-            this.lblGestionCompras.BackColor = System.Drawing.Color.ForestGreen;
-            this.lblGestionCompras.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblGestionCompras.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGestionCompras.ForeColor = System.Drawing.Color.White;
-            this.lblGestionCompras.Location = new System.Drawing.Point(-1, 5);
-            this.lblGestionCompras.Name = "lblGestionCompras";
-            this.lblGestionCompras.Size = new System.Drawing.Size(987, 58);
-            this.lblGestionCompras.TabIndex = 24;
-            this.lblGestionCompras.Text = "Facturación y Despacho de Pedidos";
-            this.lblGestionCompras.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAyuda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblAyuda.AutoSize = true;
+            this.lblAyuda.Location = new System.Drawing.Point(17, 176);
+            this.lblAyuda.Name = "lblAyuda";
+            this.lblAyuda.Size = new System.Drawing.Size(35, 13);
+            this.lblAyuda.TabIndex = 29;
+            this.lblAyuda.Text = "label2";
             // 
             // FormFacturacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Beige;
-            this.ClientSize = new System.Drawing.Size(984, 561);
+            this.ClientSize = new System.Drawing.Size(864, 461);
+            this.Controls.Add(this.lblAyuda);
             this.Controls.Add(this.grbDetalleCompra);
             this.Controls.Add(this.lblEtiquetaFactura);
-            this.Controls.Add(this.btnAtras);
             this.Controls.Add(this.dgvListadoCompra);
-            this.Controls.Add(this.lblGestionCompras);
             this.Name = "FormFacturacion";
             this.Text = "FormFacturacion";
             this.Load += new System.EventHandler(this.FormFacturacion_Load);
@@ -255,9 +224,7 @@
         private System.Windows.Forms.Button btnCancelarFactura;
         private System.Windows.Forms.Button btnConfirmarDespacho;
         private System.Windows.Forms.Label lblEtiquetaFactura;
-        private System.Windows.Forms.Button btnAtras;
         private System.Windows.Forms.DataGridView dgvListadoCompra;
-        private System.Windows.Forms.DataGridViewButtonColumn BotonAccion;
-        private System.Windows.Forms.Label lblGestionCompras;
+        private System.Windows.Forms.Label lblAyuda;
     }
 }

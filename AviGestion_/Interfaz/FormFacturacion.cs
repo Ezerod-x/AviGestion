@@ -3,6 +3,7 @@ using AviGestion_.UI;
 using System;
 using System.Data;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace AviGestion_.Interfaz
 {
@@ -11,6 +12,8 @@ namespace AviGestion_.Interfaz
         private FacturacionLogica negocio = new FacturacionLogica();
         private int idPedidoSeleccionado = 0;
         private Usuario usuarioActual;
+        private static readonly Color VERDE = Color.FromArgb(46, 125, 50);
+
 
         public FormFacturacion(Usuario usuarioActual)//nuevo form
         {
@@ -23,16 +26,21 @@ namespace AviGestion_.Interfaz
         {
             try
             {
-                dgvDetalle.ReadOnly = true;
-                dgvDetalle.AllowUserToAddRows = false;
-                dgvDetalle.RowHeadersVisible = false;
-                dgvDetalle.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-                dgvListadoCompra.ReadOnly = true;
-                dgvListadoCompra.AllowUserToAddRows = false;
-                dgvListadoCompra.RowHeadersVisible = false;
+                EstiloGrilla(dgvListadoCompra);
+                dgvListadoCompra.MultiSelect = false;
                 dgvListadoCompra.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dgvListadoCompra.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgvListadoCompra.Cursor = Cursors.Hand;
+                dgvListadoCompra.CellDoubleClick += (s, ev) => { if (ev.RowIndex >= 0) CargarPedido(ev.RowIndex); };
+
+                EstiloGrilla(dgvDetalle);
+
+                EstiloBoton(btnConfirmarDespacho, VERDE, Color.White);
+                EstiloBoton(btnCancelarFactura, Color.White, Color.FromArgb(160, 0, 0));
+
+                lblAyuda.Text = "Doble clic en un pedido para cargar su detalle.";
+                lblAyuda.ForeColor = Color.FromArgb(91, 107, 79);
+                lblAyuda.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
+                lblPedidoCliente.ForeColor = VERDE;
 
                 CargarGrilla();
                 LimpiarCampos();
@@ -62,32 +70,14 @@ namespace AviGestion_.Interfaz
                 dgvListadoCompra.Columns["Total"].DefaultCellStyle.Format = "C2";
                 dgvListadoCompra.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             }
-
-            if (dgvListadoCompra.Columns["BotonAccion"] != null)
-            {
-                dgvListadoCompra.Columns["BotonAccion"].DisplayIndex = dgvListadoCompra.Columns.Count - 1;
-                dgvListadoCompra.Columns["BotonAccion"].HeaderText = "";
-                foreach (DataGridViewRow fila in dgvListadoCompra.Rows)
-                    fila.Cells["BotonAccion"].Value = "Facturar / Despachar";
-            }
-        }
-        private void LimpiarCampos()
-        {
-            idPedidoSeleccionado = 0;
-            lblPedidoCliente.Text = "";
-            lblTotalPagar.Text = "$ 0,00";
-            dgvDetalle.DataSource = null;
-            grbDetalleCompra.Visible = false;
         }
 
-        private void dgvListadoCompra_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        // Doble clic o Enter sobre una fila: SOLO carga el detalle, no confirma nada
+        private void CargarPedido(int indiceFila)
         {
-            if (e.RowIndex < 0) return;
-            if (dgvListadoCompra.Columns[e.ColumnIndex].Name != "BotonAccion") return;
-
             try
             {
-                DataGridViewRow fila = dgvListadoCompra.Rows[e.RowIndex];
+                DataGridViewRow fila = dgvListadoCompra.Rows[indiceFila];
                 idPedidoSeleccionado = Convert.ToInt32(fila.Cells["NºPedido"].Value);
                 string cliente = fila.Cells["Cliente"].Value.ToString();
 
@@ -109,13 +99,28 @@ namespace AviGestion_.Interfaz
 
                 lblPedidoCliente.Text = $"Pedido Nº {idPedidoSeleccionado} · {cliente}";
                 lblTotalPagar.Text = "$ " + importeTotal.ToString("N2");
-                grbDetalleCompra.Visible = true;
+
+                btnConfirmarDespacho.Enabled = true;     // ahora hay algo que confirmar
+                btnCancelarFactura.Enabled = true;
             }
             catch (Exception ex)
             {
+                LimpiarCampos();
                 MessageBox.Show("No se pudo cargar el detalle del pedido: " + ex.Message, "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        //Deja la pantalla sin pedido cargado y sin detalle de compra, con botones deshabilitados.
+        //Se llama al cancelar o al confirmar despacho.
+        private void LimpiarCampos()
+        {
+            idPedidoSeleccionado = 0;
+            lblPedidoCliente.Text = "Sin pedido cargado";
+            lblTotalPagar.Text = "$ 0,00";
+            dgvDetalle.DataSource = null;
+            dgvListadoCompra.ClearSelection();
+            btnConfirmarDespacho.Enabled = false;
+            btnCancelarFactura.Enabled = false;
         }
 
         private void btnConfirmarDespacho_Click(object sender, EventArgs e)
@@ -132,6 +137,7 @@ namespace AviGestion_.Interfaz
                 "Confirmación de Despacho", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirma != DialogResult.Yes) return;
+            btnConfirmarDespacho.Enabled = false;        // evita un segundo clic mientras se procesa
 
             try
             {
@@ -156,6 +162,7 @@ namespace AviGestion_.Interfaz
             }
             catch (Exception ex)
             {
+                btnConfirmarDespacho.Enabled = true;     // si falló, se puede reintentar
                 MessageBox.Show("Error técnico: " + ex.Message, "Falla de Comunicación",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -166,11 +173,30 @@ namespace AviGestion_.Interfaz
             LimpiarCampos();
         }
 
-        private void btnAtras_Click(object sender, EventArgs e)
+        // ---- Estilo (verde 46; 125; 50) ----
+        private void EstiloGrilla(DataGridView g)
         {
-            FormMenu menu = new FormMenu(usuarioActual);
-            menu.Show();
-            this.Close();
+            g.ReadOnly = true;
+            g.AllowUserToAddRows = false;
+            g.RowHeadersVisible = false;
+            g.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            g.EnableHeadersVisualStyles = false;
+            g.ColumnHeadersDefaultCellStyle.BackColor = VERDE;
+            g.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+        }
+
+        // Botón plano que se ve gris cuando está deshabilitado
+        private void EstiloBoton(Button b, Color fondo, Color texto)
+        {
+            b.FlatStyle = FlatStyle.Flat;
+            b.UseVisualStyleBackColor = false;
+            b.BackColor = fondo;
+            b.ForeColor = texto;
+            b.EnabledChanged += (s, ev) =>
+            {
+                b.BackColor = b.Enabled ? fondo : Color.Gainsboro;
+                b.ForeColor = b.Enabled ? texto : Color.Gray;
+            };
         }
     }
 }

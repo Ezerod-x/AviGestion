@@ -1,13 +1,7 @@
 ﻿using AviGestion_.Logica;
-using AviGestion_.UI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AviGestion_.Interfaz
@@ -65,39 +59,12 @@ namespace AviGestion_.Interfaz
             if (dgvTablaClientes.Columns.Contains("colDniCuil"))
                 dgvTablaClientes.Columns["colDniCuil"].DataPropertyName = "DniCuil";
 
+            lblAyuda.Text = "Doble clic en un cliente para poder modificar sus datos o ver su historial";
+            lblAyuda.ForeColor = Color.FromArgb(91, 107, 79);
+            lblAyuda.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
+
             txtBusquedaFiltrado.TextChanged += txtBusquedaFiltrado_TextChanged;
             CargarDatosClientes();
-        }
-
-        private void dgvTablaClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            // Verificar que sea la columna Acción (Modificar) y una fila válida
-            if (e.ColumnIndex == dgvTablaClientes.Columns["colAccion"].Index && e.RowIndex >= 0)
-            {
-                MapearFilaAFormulario(e.RowIndex);
-                return;
-            }
-            if (dgvTablaClientes.Columns.Contains("btnHistorial") && dgvTablaClientes.Columns[e.ColumnIndex].Name == "btnHistorial")
-            {
-                var fila = dgvTablaClientes.Rows[e.RowIndex];
-                int idCliente = Convert.ToInt32(fila.Cells["colId"].Value);
-
-                string nombreCompleto = $"{fila.Cells["colNombre"].Value} {fila.Cells["colApellido"].Value}".Trim();
-                string contacto = $"{fila.Cells["colCorreo"].Value} | {fila.Cells["colTelefono"].Value}";
-                string direccion = fila.Cells["colDireccion"].Value?.ToString() ?? "Sin dirección registrada";
-
-                FormHistorialCliente frmHistorial = new FormHistorialCliente(idCliente, nombreCompleto, contacto, direccion);
-                frmHistorial.ShowDialog(); 
-            }
-        }
-
-        private void dgvTablaClientes_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.ColumnIndex == dgvTablaClientes.Columns["colAccion"].Index && e.RowIndex >= 0)
-            {
-                MapearFilaAFormulario(e.RowIndex);
-            }
         }
 
         private void txtBusquedaFiltrado_TextChanged(object sender, EventArgs e)
@@ -218,13 +185,39 @@ namespace AviGestion_.Interfaz
             grbRegistrarModificar.Visible = false;
         }
 
-        private void btnAtras_Click(object sender, EventArgs e)//Modificado
+        //Evento para capturar el Doble Clic en cualquier celda de la fila
+        private void dgvTablaClientes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            FormMenu menu = new FormMenu(usuarioActual);
-            menu.Show();
-            this.Close();
+            // Validar que se haya hecho doble clic sobre una fila de datos real y no en el encabezado
+            if (e.RowIndex >= 0)
+            {
+                MapearFilaAFormulario(e.RowIndex);
+
+                // Como seleccionamos un cliente existente, habilitamos el botón de historial
+                btnVerHistorial.Visible = true;
+            }
         }
 
+        private void btnVerHistorial_Click(object sender, EventArgs e)
+        {
+            // Validamos que realmente haya un cliente seleccionado
+            if (idClienteSeleccionado == -1) return;
+
+            // Obtenemos la fila seleccionada actualmente para armar los datos del constructor
+            if (dgvTablaClientes.CurrentRow != null)
+            {
+                var fila = dgvTablaClientes.CurrentRow;
+
+                string nombreCompleto = txtResponsable.Text.Trim();
+                string contacto = $"{txtEmail.Text.Trim()} | {txtTelefono.Text.Trim()}";
+                string direccion = string.IsNullOrWhiteSpace(txtDireccion.Text) ? "Sin dirección registrada" : txtDireccion.Text.Trim();
+
+                FormHistorialCliente frmHistorial = new FormHistorialCliente(idClienteSeleccionado, nombreCompleto, contacto, direccion);
+                frmHistorial.ShowDialog();
+            }
+        }
+
+        #region Métodos para cargar, mapear datos y limpiar campos 
         private void CargarDatosClientes()
         {
             try
@@ -274,5 +267,6 @@ namespace AviGestion_.Interfaz
             txtDireccion.Text = "";
             txtDniCuil.Text = "";
         }
+        #endregion
     }
 }
