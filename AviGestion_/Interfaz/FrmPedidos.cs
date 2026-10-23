@@ -1,4 +1,5 @@
 ﻿using AviGestion_.Datos;
+using AviGestion_.Interfaz;
 using AviGestion_.Logica;
 using AviGestion_.UI;
 using iTextSharp.text;
@@ -16,26 +17,59 @@ namespace AviGestion_.Interfaz
     public partial class FrmPedidos : Form
     {
         private PedidoLogica logica = new PedidoLogica();
-
         private Dictionary<string, string> _codigoPorNombre = new Dictionary<string, string>();
+        private int _idPedidoDetalle = -1;
+        private const string SUGERENCIA = "Filtrar por N°Pedido, Cliente, Fecha, Estado o Productos";
 
-        #region Constructor e Inicialización
+        #region Constructor
         public FrmPedidos()
         {
             InitializeComponent();
             CargarClientes();
             CargarProductos();
             CargarPedidos();
-
+            ConfigurarBuscador();
             dtpFecha.Value = DateTime.Today;
             nudCantidad.Minimum = 1;
             nudCantidad.Maximum = 999;
             nudCantidad.Value = 1;
-            groupBoxAlta.Visible = false;
+            OcultarPaneles();
+            dgvDetProductos.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(245, 245, 220);
+            dgvDetProductos.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+        }
+
+        #endregion
+
+        #region Helpers paneles
+        private void OcultarPaneles()
+        {
+            pnlDetalle.Visible = false;
+            pnlAlta.Visible = false;
+            dgvPedidos.Size = new System.Drawing.Size(1040, 560);
+            lblAyuda.Location = new System.Drawing.Point(12, dgvPedidos.Bottom + 4);
+        }
+
+        private void MostrarPanelDetalle()
+        {
+            pnlAlta.Visible = false;
+            dgvPedidos.Size = new System.Drawing.Size(1040, 270);
+            lblAyuda.Location = new System.Drawing.Point(12, dgvPedidos.Bottom + 4);
+            pnlDetalle.Location = new System.Drawing.Point(10, lblAyuda.Bottom + 4);
+            pnlDetalle.Visible = true;
+            pnlDetalle.BringToFront();
+        }
+
+        private void MostrarPanelAlta()
+        {
+            pnlDetalle.Visible = false;
+            dgvPedidos.Size = new System.Drawing.Size(1040, 270);
+            lblAyuda.Location = new System.Drawing.Point(12, dgvPedidos.Bottom + 4);
+            pnlAlta.Location = new System.Drawing.Point(10, lblAyuda.Bottom + 4);
+            pnlAlta.Visible = true;
         }
         #endregion
 
-        #region Carga de Datos
+        #region Carga de datos
         private void CargarClientes()
         {
             try
@@ -74,16 +108,14 @@ namespace AviGestion_.Interfaz
                 dgvPedidos.Rows.Clear();
                 foreach (var p in logica.ObtenerPedidos())
                 {
-                    dgvPedidos.Rows.Add(
-                        p.Id.ToString(), p.Cliente, p.Productos, p.Fecha, p.Estado,
-                        p.Estado == "Cancelado" || p.Estado == "Enviado" ||
-                        p.Estado == "Entregado" ? "" : "Cancelar");
+                    dgvPedidos.Rows.Add(p.Id.ToString(), p.Cliente,
+                        p.Productos, p.Fecha, p.Estado);
 
                     if (p.Estado == "Cancelado")
                     {
-                        int ultima = dgvPedidos.Rows.Count - 1;
-                        dgvPedidos.Rows[ultima].DefaultCellStyle.ForeColor = Color.DarkRed;
-                        dgvPedidos.Rows[ultima].DefaultCellStyle.BackColor = Color.MistyRose;
+                        int i = dgvPedidos.Rows.Count - 1;
+                        dgvPedidos.Rows[i].DefaultCellStyle.ForeColor = Color.DarkRed;
+                        dgvPedidos.Rows[i].DefaultCellStyle.BackColor = Color.MistyRose;
                     }
                 }
             }
@@ -94,14 +126,182 @@ namespace AviGestion_.Interfaz
         }
         #endregion
 
-        #region Alta de Pedido
+        #region Doble clic en grilla → Panel Detalle
+        private void dgvPedidos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            try
+            {
+                if (e.RowIndex < 0) return;
+
+                _idPedidoDetalle = Convert.ToInt32(dgvPedidos.Rows[e.RowIndex].Cells[0].Value);
+                string cliente = dgvPedidos.Rows[e.RowIndex].Cells[1].Value?.ToString();
+                string productos = dgvPedidos.Rows[e.RowIndex].Cells[2].Value?.ToString();
+                string fecha = dgvPedidos.Rows[e.RowIndex].Cells[3].Value?.ToString();
+                string estado = dgvPedidos.Rows[e.RowIndex].Cells[4].Value?.ToString();
+
+                lblDetNroPedido.Text = $"Detalle del Pedido #{_idPedidoDetalle}";
+                txtDetCliente.Text = cliente;
+                txtDetFecha.Text = fecha;
+                txtDetEstado.Text = estado;
+                txtDetEstado.ForeColor = estado == "Cancelado" ? Color.DarkRed :
+                                         estado == "Pendiente" ? Color.DarkGoldenrod :
+                                         Color.DarkGreen;
+
+                dgvDetProductos.Rows.Clear();
+                if (!string.IsNullOrEmpty(productos))
+                {
+                    foreach (var item in productos.Split(','))
+                    {
+                        string prod = item.Trim();
+                        if (string.IsNullOrEmpty(prod)) continue;
+                        string nombre = prod;
+                        string cantidad = "-";
+                        int idx = prod.LastIndexOf(" x");
+                        if (idx > 0)
+                        {
+                            nombre = prod.Substring(0, idx).Trim();
+                            cantidad = prod.Substring(idx + 2).Trim();
+                        }
+                        dgvDetProductos.Rows.Add(nombre, cantidad);
+                    }
+                }
+
+                bool puedeCancel = estado == "Pendiente" || estado == "En preparación";
+                bool puedeFacturar = estado == "Pendiente";
+                btnFacturacion.Enabled = puedeFacturar;
+                btnFacturacion.BackColor = puedeFacturar ?
+                    Color.FromArgb(46, 125, 50) : Color.Gray;
+
+                btnCancelarPedido.Enabled = puedeCancel;
+                btnCancelarPedido.BackColor = puedeCancel ?
+                    Color.FromArgb(155, 28, 28) : Color.Gray;
+
+                // ← Limpiar selección azul del DGV
+                dgvPedidos.ClearSelection();
+                dgvDetProductos.ClearSelection();
+
+                MostrarPanelDetalle();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error en detalle",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion
+
+        #region Acciones del panel detalle
+        private void btnCancelarPedido_Click(object sender, EventArgs e)
+        {
+            DialogResult confirm = MessageBox.Show(
+                $"¿Cancelar el pedido #{_idPedidoDetalle} de {txtDetCliente.Text}?",
+                "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes)
+            {
+                try
+                {
+                    logica.CancelarPedido(_idPedidoDetalle, txtDetEstado.Text);
+                    MessageBox.Show("Pedido cancelado. El stock fue restaurado.",
+                        "Cancelación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    OcultarPaneles();
+                    CargarPedidos();
+                    CargarProductos();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        private void btnGenerarComprobante_Click(object sender, EventArgs e)
+        {
+            string nro = _idPedidoDetalle.ToString();
+            string cliente = txtDetCliente.Text;
+            string productos = string.Join(", ", ObtenerProductosDetalle());
+            string fecha = txtDetFecha.Text;
+            string estado = txtDetEstado.Text;
+
+            string ruta = System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                $"Comprobante_Pedido_{nro}.pdf");
+
+            try
+            {
+                PdfDocument doc = new PdfDocument();
+                PdfWriter.GetInstance(doc, new System.IO.FileStream(ruta, System.IO.FileMode.Create));
+                doc.Open();
+
+                PdfFont fuenteTitulo = new PdfFont(PdfFont.FontFamily.HELVETICA, 18f,
+                    PdfFont.BOLD, new BaseColor(34, 139, 34));
+                PdfFont fuenteNormal = new PdfFont(PdfFont.FontFamily.HELVETICA, 11f);
+                PdfFont fuenteBold = new PdfFont(PdfFont.FontFamily.HELVETICA, 11f, PdfFont.BOLD);
+
+                doc.Add(new Paragraph("AviGestión - Avícola Don José", fuenteTitulo));
+                doc.Add(new Paragraph("Comprobante de Pedido", fuenteBold));
+                doc.Add(new Paragraph("─────────────────────────────────"));
+                doc.Add(new Paragraph(" "));
+                doc.Add(new Paragraph($"N° Pedido:   #{nro}", fuenteNormal));
+                doc.Add(new Paragraph($"Cliente:     {cliente}", fuenteNormal));
+                doc.Add(new Paragraph($"Productos:   {productos}", fuenteNormal));
+                doc.Add(new Paragraph($"Fecha:       {fecha}", fuenteNormal));
+                doc.Add(new Paragraph($"Estado:      {estado}", fuenteNormal));
+                doc.Add(new Paragraph(" "));
+                doc.Add(new Paragraph("─────────────────────────────────"));
+                doc.Add(new Paragraph($"Generado el: {DateTime.Now:dd/MM/yyyy HH:mm}", fuenteNormal));
+                doc.Close();
+
+                MessageBox.Show("Comprobante generado en el escritorio.",
+                    "PDF generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                System.Diagnostics.Process.Start(
+                    new System.Diagnostics.ProcessStartInfo(ruta) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al generar el PDF: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private List<string> ObtenerProductosDetalle()
+        {
+            var lista = new List<string>();
+            foreach (DataGridViewRow fila in dgvDetProductos.Rows)
+            {
+                string prod = fila.Cells[0].Value?.ToString();
+                if (!string.IsNullOrEmpty(prod)) lista.Add(prod);
+            }
+            return lista;
+        }
+
+        private void btnCerrarDetalle_Click(object sender, EventArgs e)
+        {
+            OcultarPaneles();
+        }
+        private void btnFacturacion_Click(object sender, EventArgs e)
+        {
+            // FrmPedidos vive dentro del panel del menú, así que ParentForm es el FormMenu
+            FormMenu menu = this.ParentForm as FormMenu;
+            if (menu != null)
+                menu.AbrirPantalla("Facturación");
+        }
+        #endregion
+
+        #region Panel Alta
         private void btnAgregarPedido_Click(object sender, EventArgs e)
         {
             cboCliente.SelectedIndex = -1;
             dgvProductosPedido.Rows.Clear();
+            _codigoPorNombre.Clear();
             nudCantidad.Value = 1;
             dtpFecha.Value = DateTime.Today;
-            groupBoxAlta.Visible = true;
+            MostrarPanelAlta();
             cboCliente.Focus();
         }
 
@@ -149,40 +349,25 @@ namespace AviGestion_.Interfaz
                 }
             }
 
-            // Guardar código en diccionario
             _codigoPorNombre[prod.Nombre] = prod.Codigo;
-
-            dgvProductosPedido.Rows.Add(
-                prod.Nombre,
-                cantidad,
-                (prod.Stock - cantidad) + " cajones",
-                "✕ Quitar"
-            );
+            dgvProductosPedido.Rows.Add(prod.Nombre, cantidad,
+                (prod.Stock - cantidad) + " cajones", "✕ Quitar");
 
             nudCantidad.Value = 1;
             lstProductos.ClearSelected();
-
-            // Actualizar stock en tiempo real en el listbox
             ActualizarStockListbox();
         }
 
         private void ActualizarStockListbox()
         {
-            // Cargar productos frescos de la BD
             var productosActuales = logica.ObtenerProductos();
-
-            // Restar lo que ya está en el DGV
             foreach (DataGridViewRow fila in dgvProductosPedido.Rows)
             {
                 string nombreProd = fila.Cells[0].Value?.ToString();
                 int cantPedida = Convert.ToInt32(fila.Cells[1].Value);
-
                 var prod = productosActuales.Find(p => p.Nombre == nombreProd);
-                if (prod != null)
-                    prod.Stock -= cantPedida;
+                if (prod != null) prod.Stock -= cantPedida;
             }
-
-            // Actualizar el listbox
             lstProductos.Items.Clear();
             foreach (var p in productosActuales)
                 lstProductos.Items.Add(p);
@@ -205,15 +390,14 @@ namespace AviGestion_.Interfaz
             if (cboCliente.SelectedItem == null ||
                 cboCliente.SelectedItem.ToString() == "+ Agregar nuevo cliente")
             {
-                MessageBox.Show("Por favor seleccioná un cliente.",
-                    "Campo obligatorio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccioná un cliente.", "Campo obligatorio",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (dgvProductosPedido.Rows.Count == 0)
             {
-                MessageBox.Show("Agregá al menos un producto al pedido.",
-                    "Campo obligatorio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Agregá al menos un producto.", "Campo obligatorio",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -221,30 +405,26 @@ namespace AviGestion_.Interfaz
             {
                 ClienteItem cliente = (ClienteItem)cboCliente.SelectedItem;
                 var productos = new List<(string Codigo, int Cantidad)>();
-                string productosTexto = "";
+                string prodTexto = "";
 
                 foreach (DataGridViewRow fila in dgvProductosPedido.Rows)
                 {
                     string nombre = fila.Cells[0].Value?.ToString();
                     int cantidad = Convert.ToInt32(fila.Cells[1].Value);
-                    string codigo = _codigoPorNombre[nombre]; // obtener código del diccionario
+                    string codigo = _codigoPorNombre[nombre];
                     productos.Add((codigo, cantidad));
-                    productosTexto += $"{nombre} x{cantidad}, ";
+                    prodTexto += $"{nombre} x{cantidad}, ";
                 }
 
                 int idPedido = logica.RegistrarPedido(cliente.Id, dtpFecha.Value, productos);
-                productosTexto = productosTexto.TrimEnd(',', ' ');
-
-                dgvPedidos.Rows.Insert(0, idPedido.ToString(), cliente.Nombre,
-                    productosTexto, dtpFecha.Value.ToShortDateString(), "Pendiente", "Cancelar");
+                prodTexto = prodTexto.TrimEnd(',', ' ');
 
                 MessageBox.Show("Pedido registrado exitosamente con estado Pendiente.",
                     "Pedido registrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                cboCliente.SelectedIndex = -1;
-                dgvProductosPedido.Rows.Clear();
-                nudCantidad.Value = 1;
-                groupBoxAlta.Visible = false;
+                OcultarPaneles();
+                _codigoPorNombre.Clear();
+                CargarPedidos();
                 CargarProductos();
             }
             catch (Exception ex)
@@ -253,156 +433,46 @@ namespace AviGestion_.Interfaz
             }
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private void btnCancelarAlta_Click(object sender, EventArgs e)
         {
-            cboCliente.SelectedIndex = -1;
-            dgvProductosPedido.Rows.Clear();
-            nudCantidad.Value = 1;
-            dtpFecha.Value = DateTime.Today;
-            groupBoxAlta.Visible = false;
+            _codigoPorNombre.Clear();
+            OcultarPaneles();
         }
-        #endregion
 
-        #region Cancelación de Pedido
-        private void dgvPedidos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 5 && e.RowIndex >= 0)
-            {
-                string estado = dgvPedidos.Rows[e.RowIndex].Cells[4].Value?.ToString();
-                string cliente = dgvPedidos.Rows[e.RowIndex].Cells[1].Value?.ToString();
-                string nroPedido = dgvPedidos.Rows[e.RowIndex].Cells[0].Value?.ToString();
-
-                try
-                {
-                    // Validar en lógica antes de preguntar
-                    if (estado == "Enviado" || estado == "Entregado" || estado == "Cancelado")
-                    {
-                        logica.CancelarPedido(int.Parse(nroPedido), estado);
-                        return;
-                    }
-
-                    DialogResult confirmacion = MessageBox.Show(
-                        $"¿Estás seguro que querés cancelar el pedido #{nroPedido} de {cliente}?",
-                        "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                    if (confirmacion == DialogResult.Yes)
-                    {
-                        logica.CancelarPedido(int.Parse(nroPedido), estado);
-
-                        dgvPedidos.Rows[e.RowIndex].Cells[4].Value = "Cancelado";
-                        dgvPedidos.Rows[e.RowIndex].Cells[5].Value = "";
-                        dgvPedidos.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.DarkRed;
-                        dgvPedidos.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MistyRose;
-
-                        MessageBox.Show("Pedido cancelado. El stock fue restaurado.",
-                            "Cancelación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        CargarProductos();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-        }
         #endregion
 
         #region Búsqueda
+        private void ConfigurarBuscador()
+        {
+            txtBuscar.Text = SUGERENCIA;
+            txtBuscar.ForeColor = Color.Gray;
+            txtBuscar.Enter += txtBuscar_Enter;
+            txtBuscar.Leave += txtBuscar_Leave;
+        }
+
+        private void txtBuscar_Enter(object sender, EventArgs e)
+        {
+            if (txtBuscar.Text == SUGERENCIA) { txtBuscar.Text = ""; txtBuscar.ForeColor = Color.Black; }
+        }
+
+        private void txtBuscar_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtBuscar.Text)) { txtBuscar.Text = SUGERENCIA; txtBuscar.ForeColor = Color.Gray; }
+        }
+
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
-            string busqueda = txtBuscar.Text.ToLower();
+            string busqueda = txtBuscar.Text == SUGERENCIA ? "" : txtBuscar.Text.Trim().ToLower();
             foreach (DataGridViewRow fila in dgvPedidos.Rows)
             {
                 if (fila.IsNewRow) continue;
-                string cli = fila.Cells[1].Value?.ToString().ToLower() ?? "";
-                string est = fila.Cells[4].Value?.ToString().ToLower() ?? "";
                 string nro = fila.Cells[0].Value?.ToString().ToLower() ?? "";
-                fila.Visible = cli.Contains(busqueda) || est.Contains(busqueda) || nro.Contains(busqueda);
-            }
-        }
-        #endregion
-
-        #region Comprobante PDF
-        private void btnComprobante_Click(object sender, EventArgs e)
-        {
-            if (dgvPedidos.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Seleccioná un pedido de la lista para generar el comprobante.",
-                    "Selección requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            DataGridViewRow fila = dgvPedidos.SelectedRows[0];
-            string nro = fila.Cells[0].Value?.ToString();
-            string cliente = fila.Cells[1].Value?.ToString();
-            string productos = fila.Cells[2].Value?.ToString();
-            string fecha = fila.Cells[3].Value?.ToString();
-            string estado = fila.Cells[4].Value?.ToString();
-
-            string ruta = System.IO.Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                $"Comprobante_Pedido_{nro}.pdf");
-
-            try
-            {
-                PdfDocument doc = new PdfDocument();
-                PdfWriter.GetInstance(doc, new System.IO.FileStream(ruta, System.IO.FileMode.Create));
-                doc.Open();
-
-                PdfFont fuenteTitulo = new PdfFont(PdfFont.FontFamily.HELVETICA, 18f,
-                    PdfFont.BOLD, new BaseColor(34, 139, 34));
-                PdfFont fuenteNormal = new PdfFont(PdfFont.FontFamily.HELVETICA, 11f);
-                PdfFont fuenteBold = new PdfFont(PdfFont.FontFamily.HELVETICA, 11f, PdfFont.BOLD);
-
-                doc.Add(new Paragraph("AviGestión - Avícola Don José", fuenteTitulo));
-                doc.Add(new Paragraph("Comprobante de Pedido", fuenteBold));
-                doc.Add(new Paragraph("─────────────────────────────────"));
-                doc.Add(new Paragraph(" "));
-                doc.Add(new Paragraph($"N° Pedido:   #{nro}", fuenteNormal));
-                doc.Add(new Paragraph($"Cliente:     {cliente}", fuenteNormal));
-                doc.Add(new Paragraph($"Productos:   {productos}", fuenteNormal));
-                doc.Add(new Paragraph($"Fecha:       {fecha}", fuenteNormal));
-                doc.Add(new Paragraph($"Estado:      {estado}", fuenteNormal));
-                doc.Add(new Paragraph(" "));
-                doc.Add(new Paragraph("─────────────────────────────────"));
-                doc.Add(new Paragraph($"Generado el: {DateTime.Now:dd/MM/yyyy HH:mm}", fuenteNormal));
-                doc.Close();
-
-                MessageBox.Show("Comprobante generado en el escritorio.",
-                    "PDF generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                System.Diagnostics.Process.Start(
-                    new System.Diagnostics.ProcessStartInfo(ruta) { UseShellExecute = true });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al generar el PDF: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        #endregion
-
-        #region Registrar Pago
-        private void btnRegistrarPago_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Módulo de pagos próximamente.",
-                "En desarrollo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        #endregion
-
-        #region Volver 
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            this.Close();
-            // El FormMenu ya estaba abierto y oculto, se vuelve a mostrar
-            foreach (Form f in Application.OpenForms)
-            {
-                if (f is FormMenu)
-                {
-                    f.Show();
-                    break;
-                }
+                string cli = fila.Cells[1].Value?.ToString().ToLower() ?? "";
+                string prod = fila.Cells[2].Value?.ToString().ToLower() ?? "";
+                string fec = fila.Cells[3].Value?.ToString().ToLower() ?? "";
+                string est = fila.Cells[4].Value?.ToString().ToLower() ?? "";
+                fila.Visible = nro.Contains(busqueda) || cli.Contains(busqueda) || prod.Contains(busqueda)
+                            || fec.Contains(busqueda) || est.Contains(busqueda);
             }
         }
         #endregion

@@ -173,6 +173,13 @@ namespace AviGestion_.UI
             else if (item.Accion != null) item.Accion();
         }
 
+        // Permite que una pantalla pida abrir otra del menú (se usa para: Pedidos -> Facturación)
+        public void AbrirPantalla(string textoDelMenu)
+        {
+            ItemDeMenu item = items.Find(i => i.Texto == textoDelMenu);
+            if (item != null) AbrirItem(item);
+        }
+
         //Pinta de verde el botón de la pantalla abierta y deja los demás en blanco (null = ninguno).
         private void Resaltar(Control activo)
         {
