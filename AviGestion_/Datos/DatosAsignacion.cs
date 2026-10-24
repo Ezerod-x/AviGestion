@@ -5,7 +5,7 @@ namespace AviGestion_.Datos
 {
     public class DatosAsignacion
     {
-        // Pedidos de un estado, con cliente, total de cajas y camión (si ya tiene)
+        // Pedidos de un estado, con cliente, total de cajas y camión (si tiene)
         public DataTable PedidosPorEstado(string estado)
         {
             string sql = @"
@@ -15,6 +15,7 @@ namespace AviGestion_.Datos
                        ISNULL((SELECT SUM(d.Cantidad)
                                FROM DetallePedidoCompra d
                                WHERE d.Id_Pedido = pc.Id_Pedido), 0) AS Cajas,
+                       pc.Id_Vehiculo,
                        v.Patente, v.Marca, v.Modelo
                 FROM PedidosCompra pc
                 INNER JOIN Cliente c ON pc.Id_Cliente = c.Id_Cliente
@@ -35,12 +36,13 @@ namespace AviGestion_.Datos
             return tabla;
         }
 
-        // Vehículos con las cajas que todavía les entran (Libres)
+        // Vehículos con su estado y las cajas que todavía les entran (Libres)
         public DataTable Vehiculos()
         {
             string sql = @"
                 SELECT Id, Marca, Modelo, Patente, CapacidadMax, CapacidadActual,
-                       (CapacidadMax - CapacidadActual) AS Libres
+                       (CapacidadMax - CapacidadActual) AS Libres,
+                       Estado
                 FROM Vehiculos
                 ORDER BY Patente";
 
@@ -53,7 +55,7 @@ namespace AviGestion_.Datos
             return tabla;
         }
 
-        // Valida capacidad, suma las cajas al camión y pasa el pedido a "En camino"
+        // Valida capacidad, suma las cajas al camión y pasa el pedido a "En camión"
         public void Asignar(int idPedido, int idVehiculo)
         {
             using (SqlConnection cn = Conexion.ObtenerConexion())
@@ -61,6 +63,32 @@ namespace AviGestion_.Datos
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id_Pedido", idPedido);
+                cmd.Parameters.AddWithValue("@Id_Vehiculo", idVehiculo);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Saca el pedido del camión y lo devuelve a "En preparación"
+        public void Quitar(int idPedido)
+        {
+            using (SqlConnection cn = Conexion.ObtenerConexion())
+            using (var cmd = new SqlCommand("SP_QuitarPedidoDeVehiculo", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id_Pedido", idPedido);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Camión salió: el camión y sus pedidos pasan a "En camino"
+        public void Despachar(int idVehiculo)
+        {
+            using (SqlConnection cn = Conexion.ObtenerConexion())
+            using (var cmd = new SqlCommand("SP_DespacharVehiculo", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id_Vehiculo", idVehiculo);
                 cn.Open();
                 cmd.ExecuteNonQuery();

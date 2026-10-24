@@ -15,6 +15,7 @@ namespace AviGestion_.Interfaz
         private DataTable vehiculos;
 
         private static readonly Color Verde = Color.FromArgb(46, 125, 50);
+        private static readonly Color Rojo = Color.FromArgb(139, 0, 0);
 
         // Item del desplegable de camiones
         private class ItemCamion
@@ -32,6 +33,7 @@ namespace AviGestion_.Interfaz
 
             // Mantener las tarjetas del ancho de cada columna al redimensionar
             flpEspera.Resize += (s, e) => AjustarAnchos(flpEspera);
+            flpCamiones.Resize += (s, e) => AjustarAnchos(flpCamiones);
             flpEnCamino.Resize += (s, e) => AjustarAnchos(flpEnCamino);
             flpEntregados.Resize += (s, e) => AjustarAnchos(flpEntregados);
         }
@@ -46,8 +48,14 @@ namespace AviGestion_.Interfaz
             this.Close(); // FormMenu se vuelve a mostrar con FormClosed
         }
 
+        // Camiones que están en el depósito (pueden recibir pedidos)
+        private static string FiltroDeposito()
+        {
+            return "Estado = '" + AsignacionLogica.VehiculoDisponible + "' OR Estado = '" + AsignacionLogica.VehiculoCargando + "'";
+        }
+
         // ---------------------------------------------------------------
-        // Carga de las 3 columnas
+        // Carga de las 4 columnas
         // ---------------------------------------------------------------
         private void CargarTablero()
         {
@@ -56,14 +64,19 @@ namespace AviGestion_.Interfaz
                 vehiculos = logica.Vehiculos();
 
                 DataTable espera = logica.PedidosEnEspera();
+                DataTable enCamion = logica.PedidosEnCamion();
                 DataTable enCamino = logica.PedidosEnCamino();
                 DataTable entregados = logica.PedidosEntregados();
 
-                LlenarColumna(flpEspera, espera, true);
-                LlenarColumna(flpEnCamino, enCamino, false);
-                LlenarColumna(flpEntregados, entregados, false);
+                DataRow[] enDeposito = vehiculos.Select(FiltroDeposito(), "Patente");
 
-                lblEspera.Text = "Pedidos en espera (" + espera.Rows.Count + ")";
+                LlenarPedidos(flpEspera, espera, true);
+                LlenarCamionesDeposito(enDeposito, enCamion);
+                LlenarCamionesEnCamino(enCamino);
+                LlenarPedidos(flpEntregados, entregados, false);
+
+                lblEspera.Text = "En preparación (" + espera.Rows.Count + ")";
+                lblCamiones.Text = "Camiones en depósito (" + enDeposito.Length + ")";
                 lblEnCamino.Text = "En camino (" + enCamino.Rows.Count + ")";
                 lblEntregados.Text = "Entregados (" + entregados.Rows.Count + ")";
             }
@@ -74,32 +87,83 @@ namespace AviGestion_.Interfaz
             }
         }
 
-        private void LlenarColumna(FlowLayoutPanel flp, DataTable pedidos, bool conSelector)
+        private void LimpiarColumna(FlowLayoutPanel flp)
         {
-            flp.SuspendLayout();
-
             while (flp.Controls.Count > 0)
             {
                 Control c = flp.Controls[0];
                 flp.Controls.RemoveAt(0);
                 c.Dispose();
             }
+        }
+
+        private void AgregarMensajeVacio(FlowLayoutPanel flp, string texto)
+        {
+            flp.Controls.Add(new Label
+            {
+                Text = texto,
+                ForeColor = Color.Gray,
+                AutoSize = true,
+                Margin = new Padding(4, 8, 0, 0)
+            });
+        }
+
+        private void LlenarPedidos(FlowLayoutPanel flp, DataTable pedidos, bool conSelector)
+        {
+            flp.SuspendLayout();
+            LimpiarColumna(flp);
 
             if (pedidos.Rows.Count == 0)
-            {
-                flp.Controls.Add(new Label
-                {
-                    Text = "No hay pedidos",
-                    ForeColor = Color.Gray,
-                    AutoSize = true,
-                    Margin = new Padding(4, 8, 0, 0)
-                });
-            }
+                AgregarMensajeVacio(flp, "No hay pedidos");
 
             foreach (DataRow fila in pedidos.Rows)
                 flp.Controls.Add(CrearTarjeta(fila, conSelector, AnchoTarjeta(flp)));
 
             flp.ResumeLayout(true);
+        }
+
+        private void LlenarCamionesDeposito(DataRow[] camiones, DataTable enCamion)
+        {
+            flpCamiones.SuspendLayout();
+            LimpiarColumna(flpCamiones);
+
+            if (camiones.Length == 0)
+                AgregarMensajeVacio(flpCamiones, "No hay camiones en el depósito");
+
+            foreach (DataRow v in camiones)
+            {
+                DataRow[] pedidos = enCamion.Select("Id_Vehiculo = " + Convert.ToInt32(v["Id"]), "Id_Pedido");
+                flpCamiones.Controls.Add(CrearTarjetaCamionDeposito(v, pedidos, AnchoTarjeta(flpCamiones)));
+            }
+
+            flpCamiones.ResumeLayout(true);
+        }
+
+        // Agrupa los pedidos "En camino" por camión: una tarjeta por camión
+        private void LlenarCamionesEnCamino(DataTable enCamino)
+        {
+            flpEnCamino.SuspendLayout();
+            LimpiarColumna(flpEnCamino);
+
+            if (enCamino.Rows.Count == 0)
+                AgregarMensajeVacio(flpEnCamino, "No hay camiones en camino");
+
+            var camiones = new List<int>();
+            foreach (DataRow p in enCamino.Rows)
+            {
+                int id = p["Id_Vehiculo"] == DBNull.Value ? -1 : Convert.ToInt32(p["Id_Vehiculo"]);
+                if (!camiones.Contains(id)) camiones.Add(id);
+            }
+
+            foreach (int id in camiones)
+            {
+                DataRow[] pedidos = id == -1
+                    ? enCamino.Select("Id_Vehiculo IS NULL", "Id_Pedido")
+                    : enCamino.Select("Id_Vehiculo = " + id, "Id_Pedido");
+                flpEnCamino.Controls.Add(CrearTarjetaCamionEnCamino(pedidos, AnchoTarjeta(flpEnCamino)));
+            }
+
+            flpEnCamino.ResumeLayout(true);
         }
 
         private int AnchoTarjeta(FlowLayoutPanel flp)
@@ -116,8 +180,25 @@ namespace AviGestion_.Interfaz
             }
         }
 
+        private Panel NuevaTarjeta(int ancho, int alto)
+        {
+            return new Panel
+            {
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle,
+                Width = ancho,
+                Height = alto,
+                Margin = new Padding(0, 0, 0, 8)
+            };
+        }
+
+        private static string TextoCajas(int cajas)
+        {
+            return cajas + (cajas == 1 ? " caja" : " cajas");
+        }
+
         // ---------------------------------------------------------------
-        // Tarjeta de un pedido
+        // Tarjeta de un pedido (columnas En preparación y Entregados)
         // ---------------------------------------------------------------
         private Panel CrearTarjeta(DataRow fila, bool conSelector, int ancho)
         {
@@ -128,14 +209,7 @@ namespace AviGestion_.Interfaz
             object f = fila["Fecha"];
             string fecha = f is DateTime ? ((DateTime)f).ToString("dd/MM/yyyy") : Convert.ToString(f);
 
-            var card = new Panel
-            {
-                BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle,
-                Width = ancho,
-                Height = conSelector ? 112 : 92,
-                Margin = new Padding(0, 0, 0, 8)
-            };
+            var card = NuevaTarjeta(ancho, conSelector ? 112 : 92);
 
             card.Controls.Add(new Label
             {
@@ -158,7 +232,7 @@ namespace AviGestion_.Interfaz
 
             card.Controls.Add(new Label
             {
-                Text = fecha + "   ·   " + cajas + (cajas == 1 ? " caja" : " cajas"),
+                Text = fecha + "   ·   " + TextoCajas(cajas),
                 ForeColor = Color.DimGray,
                 AutoSize = false,
                 AutoEllipsis = true,
@@ -191,7 +265,7 @@ namespace AviGestion_.Interfaz
             return card;
         }
 
-        // Desplegable con los camiones donde entra el pedido
+        // Desplegable con los camiones del depósito donde entra el pedido
         private ComboBox CrearSelectorCamion(int idPedido, int cajas, int ancho)
         {
             var cmb = new ComboBox
@@ -202,7 +276,7 @@ namespace AviGestion_.Interfaz
                 Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
 
-            DataRow[] aptos = vehiculos.Select("Libres >= " + cajas, "Patente");
+            DataRow[] aptos = vehiculos.Select("(" + FiltroDeposito() + ") AND Libres >= " + cajas, "Patente");
 
             if (aptos.Length == 0)
             {
@@ -237,6 +311,215 @@ namespace AviGestion_.Interfaz
             return cmb;
         }
 
+        // ---------------------------------------------------------------
+        // Tarjetas de camión
+        // ---------------------------------------------------------------
+
+        // Patente + etiqueta de estado + marca/modelo. Devuelve el "y" siguiente.
+        private int AgregarEncabezadoCamion(Panel card, string patente, string estado, string subtitulo, int ancho)
+        {
+            var fuentePatente = new Font("Segoe UI", 10F, FontStyle.Bold);
+            var fuenteChip = new Font("Segoe UI", 8F, FontStyle.Bold);
+
+            card.Controls.Add(new Label
+            {
+                Text = patente,
+                Font = fuentePatente,
+                ForeColor = Verde,
+                AutoSize = true,
+                Location = new Point(10, 8)
+            });
+
+            Color fondo, texto;
+            if (estado == AsignacionLogica.VehiculoCargando)
+            { fondo = Color.FromArgb(255, 243, 205); texto = Color.FromArgb(138, 106, 0); }
+            else if (estado == AsignacionLogica.VehiculoEnCamino)
+            { fondo = Color.FromArgb(227, 242, 253); texto = Color.FromArgb(21, 101, 192); }
+            else
+            { fondo = Color.FromArgb(232, 245, 233); texto = Verde; }
+
+            int x = 10 + TextRenderer.MeasureText(patente, fuentePatente).Width + 2;
+            card.Controls.Add(new Label
+            {
+                Text = estado,
+                Font = fuenteChip,
+                BackColor = fondo,
+                ForeColor = texto,
+                AutoSize = false,
+                Size = new Size(TextRenderer.MeasureText(estado, fuenteChip).Width + 12, 18),
+                Location = new Point(x, 10),
+                TextAlign = ContentAlignment.MiddleCenter
+            });
+
+            card.Controls.Add(new Label
+            {
+                Text = subtitulo,
+                ForeColor = Color.DimGray,
+                AutoSize = false,
+                AutoEllipsis = true,
+                Size = new Size(ancho - 24, 18),
+                Location = new Point(10, 32),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+            });
+
+            return 54;
+        }
+
+        // Una fila "#10 Cliente · 15 cajas" (con link Quitar si corresponde)
+        private void AgregarFilaPedido(Panel card, ref int y, DataRow p, int ancho, string patente, bool conQuitar)
+        {
+            int idPedido = Convert.ToInt32(p["Id_Pedido"]);
+            string texto = "#" + idPedido + "  " + Convert.ToString(p["Cliente"]).Trim()
+                           + " · " + TextoCajas(Convert.ToInt32(p["Cajas"]));
+
+            card.Controls.Add(new Label
+            {
+                Text = texto,
+                AutoSize = false,
+                AutoEllipsis = true,
+                Size = new Size(ancho - 24 - (conQuitar ? 50 : 0), 18),
+                Location = new Point(10, y),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+            });
+
+            if (conQuitar)
+            {
+                var lnk = new LinkLabel
+                {
+                    Text = "Quitar",
+                    LinkColor = Rojo,
+                    ActiveLinkColor = Rojo,
+                    AutoSize = false,
+                    Size = new Size(45, 18),
+                    Location = new Point(ancho - 12 - 45, y),
+                    TextAlign = ContentAlignment.TopRight,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right
+                };
+                lnk.LinkClicked += (s, e) => QuitarPedido(idPedido, patente);
+                card.Controls.Add(lnk);
+            }
+
+            y += 22;
+        }
+
+        // Camión en el depósito: carga, pedidos cargados y botón "Camión salió"
+        private Panel CrearTarjetaCamionDeposito(DataRow v, DataRow[] pedidos, int ancho)
+        {
+            int idVehiculo = Convert.ToInt32(v["Id"]);
+            string patente = Convert.ToString(v["Patente"]);
+            int max = Convert.ToInt32(v["CapacidadMax"]);
+            int actual = Convert.ToInt32(v["CapacidadActual"]);
+            int libres = Convert.ToInt32(v["Libres"]);
+
+            int cajasCargadas = 0;
+            foreach (DataRow p in pedidos) cajasCargadas += Convert.ToInt32(p["Cajas"]);
+
+            var card = NuevaTarjeta(ancho, 100);
+
+            int y = AgregarEncabezadoCamion(card, patente, Convert.ToString(v["Estado"]),
+                Convert.ToString(v["Marca"]) + " " + Convert.ToString(v["Modelo"]), ancho);
+
+            int maxBarra = Math.Max(1, max);
+            card.Controls.Add(new ProgressBar
+            {
+                Minimum = 0,
+                Maximum = maxBarra,
+                Value = Math.Min(Math.Max(actual, 0), maxBarra),
+                Style = ProgressBarStyle.Continuous,
+                Size = new Size(ancho - 24, 10),
+                Location = new Point(10, y),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+            });
+            y += 14;
+
+            card.Controls.Add(new Label
+            {
+                Text = actual + " de " + max + " cajas",
+                ForeColor = Color.DimGray,
+                AutoSize = true,
+                Location = new Point(10, y)
+            });
+            card.Controls.Add(new Label
+            {
+                Text = libres + " libres",
+                ForeColor = Color.DimGray,
+                AutoSize = false,
+                Size = new Size(100, 16),
+                Location = new Point(ancho - 12 - 100, y),
+                TextAlign = ContentAlignment.TopRight,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
+            });
+            y += 24;
+
+            if (pedidos.Length == 0)
+            {
+                card.Controls.Add(new Label
+                {
+                    Text = "Sin pedidos cargados",
+                    ForeColor = Color.Gray,
+                    AutoSize = true,
+                    Location = new Point(10, y)
+                });
+                y += 22;
+            }
+            else
+            {
+                foreach (DataRow p in pedidos)
+                    AgregarFilaPedido(card, ref y, p, ancho, patente, true);
+            }
+
+            y += 4;
+            bool puedeSalir = pedidos.Length > 0;
+            var btnSalio = new Button
+            {
+                Text = "Camión salió",
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                Enabled = puedeSalir,
+                BackColor = puedeSalir ? Verde : Color.Gainsboro,
+                ForeColor = puedeSalir ? Color.White : Color.Gray,
+                Cursor = puedeSalir ? Cursors.Hand : Cursors.Default,
+                Size = new Size(ancho - 24, 28),
+                Location = new Point(10, y),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                UseVisualStyleBackColor = false
+            };
+            btnSalio.FlatAppearance.BorderColor = btnSalio.BackColor;
+            int cantidadPedidos = pedidos.Length;
+            btnSalio.Click += (s, e) => DespacharCamion(idVehiculo, patente, cantidadPedidos, cajasCargadas);
+            card.Controls.Add(btnSalio);
+            y += 28 + 10;
+
+            card.Height = y;
+            return card;
+        }
+
+        // Camión en camino: sus pedidos, sin acciones
+        private Panel CrearTarjetaCamionEnCamino(DataRow[] pedidos, int ancho)
+        {
+            DataRow primero = pedidos[0];
+            bool sinCamion = primero["Patente"] == DBNull.Value;
+            string patente = sinCamion ? "Sin camión" : Convert.ToString(primero["Patente"]);
+
+            int cajas = 0;
+            foreach (DataRow p in pedidos) cajas += Convert.ToInt32(p["Cajas"]);
+
+            string subtitulo = (sinCamion ? "" : Convert.ToString(primero["Marca"]) + " " + Convert.ToString(primero["Modelo"]) + " · ")
+                               + TextoCajas(cajas);
+
+            var card = NuevaTarjeta(ancho, 100);
+            int y = AgregarEncabezadoCamion(card, patente, AsignacionLogica.VehiculoEnCamino, subtitulo, ancho);
+
+            foreach (DataRow p in pedidos)
+                AgregarFilaPedido(card, ref y, p, ancho, patente, false);
+
+            card.Height = y + 8;
+            return card;
+        }
+
+        // ---------------------------------------------------------------
+        // Acciones
+        // ---------------------------------------------------------------
         private void AsignarPedido(int idPedido, ItemCamion camion)
         {
             try
@@ -252,9 +535,57 @@ namespace AviGestion_.Interfaz
             }
 
             BitacoraLogica.Registrar(usuarioActual.Nombre,
-                "Asignó el pedido #" + idPedido + " al vehículo " + camion.Patente, "Pedidos");
+                "Cargó el pedido #" + idPedido + " en el vehículo " + camion.Patente, "Pedidos");
 
             // Se recarga después del evento para no destruir el combo mientras se usa
+            BeginInvoke((Action)CargarTablero);
+        }
+
+        private void QuitarPedido(int idPedido, string patente)
+        {
+            try
+            {
+                logica.Quitar(idPedido);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "No se pudo quitar el pedido",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                BeginInvoke((Action)CargarTablero);
+                return;
+            }
+
+            BitacoraLogica.Registrar(usuarioActual.Nombre,
+                "Quitó el pedido #" + idPedido + " del vehículo " + patente, "Pedidos");
+
+            BeginInvoke((Action)CargarTablero);
+        }
+
+        private void DespacharCamion(int idVehiculo, string patente, int cantidadPedidos, int cajas)
+        {
+            var confirmacion = MessageBox.Show(
+                "¿Confirmás que el camión " + patente + " salió con " + cantidadPedidos
+                + (cantidadPedidos == 1 ? " pedido" : " pedidos") + " (" + TextoCajas(cajas) + ")?\n\n"
+                + "El camión y sus pedidos van a quedar \"En camino\".",
+                "Confirmar salida", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmacion != DialogResult.Yes) return;
+
+            try
+            {
+                logica.Despachar(idVehiculo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "No se pudo registrar la salida",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                BeginInvoke((Action)CargarTablero);
+                return;
+            }
+
+            BitacoraLogica.Registrar(usuarioActual.Nombre,
+                "Registró la salida del vehículo " + patente + " con " + cantidadPedidos + " pedido(s)", "Pedidos");
+
             BeginInvoke((Action)CargarTablero);
         }
     }
