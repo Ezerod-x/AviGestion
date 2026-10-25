@@ -41,9 +41,11 @@ namespace AviGestion_
         }
         private void lnkOlvidoContrasena_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            FormRecuperoContrasena recupero = new FormRecuperoContrasena();
-            recupero.Show();
-            this.Hide();
+            // Ventana modal: al cerrarla se vuelve a este login
+            using (FormRecuperoContrasena recupero = new FormRecuperoContrasena())
+            {
+                recupero.ShowDialog(this);
+            }
         }
     }
 }

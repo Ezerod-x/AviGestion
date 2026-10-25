@@ -83,7 +83,7 @@ namespace AviGestion_.Datos
                 comando.Parameters.AddWithValue("@Apellido", usuario.Apellido);
                 comando.Parameters.AddWithValue("@Contrasena", usuario.Contrasena);
                 comando.Parameters.AddWithValue("@Rol", usuario.Rol);
-                comando.Parameters.AddWithValue("@Mail", usuario.Mail);
+                comando.Parameters.AddWithValue("@Mail", (object)usuario.Mail ?? DBNull.Value);
 
                 conexion.Open();
                 comando.ExecuteNonQuery();
@@ -94,13 +94,13 @@ namespace AviGestion_.Datos
         {
             using (SqlConnection conexion = Conexion.ObtenerConexion())
             {
+                // No modifica la contraseña: se cambia aparte (cambio de contraseña / recupero)
                 string query = "UPDATE Usuarios SET Nombre = @Nombre, Apellido = @Apellido, " +
-                                "Contrasena = @Contrasena, Rol = @Rol WHERE idUsuario = @IdUsuario";
+                                "Rol = @Rol WHERE idUsuario = @IdUsuario";
 
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@Nombre", usuario.Nombre);
                 comando.Parameters.AddWithValue("@Apellido", usuario.Apellido);
-                comando.Parameters.AddWithValue("@Contrasena", usuario.Contrasena);
                 comando.Parameters.AddWithValue("@Rol", usuario.Rol);
                 comando.Parameters.AddWithValue("@IdUsuario", usuario.IdUsuario);
 
@@ -155,18 +155,51 @@ namespace AviGestion_.Datos
             return usuario;
         }
 
-        public void ActualizarContrasena(int idUsuario, string nuevaContrasena)
+        public Usuario ObtenerUsuarioPorId(int idUsuario)
+        {
+            Usuario usuario = null;
+
+            using (SqlConnection conexion = Conexion.ObtenerConexion())
+            {
+                string query = "SELECT idUsuario, Nombre, Apellido, Contrasena, Rol, Mail " +
+                                "FROM Usuarios WHERE idUsuario = @IdUsuario";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                conexion.Open();
+                SqlDataReader lector = comando.ExecuteReader();
+
+                if (lector.Read())
+                {
+                    usuario = new Usuario
+                    {
+                        IdUsuario = (int)lector["idUsuario"],
+                        Nombre = lector["Nombre"].ToString(),
+                        Apellido = lector["Apellido"].ToString(),
+                        Contrasena = lector["Contrasena"].ToString(),
+                        Rol = lector["Rol"].ToString(),
+                        Mail = lector["Mail"] == DBNull.Value ? "" : lector["Mail"].ToString()
+                    };
+                }
+            }
+
+            return usuario;
+        }
+
+        // La contraseña ya tiene que llegar encriptada (SHA256). Devuelve true si se actualizó.
+        public bool ActualizarContrasena(int idUsuario, string contrasenaCifrada)
         {
             using (SqlConnection conexion = Conexion.ObtenerConexion())
             {
                 string query = "UPDATE Usuarios SET Contrasena = @Contrasena WHERE idUsuario = @IdUsuario";
 
                 SqlCommand comando = new SqlCommand(query, conexion);
-                comando.Parameters.AddWithValue("@Contrasena", nuevaContrasena);
+                comando.Parameters.AddWithValue("@Contrasena", contrasenaCifrada);
                 comando.Parameters.AddWithValue("@IdUsuario", idUsuario);
 
                 conexion.Open();
-                comando.ExecuteNonQuery();
+                return comando.ExecuteNonQuery() > 0;
             }
         }
 

@@ -87,6 +87,7 @@ namespace AviGestion_.UI
             items.Add(new ItemDeMenu { Seccion = "ADMINISTRACIÓN", Texto = "Bitácora", Titulo = "Bitácora", Roles = admin, Crear = () => new FormBitacora(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "ADMINISTRACIÓN", Texto = "Backup", Titulo = "Backup", Roles = admin, Crear = () => new FormBackup(usuarioActual) });
 
+            items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Cambiar contraseña", Accion = AbrirCambiarContrasena });
             items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Ayuda", Accion = () => MessageBox.Show("Ayuda en construcción.", "AviGestión") });
         }
 
@@ -171,6 +172,15 @@ namespace AviGestion_.UI
             if (!TieneAcceso(item)) return;                            // doble control de seguridad
             if (item.Crear != null) AbrirEnPanel(item.Crear(), item.Titulo ?? item.Texto, item.Boton);
             else if (item.Accion != null) item.Accion();
+        }
+
+        // Cambio de contraseña del usuario con sesión iniciada: se abre como ventana modal.
+        private void AbrirCambiarContrasena()
+        {
+            using (FrmCambiarContrasena frm = new FrmCambiarContrasena(usuarioActual))
+            {
+                frm.ShowDialog(this);
+            }
         }
 
         // Permite que una pantalla pida abrir otra del menú (se usa para: Pedidos -> Facturación)

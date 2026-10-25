@@ -13,7 +13,7 @@ namespace AviGestion_.UI
 {
     public partial class FormUsuarios : Form
     {
-        
+
 
         private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -29,7 +29,8 @@ namespace AviGestion_.UI
 
                 txtNombre.Text = usuario.Nombre;
                 txtApellido.Text = usuario.Apellido;
-                txtContrasena.Text = usuario.Contrasena;
+                txtContrasena.Clear();
+                txtContrasena.Enabled = false;   // la contraseña no se edita acá: la cambia cada usuario
                 cmbRol.Text = usuario.Rol;
             }
             else if (nombreColumna == "colEliminar")
@@ -71,20 +72,35 @@ namespace AviGestion_.UI
             txtNombre.Clear();
             txtApellido.Clear();
             txtContrasena.Clear();
+            txtContrasena.Enabled = true;
             cmbRol.SelectedIndex = -1;
             txtNombre.Focus();
-        
-    }
+
+        }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            bool esAlta = !idUsuarioEditando.HasValue;
+
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
-         string.IsNullOrWhiteSpace(txtApellido.Text) ||
-         string.IsNullOrWhiteSpace(txtContrasena.Text) ||
-         cmbRol.SelectedIndex == -1)
+                string.IsNullOrWhiteSpace(txtApellido.Text) ||
+                (esAlta && string.IsNullOrWhiteSpace(txtContrasena.Text)) ||
+                cmbRol.SelectedIndex == -1)
             {
                 MessageBox.Show("Completá todos los campos antes de guardar.");
                 return;
+            }
+
+            // En el alta, la contraseña inicial tiene que cumplir los requisitos
+            if (esAlta)
+            {
+                string errorRequisitos = UsuarioLogica.ValidarRequisitos(txtContrasena.Text.Trim());
+                if (errorRequisitos != null)
+                {
+                    MessageBox.Show(errorRequisitos);
+                    txtContrasena.Focus();
+                    return;
+                }
             }
 
             Usuario usuario = new Usuario
@@ -111,6 +127,7 @@ namespace AviGestion_.UI
             txtNombre.Clear();
             txtApellido.Clear();
             txtContrasena.Clear();
+            txtContrasena.Enabled = true;
             cmbRol.SelectedIndex = -1;
 
             CargarUsuarios();
@@ -121,6 +138,7 @@ namespace AviGestion_.UI
             txtNombre.Clear();
             txtApellido.Clear();
             txtContrasena.Clear();
+            txtContrasena.Enabled = true;
             cmbRol.SelectedIndex = -1;
         }
         private Usuario usuarioActual;
