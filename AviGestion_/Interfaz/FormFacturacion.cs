@@ -1,15 +1,17 @@
 ﻿using AviGestion_.Logica;
-using AviGestion_.UI;
+using System.Linq;
 using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace AviGestion_.Interfaz
 {
     public partial class FormFacturacion : Form
     {
         private FacturacionLogica negocio = new FacturacionLogica();
+        private List<PagoPedido> listaPedidos = new List<PagoPedido>();
         private int idPedidoSeleccionado = 0;
         private Usuario usuarioActual;
         private static readonly Color VERDE = Color.FromArgb(46, 125, 50);
@@ -20,10 +22,17 @@ namespace AviGestion_.Interfaz
             InitializeComponent();
             CenterToParent();
             this.usuarioActual = usuarioActual;
+
+            #region Configuración pestaña "Facturados del dia"
+            tabsFacturacion.SelectedIndexChanged += (s, e) => { if (tabsFacturacion.SelectedTab == tabFacturadosDia) CargarFacturados(); };
+            dtpFechaFacturados.ValueChanged += (s, e) => CargarFacturados();
+            dtpFechaFacturados.MaxDate = DateTime.Today;
+            #endregion
         }
 
         private void FormFacturacion_Load(object sender, EventArgs e)
         {
+
             try
             {
                 EstiloGrilla(dgvListadoCompra);
@@ -31,18 +40,21 @@ namespace AviGestion_.Interfaz
                 dgvListadoCompra.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dgvListadoCompra.Cursor = Cursors.Hand;
                 dgvListadoCompra.CellDoubleClick += (s, ev) => { if (ev.RowIndex >= 0) CargarPedido(ev.RowIndex); };
-
+               
                 EstiloGrilla(dgvDetalle);
 
                 EstiloBoton(btnConfirmarDespacho, VERDE, Color.White);
                 EstiloBoton(btnCancelarFactura, Color.White, Color.FromArgb(160, 0, 0));
 
+                txtBuscar.Text = "Filtrar por N°Pedido, Cliente, Fecha o Productos";
+                txtBuscar.ForeColor = Color.Gray;
                 lblAyuda.Text = "Doble clic en un pedido para cargar su detalle.";
                 lblAyuda.ForeColor = Color.FromArgb(91, 107, 79);
                 lblAyuda.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
                 lblPedidoCliente.ForeColor = VERDE;
-
+                
                 CargarGrilla();
+                CargarFacturados();
                 LimpiarCampos();
             }
             catch (Exception ex)
@@ -53,23 +65,9 @@ namespace AviGestion_.Interfaz
 
         private void CargarGrilla()
         {
-            dgvListadoCompra.AutoGenerateColumns = true;
-            dgvListadoCompra.DataSource = negocio.ListarPedidosPendientes();
+            listaPedidos = negocio.ListarPedidosPendientes();
+            MostrarEnGrilla(listaPedidos);
 
-            // Columnas que no aportan en este módulo (todos son 'Pendiente', sin pagos)
-            if (dgvListadoCompra.Columns["Estado"] != null) dgvListadoCompra.Columns["Estado"].Visible = false;
-            if (dgvListadoCompra.Columns["SaldoPendiente"] != null) dgvListadoCompra.Columns["SaldoPendiente"].Visible = false;
-
-            if (dgvListadoCompra.Columns["NºPedido"] != null)
-            {
-                dgvListadoCompra.Columns["NºPedido"].HeaderText = "Nº";
-                dgvListadoCompra.Columns["NºPedido"].FillWeight = 40;
-            }
-            if (dgvListadoCompra.Columns["Total"] != null)
-            {
-                dgvListadoCompra.Columns["Total"].DefaultCellStyle.Format = "C2";
-                dgvListadoCompra.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            }
         }
 
         // Doble clic o Enter sobre una fila: SOLO carga el detalle, no confirma nada
@@ -110,6 +108,93 @@ namespace AviGestion_.Interfaz
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void CargarFacturados()
+        {
+            try
+            {
+                DataTable tabla = negocio.ListarFacturadosPorFecha(dtpFechaFacturados.Value.Date);
+                dgvFacturados.DataSource = tabla;
+
+                dgvFacturados.Columns["Comprobante"].HeaderText = "Comprobante Nº";
+                dgvFacturados.Columns["Id_Pedido"].HeaderText = "Pedido Nº";
+                dgvFacturados.Columns["EstadoPedido"].HeaderText = "Estado del pedido";
+                dgvFacturados.Columns["Total"].DefaultCellStyle.Format = "C2";
+                dgvFacturados.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+                // Anchos relativos (la grilla ocupa todo el ancho)
+                dgvFacturados.Columns["Comprobante"].FillWeight = 12;
+                dgvFacturados.Columns["Id_Pedido"].FillWeight = 10;
+                dgvFacturados.Columns["Cliente"].FillWeight = 20;
+                dgvFacturados.Columns["Productos"].FillWeight = 32;
+                dgvFacturados.Columns["Total"].FillWeight = 12;
+                dgvFacturados.Columns["EstadoPedido"].FillWeight = 14;
+
+                decimal sumaTotal = 0;// suma de todos los pedidos facturados en la fecha seleccionada
+                foreach (DataRow fila in tabla.Rows)
+                    sumaTotal += Convert.ToDecimal(fila["Total"]);
+
+                string cuando = dtpFechaFacturados.Value.Date == DateTime.Today ? "hoy" : dtpFechaFacturados.Value.ToString("dd/MM/yyyy");
+                lblResumenFacturados.Text = $"{tabla.Rows.Count} pedido(s) facturado(s) {cuando} · Total facturado: {sumaTotal:C2}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo cargar los facturados: " + ex.Message, "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #region Actualización de la grilla de pedidos pendientes, filtro y limpieza de campos
+        private void txtBuscar_TextChanged(object sender, EventArgs e) { AplicarFiltro(); }
+        private void AplicarFiltro()
+        {
+            if (listaPedidos == null) return;
+
+            // Sin texto, o con el texto gris de ayuda: se muestra todo y no se filtra
+            if (txtBuscar.Text == "Filtrar por N°Pedido, Cliente, Fecha o Productos" || txtBuscar.Text.Trim() == "")
+            {
+                MostrarEnGrilla(listaPedidos);
+                return;
+            }
+            string texto = txtBuscar.Text.Trim().ToLower();
+            List<PagoPedido> filtrada = new List<PagoPedido>();
+
+            filtrada = new List<PagoPedido>();
+            foreach (PagoPedido p in listaPedidos)
+            {
+                if (p.NºPedido.ToString().Contains(texto) ||
+                    (p.Cliente ?? "").ToLower().Contains(texto) ||
+                    (p.Fecha ?? "").Contains(texto) ||
+                    (p.Productos ?? "").ToLower().Contains(texto))
+                {
+                    filtrada.Add(p);
+                }
+            }
+            
+            MostrarEnGrilla(filtrada);
+
+        }
+
+        private void txtBuscar_Enter(object sender, EventArgs e)
+        {
+            // Si el usuario hace clic y todavía está el texto de sugerencia, se borra y cambia la letra en negro
+            if (txtBuscar.Text == "Filtrar por N°Pedido, Cliente, Fecha o Productos")
+            {
+                txtBuscar.Text = "";
+                txtBuscar.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtBuscar_Leave(object sender, EventArgs e)
+        {
+            // Si el usuario hace clic afuera y no escribió nada, vuelve a poner la sugerencia gris
+            if (string.IsNullOrWhiteSpace(txtBuscar.Text))
+            {
+                txtBuscar.Text = "Filtrar por N°Pedido, Cliente, Fecha o Productos";
+                txtBuscar.ForeColor = Color.Gray;
+            }
+        }
+
         //Deja la pantalla sin pedido cargado y sin detalle de compra, con botones deshabilitados.
         //Se llama al cancelar o al confirmar despacho.
         private void LimpiarCampos()
@@ -123,6 +208,36 @@ namespace AviGestion_.Interfaz
             btnCancelarFactura.Enabled = false;
         }
 
+        // Único lugar donde se asigna el DataSource: así el formato nunca se pierde
+        private void MostrarEnGrilla(List<PagoPedido> lista)
+        {
+            dgvListadoCompra.AutoGenerateColumns = true;
+            dgvListadoCompra.DataSource = null;
+            dgvListadoCompra.DataSource = lista;
+            FormatearColumnas();
+        }
+
+        private void FormatearColumnas()
+        {
+            // Columnas que no aportan en este módulo (todos son 'Pendiente', sin pagos)
+            foreach (string nombre in new[] { "MetodoPago", "Estado", "SaldoPendiente" })
+                if (dgvListadoCompra.Columns.Contains(nombre))
+                    dgvListadoCompra.Columns[nombre].Visible = false;
+
+            if (dgvListadoCompra.Columns.Contains("NºPedido"))
+            {
+                dgvListadoCompra.Columns["NºPedido"].HeaderText = "Nº";
+                dgvListadoCompra.Columns["NºPedido"].FillWeight = 40;
+            }
+            if (dgvListadoCompra.Columns.Contains("Total"))
+            {
+                dgvListadoCompra.Columns["Total"].DefaultCellStyle.Format = "C2";
+                dgvListadoCompra.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+        }
+        #endregion
+
+        #region Eventos de operaciones Confirmar y cancelar
         private void btnConfirmarDespacho_Click(object sender, EventArgs e)
         {
             if (idPedidoSeleccionado <= 0)
@@ -159,6 +274,7 @@ namespace AviGestion_.Interfaz
 
                 LimpiarCampos();
                 CargarGrilla();
+                CargarFacturados();
             }
             catch (Exception ex)
             {
@@ -172,7 +288,9 @@ namespace AviGestion_.Interfaz
         {
             LimpiarCampos();
         }
+        #endregion
 
+        #region Interfaz y estilo
         // ---- Estilo (verde 46; 125; 50) ----
         private void EstiloGrilla(DataGridView g)
         {
@@ -198,5 +316,7 @@ namespace AviGestion_.Interfaz
                 b.ForeColor = b.Enabled ? texto : Color.Gray;
             };
         }
+        #endregion
+
     }
 }

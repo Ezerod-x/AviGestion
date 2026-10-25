@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace AviGestion_.Datos
 {
-    public class FacturacionDatos // nuevo  
+    public class FacturacionDatos 
     {
         // Grilla superior: pedidos pendientes de facturar (últimos 30 días)
         public List<PagoPedido> ObtenerPedidosPendientes()
@@ -74,6 +74,25 @@ namespace AviGestion_.Datos
 
                 return (ResultadoDespacho)Convert.ToInt32(pResultado.Value);
             }
+        }
+
+        // Mini historial: pedidos facturados en un día (por defecto, hoy)
+        public DataTable ObtenerFacturadosPorFecha(DateTime fecha)
+        {
+            DataTable tabla = new DataTable();
+
+            using (SqlConnection cn = Conexion.ObtenerConexion())
+            using (SqlCommand cmd = new SqlCommand("SP_Facturacion_ObtenerFacturadosPorFecha", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@Fecha", SqlDbType.Date).Value = fecha.Date;
+
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(tabla);
+                }
+            }
+            return tabla;
         }
     }
 }

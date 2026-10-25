@@ -27,6 +27,7 @@ namespace AviGestion_.Interfaz
         private void FormRegistrarPago_Load(object sender, EventArgs e)
         {
             ConfigurarColumnasGrilla();
+            cboMetodoPago.Items.AddRange(PagoPedidoLogica.MetodosPago);
             EstiloGrilla(dgvListadoPedidos);
             dgvListadoPedidos.MultiSelect = false;
             dgvListadoPedidos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -62,6 +63,9 @@ namespace AviGestion_.Interfaz
             if (dgvListadoPedidos.Columns.Contains("colSaldoPendiente")) dgvListadoPedidos.Columns["colSaldoPendiente"].DataPropertyName = "SaldoPendiente";
             if (dgvListadoPedidos.Columns.Contains("colEstado")) dgvListadoPedidos.Columns["colEstado"].DataPropertyName = "Estado";
 
+            if (dgvListadoPedidos.Columns.Contains("colMetodoPago"))
+                dgvListadoPedidos.Columns["colMetodoPago"].DataPropertyName = "MetodoPago";
+
             foreach (string nombre in new[] { "colTotal", "colSaldoPendiente" })
                 if (dgvListadoPedidos.Columns.Contains(nombre))
                 {
@@ -89,7 +93,7 @@ namespace AviGestion_.Interfaz
         private void txtBuscar_TextChanged(object sender, EventArgs e) { AplicarFiltro(); }
         private void AplicarFiltro()
         {
-            if (listaOriginalPedidos == null) return;
+            if (listaOriginalPedidos == null) return; 
             string texto = txtBuscar.Text.Trim().ToLower();
 
             List<PagoPedido> lista = listaOriginalPedidos;
@@ -125,7 +129,7 @@ namespace AviGestion_.Interfaz
         {
             pedidoSeleccionado = (PagoPedido)dgvListadoPedidos.Rows[indiceFila].DataBoundItem;
 
-            splitPagos.Panel2.Enabled = true;                  // habilita la franja: campo de importe y botones
+            HabilitarPago(true);                  // habilita la franja: campo de importe y botones
             lblPedidoCliente.Text = $"Pedido Nº {pedidoSeleccionado.NºPedido} · {pedidoSeleccionado.Cliente}";
             lblTotalPedido.Text = pedidoSeleccionado.Total.ToString("C2");
             lblSaldoPendiente.Text = pedidoSeleccionado.SaldoPendiente.ToString("C2");
@@ -136,19 +140,28 @@ namespace AviGestion_.Interfaz
             nudImporte.Value = 0;
             nudImporte.Focus();
             nudImporte.Select(0, nudImporte.Text.Length);
+
+            cboMetodoPago.SelectedIndex = 0;   // Efectivo por defecto
         }
 
+        private void HabilitarPago(bool habilitado)
+        {
+            nudImporte.Enabled = habilitado;
+            cboMetodoPago.Enabled = habilitado;
+            btnConfirmarPago.Enabled = habilitado;
+        }
         //Deja la franja sin pedido cargado y deshabilitada
         private void LimpiarPanelPago()
         {
             pedidoSeleccionado = null;
-            lblPedidoCliente.Text = "Sin pedido cargado";
+            lblPedidoCliente.Text = "Sin pedido seleccionado";
             lblTotalPedido.Text = "$ 0,00";
             lblSaldoPendiente.Text = "$ 0,00";
             lblCapImporte.Text = "IMPORTE A ABONAR";
             nudImporte.Value = 0;
+            cboMetodoPago.SelectedIndex = -1;
             dgvListadoPedidos.ClearSelection();
-            splitPagos.Panel2.Enabled = false;
+            HabilitarPago(false);
         }
         #endregion
 
@@ -178,12 +191,20 @@ namespace AviGestion_.Interfaz
                     nudImporte.Focus();
                     return;                                    // no se registra nada y el importe queda para corregirlo
                 }
-                if (MessageBox.Show($"¿Registrar un pago de {importeABonar:C2} para el pedido Nº {pedidoSeleccionado.NºPedido}?",
+                if (cboMetodoPago.SelectedItem == null)
+                {
+                    MessageBox.Show("Seleccioná un método de pago.", "Validación Comercial",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cboMetodoPago.Focus();
+                    return;
+                }
+                string metodoPago = cboMetodoPago.SelectedItem.ToString();
+                if (MessageBox.Show($"¿Registrar un pago de {importeABonar:C2} ({metodoPago}) para el pedido Nº {pedidoSeleccionado.NºPedido}?",
                                     "Confirmar pago", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                     return;
 
                 splitPagos.Panel2.Enabled = false;             // evita un segundo clic mientras se procesa
-                pagosLogica.RegistrarPago(pedidoSeleccionado.NºPedido, importeABonar);
+                pagosLogica.RegistrarPago(pedidoSeleccionado.NºPedido, importeABonar, metodoPago);
                 MessageBox.Show("El pago fue registrado correctamente en la base de datos.", "Pago Registrado",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -233,6 +254,7 @@ namespace AviGestion_.Interfaz
             pintar();                                          // estado inicial (la franja arranca deshabilitada)
             b.EnabledChanged += (s, ev) => pintar();
         }
+
         #endregion
 
     }

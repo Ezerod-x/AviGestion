@@ -1,7 +1,7 @@
 ﻿
 namespace AviGestion_.Logica
 {
-    public class PagoPedido//nuevo
+    public class PagoPedido
     {
         //Datos del pedido
         public int NºPedido { get; set; }
@@ -12,5 +12,6 @@ namespace AviGestion_.Logica
         public string Estado { get; set; }
         //Utiles para Registrar Pago
         public decimal SaldoPendiente { get; set; }
+        public string MetodoPago { get; set; }
     }
 }

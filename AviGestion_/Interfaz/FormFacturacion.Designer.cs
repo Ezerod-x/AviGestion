@@ -28,6 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.lblEtiquetaFactura = new System.Windows.Forms.Label();
+            this.dgvListadoCompra = new System.Windows.Forms.DataGridView();
+            this.lblAyuda = new System.Windows.Forms.Label();
+            this.tabsFacturacion = new System.Windows.Forms.TabControl();
+            this.tabPendientes = new System.Windows.Forms.TabPage();
             this.grbDetalleCompra = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblLectura = new System.Windows.Forms.Label();
@@ -36,18 +50,108 @@
             this.lblPedidoCliente = new System.Windows.Forms.Label();
             this.btnCancelarFactura = new System.Windows.Forms.Button();
             this.btnConfirmarDespacho = new System.Windows.Forms.Button();
-            this.lblEtiquetaFactura = new System.Windows.Forms.Label();
-            this.dgvListadoCompra = new System.Windows.Forms.DataGridView();
-            this.lblAyuda = new System.Windows.Forms.Label();
+            this.tabFacturadosDia = new System.Windows.Forms.TabPage();
+            this.lblResumenFacturados = new System.Windows.Forms.Label();
+            this.dgvFacturados = new System.Windows.Forms.DataGridView();
+            this.dtpFechaFacturados = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListadoCompra)).BeginInit();
+            this.tabsFacturacion.SuspendLayout();
+            this.tabPendientes.SuspendLayout();
             this.grbDetalleCompra.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalle)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvListadoCompra)).BeginInit();
+            this.tabFacturadosDia.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFacturados)).BeginInit();
             this.SuspendLayout();
+            // 
+            // lblEtiquetaFactura
+            // 
+            this.lblEtiquetaFactura.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblEtiquetaFactura.AutoSize = true;
+            this.lblEtiquetaFactura.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEtiquetaFactura.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblEtiquetaFactura.Location = new System.Drawing.Point(529, 27);
+            this.lblEtiquetaFactura.Name = "lblEtiquetaFactura";
+            this.lblEtiquetaFactura.Size = new System.Drawing.Size(323, 14);
+            this.lblEtiquetaFactura.TabIndex = 27;
+            this.lblEtiquetaFactura.Text = "Pedidos pendientes a facturar (últimos 30 días)";
+            // 
+            // dgvListadoCompra
+            // 
+            this.dgvListadoCompra.AllowUserToAddRows = false;
+            this.dgvListadoCompra.AllowUserToDeleteRows = false;
+            this.dgvListadoCompra.AllowUserToOrderColumns = true;
+            this.dgvListadoCompra.AllowUserToResizeRows = false;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.White;
+            this.dgvListadoCompra.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
+            this.dgvListadoCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvListadoCompra.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvListadoCompra.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvListadoCompra.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvListadoCompra.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle20;
+            this.dgvListadoCompra.ColumnHeadersHeight = 26;
+            this.dgvListadoCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvListadoCompra.Location = new System.Drawing.Point(8, 44);
+            this.dgvListadoCompra.MultiSelect = false;
+            this.dgvListadoCompra.Name = "dgvListadoCompra";
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvListadoCompra.RowHeadersDefaultCellStyle = dataGridViewCellStyle21;
+            this.dgvListadoCompra.RowHeadersVisible = false;
+            this.dgvListadoCompra.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvListadoCompra.Size = new System.Drawing.Size(840, 141);
+            this.dgvListadoCompra.TabIndex = 25;
+            // 
+            // lblAyuda
+            // 
+            this.lblAyuda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblAyuda.AutoSize = true;
+            this.lblAyuda.Location = new System.Drawing.Point(14, 188);
+            this.lblAyuda.Name = "lblAyuda";
+            this.lblAyuda.Size = new System.Drawing.Size(35, 13);
+            this.lblAyuda.TabIndex = 29;
+            this.lblAyuda.Text = "label2";
+            // 
+            // tabsFacturacion
+            // 
+            this.tabsFacturacion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabsFacturacion.Controls.Add(this.tabPendientes);
+            this.tabsFacturacion.Controls.Add(this.tabFacturadosDia);
+            this.tabsFacturacion.Location = new System.Drawing.Point(12, 214);
+            this.tabsFacturacion.Name = "tabsFacturacion";
+            this.tabsFacturacion.SelectedIndex = 0;
+            this.tabsFacturacion.Size = new System.Drawing.Size(840, 247);
+            this.tabsFacturacion.TabIndex = 30;
+            // 
+            // tabPendientes
+            // 
+            this.tabPendientes.Controls.Add(this.grbDetalleCompra);
+            this.tabPendientes.Location = new System.Drawing.Point(4, 22);
+            this.tabPendientes.Name = "tabPendientes";
+            this.tabPendientes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPendientes.Size = new System.Drawing.Size(832, 221);
+            this.tabPendientes.TabIndex = 0;
+            this.tabPendientes.Text = "Pendientes";
+            this.tabPendientes.UseVisualStyleBackColor = true;
             // 
             // grbDetalleCompra
             // 
-            this.grbDetalleCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.grbDetalleCompra.BackColor = System.Drawing.Color.White;
             this.grbDetalleCompra.Controls.Add(this.label1);
             this.grbDetalleCompra.Controls.Add(this.lblLectura);
@@ -56,11 +160,12 @@
             this.grbDetalleCompra.Controls.Add(this.lblPedidoCliente);
             this.grbDetalleCompra.Controls.Add(this.btnCancelarFactura);
             this.grbDetalleCompra.Controls.Add(this.btnConfirmarDespacho);
+            this.grbDetalleCompra.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grbDetalleCompra.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.grbDetalleCompra.Location = new System.Drawing.Point(12, 195);
+            this.grbDetalleCompra.Location = new System.Drawing.Point(3, 3);
             this.grbDetalleCompra.Name = "grbDetalleCompra";
-            this.grbDetalleCompra.Size = new System.Drawing.Size(837, 228);
-            this.grbDetalleCompra.TabIndex = 28;
+            this.grbDetalleCompra.Size = new System.Drawing.Size(826, 215);
+            this.grbDetalleCompra.TabIndex = 29;
             this.grbDetalleCompra.TabStop = false;
             // 
             // label1
@@ -69,7 +174,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.label1.Location = new System.Drawing.Point(18, 172);
+            this.label1.Location = new System.Drawing.Point(18, 159);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(202, 18);
             this.label1.TabIndex = 23;
@@ -81,7 +186,7 @@
             this.lblLectura.AutoSize = true;
             this.lblLectura.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLectura.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblLectura.Location = new System.Drawing.Point(709, 16);
+            this.lblLectura.Location = new System.Drawing.Point(698, 16);
             this.lblLectura.Name = "lblLectura";
             this.lblLectura.Size = new System.Drawing.Size(93, 16);
             this.lblLectura.TabIndex = 22;
@@ -93,7 +198,7 @@
             this.lblTotalPagar.AutoSize = true;
             this.lblTotalPagar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalPagar.ForeColor = System.Drawing.Color.Black;
-            this.lblTotalPagar.Location = new System.Drawing.Point(36, 193);
+            this.lblTotalPagar.Location = new System.Drawing.Point(36, 180);
             this.lblTotalPagar.Name = "lblTotalPagar";
             this.lblTotalPagar.Size = new System.Drawing.Size(17, 18);
             this.lblTotalPagar.TabIndex = 21;
@@ -101,14 +206,45 @@
             // 
             // dgvDetalle
             // 
+            this.dgvDetalle.AllowUserToAddRows = false;
+            this.dgvDetalle.AllowUserToDeleteRows = false;
+            this.dgvDetalle.AllowUserToResizeRows = false;
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.White;
+            this.dgvDetalle.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle22;
             this.dgvDetalle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvDetalle.BackgroundColor = System.Drawing.Color.Beige;
-            this.dgvDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDetalle.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvDetalle.BackgroundColor = System.Drawing.Color.White;
+            this.dgvDetalle.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvDetalle.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDetalle.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle23;
+            this.dgvDetalle.ColumnHeadersHeight = 26;
+            this.dgvDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle24.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvDetalle.DefaultCellStyle = dataGridViewCellStyle24;
+            this.dgvDetalle.EnableHeadersVisualStyles = false;
+            this.dgvDetalle.GridColor = System.Drawing.Color.Gainsboro;
             this.dgvDetalle.Location = new System.Drawing.Point(18, 37);
+            this.dgvDetalle.MultiSelect = false;
             this.dgvDetalle.Name = "dgvDetalle";
-            this.dgvDetalle.Size = new System.Drawing.Size(803, 128);
+            this.dgvDetalle.ReadOnly = true;
+            this.dgvDetalle.RowHeadersVisible = false;
+            this.dgvDetalle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDetalle.Size = new System.Drawing.Size(792, 115);
             this.dgvDetalle.TabIndex = 19;
             // 
             // lblPedidoCliente
@@ -131,7 +267,7 @@
             this.btnCancelarFactura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelarFactura.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelarFactura.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnCancelarFactura.Location = new System.Drawing.Point(533, 185);
+            this.btnCancelarFactura.Location = new System.Drawing.Point(522, 172);
             this.btnCancelarFactura.Name = "btnCancelarFactura";
             this.btnCancelarFactura.Size = new System.Drawing.Size(107, 37);
             this.btnCancelarFactura.TabIndex = 17;
@@ -147,7 +283,7 @@
             this.btnConfirmarDespacho.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnConfirmarDespacho.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirmarDespacho.ForeColor = System.Drawing.Color.White;
-            this.btnConfirmarDespacho.Location = new System.Drawing.Point(656, 185);
+            this.btnConfirmarDespacho.Location = new System.Drawing.Point(645, 172);
             this.btnConfirmarDespacho.Name = "btnConfirmarDespacho";
             this.btnConfirmarDespacho.Size = new System.Drawing.Size(175, 37);
             this.btnConfirmarDespacho.TabIndex = 18;
@@ -155,41 +291,106 @@
             this.btnConfirmarDespacho.UseVisualStyleBackColor = false;
             this.btnConfirmarDespacho.Click += new System.EventHandler(this.btnConfirmarDespacho_Click);
             // 
-            // lblEtiquetaFactura
+            // tabFacturadosDia
             // 
-            this.lblEtiquetaFactura.AutoSize = true;
-            this.lblEtiquetaFactura.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEtiquetaFactura.Location = new System.Drawing.Point(14, 23);
-            this.lblEtiquetaFactura.Name = "lblEtiquetaFactura";
-            this.lblEtiquetaFactura.Size = new System.Drawing.Size(323, 14);
-            this.lblEtiquetaFactura.TabIndex = 27;
-            this.lblEtiquetaFactura.Text = "Pedidos pendientes a facturar (últimos 30 días)";
+            this.tabFacturadosDia.BackColor = System.Drawing.Color.White;
+            this.tabFacturadosDia.Controls.Add(this.lblResumenFacturados);
+            this.tabFacturadosDia.Controls.Add(this.dgvFacturados);
+            this.tabFacturadosDia.Controls.Add(this.dtpFechaFacturados);
+            this.tabFacturadosDia.Location = new System.Drawing.Point(4, 22);
+            this.tabFacturadosDia.Name = "tabFacturadosDia";
+            this.tabFacturadosDia.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFacturadosDia.Size = new System.Drawing.Size(832, 221);
+            this.tabFacturadosDia.TabIndex = 1;
+            this.tabFacturadosDia.Text = "FacturadosDelDia";
             // 
-            // dgvListadoCompra
+            // lblResumenFacturados
             // 
-            this.dgvListadoCompra.AllowUserToAddRows = false;
-            this.dgvListadoCompra.AllowUserToDeleteRows = false;
-            this.dgvListadoCompra.AllowUserToOrderColumns = true;
-            this.dgvListadoCompra.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblResumenFacturados.AutoSize = true;
+            this.lblResumenFacturados.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblResumenFacturados.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(5)))));
+            this.lblResumenFacturados.Location = new System.Drawing.Point(209, 7);
+            this.lblResumenFacturados.Name = "lblResumenFacturados";
+            this.lblResumenFacturados.Size = new System.Drawing.Size(85, 16);
+            this.lblResumenFacturados.TabIndex = 2;
+            this.lblResumenFacturados.Text = "Facturados";
+            // 
+            // dgvFacturados
+            // 
+            this.dgvFacturados.AllowUserToAddRows = false;
+            this.dgvFacturados.AllowUserToDeleteRows = false;
+            this.dgvFacturados.AllowUserToResizeRows = false;
+            dataGridViewCellStyle25.BackColor = System.Drawing.Color.White;
+            this.dgvFacturados.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle25;
+            this.dgvFacturados.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvListadoCompra.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvListadoCompra.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dgvListadoCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvListadoCompra.Location = new System.Drawing.Point(12, 44);
-            this.dgvListadoCompra.Name = "dgvListadoCompra";
-            this.dgvListadoCompra.Size = new System.Drawing.Size(840, 122);
-            this.dgvListadoCompra.TabIndex = 25;
+            this.dgvFacturados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvFacturados.BackgroundColor = System.Drawing.Color.White;
+            this.dgvFacturados.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvFacturados.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFacturados.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle26;
+            this.dgvFacturados.ColumnHeadersHeight = 26;
+            this.dgvFacturados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle27.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle27.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvFacturados.DefaultCellStyle = dataGridViewCellStyle27;
+            this.dgvFacturados.EnableHeadersVisualStyles = false;
+            this.dgvFacturados.GridColor = System.Drawing.Color.Gainsboro;
+            this.dgvFacturados.Location = new System.Drawing.Point(7, 41);
+            this.dgvFacturados.MultiSelect = false;
+            this.dgvFacturados.Name = "dgvFacturados";
+            this.dgvFacturados.ReadOnly = true;
+            this.dgvFacturados.RowHeadersVisible = false;
+            this.dgvFacturados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvFacturados.Size = new System.Drawing.Size(819, 169);
+            this.dgvFacturados.TabIndex = 1;
             // 
-            // lblAyuda
+            // dtpFechaFacturados
             // 
-            this.lblAyuda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblAyuda.AutoSize = true;
-            this.lblAyuda.Location = new System.Drawing.Point(17, 176);
-            this.lblAyuda.Name = "lblAyuda";
-            this.lblAyuda.Size = new System.Drawing.Size(35, 13);
-            this.lblAyuda.TabIndex = 29;
-            this.lblAyuda.Text = "label2";
+            this.dtpFechaFacturados.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dtpFechaFacturados.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaFacturados.Location = new System.Drawing.Point(3, 3);
+            this.dtpFechaFacturados.MaxDate = new System.DateTime(2026, 10, 24, 0, 0, 0, 0);
+            this.dtpFechaFacturados.Name = "dtpFechaFacturados";
+            this.dtpFechaFacturados.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaFacturados.TabIndex = 0;
+            this.dtpFechaFacturados.Value = new System.DateTime(2026, 10, 24, 0, 0, 0, 0);
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.Beige;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.DarkGreen;
+            this.label2.Location = new System.Drawing.Point(13, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 28);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "🔍 ";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBuscar.Location = new System.Drawing.Point(54, 18);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(448, 20);
+            this.txtBuscar.TabIndex = 31;
+            this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
+            this.txtBuscar.Enter += new System.EventHandler(this.txtBuscar_Enter);
+            this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             // 
             // FormFacturacion
             // 
@@ -197,24 +398,35 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Beige;
             this.ClientSize = new System.Drawing.Size(864, 461);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtBuscar);
+            this.Controls.Add(this.tabsFacturacion);
             this.Controls.Add(this.lblAyuda);
-            this.Controls.Add(this.grbDetalleCompra);
             this.Controls.Add(this.lblEtiquetaFactura);
             this.Controls.Add(this.dgvListadoCompra);
             this.Name = "FormFacturacion";
             this.Text = "FormFacturacion";
             this.Load += new System.EventHandler(this.FormFacturacion_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListadoCompra)).EndInit();
+            this.tabsFacturacion.ResumeLayout(false);
+            this.tabPendientes.ResumeLayout(false);
             this.grbDetalleCompra.ResumeLayout(false);
             this.grbDetalleCompra.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalle)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvListadoCompra)).EndInit();
+            this.tabFacturadosDia.ResumeLayout(false);
+            this.tabFacturadosDia.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFacturados)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
+        private System.Windows.Forms.Label lblEtiquetaFactura;
+        private System.Windows.Forms.DataGridView dgvListadoCompra;
+        private System.Windows.Forms.Label lblAyuda;
+        private System.Windows.Forms.TabControl tabsFacturacion;
+        private System.Windows.Forms.TabPage tabPendientes;
         private System.Windows.Forms.GroupBox grbDetalleCompra;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblLectura;
@@ -223,8 +435,11 @@
         private System.Windows.Forms.Label lblPedidoCliente;
         private System.Windows.Forms.Button btnCancelarFactura;
         private System.Windows.Forms.Button btnConfirmarDespacho;
-        private System.Windows.Forms.Label lblEtiquetaFactura;
-        private System.Windows.Forms.DataGridView dgvListadoCompra;
-        private System.Windows.Forms.Label lblAyuda;
+        private System.Windows.Forms.TabPage tabFacturadosDia;
+        private System.Windows.Forms.Label lblResumenFacturados;
+        private System.Windows.Forms.DataGridView dgvFacturados;
+        private System.Windows.Forms.DateTimePicker dtpFechaFacturados;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtBuscar;
     }
 }

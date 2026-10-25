@@ -52,7 +52,6 @@
             // 
             // lblUsuario
             // 
-            this.lblUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.Color.White;
@@ -138,9 +137,9 @@
             this.lblGraficoProductosTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.lblGraficoProductosTitulo.Location = new System.Drawing.Point(15, 12);
             this.lblGraficoProductosTitulo.Name = "lblGraficoProductosTitulo";
-            this.lblGraficoProductosTitulo.Size = new System.Drawing.Size(234, 20);
+            this.lblGraficoProductosTitulo.Size = new System.Drawing.Size(216, 20);
             this.lblGraficoProductosTitulo.TabIndex = 0;
-            this.lblGraficoProductosTitulo.Text = "Cantidad de productos vendidos";
+            this.lblGraficoProductosTitulo.Text = "Productos Vendidos (30 Dias)";
             // 
             // pnlGraficoPedidos
             // 
@@ -160,9 +159,9 @@
             this.lblGraficoPedidosTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.lblGraficoPedidosTitulo.Location = new System.Drawing.Point(15, 12);
             this.lblGraficoPedidosTitulo.Name = "lblGraficoPedidosTitulo";
-            this.lblGraficoPedidosTitulo.Size = new System.Drawing.Size(142, 20);
+            this.lblGraficoPedidosTitulo.Size = new System.Drawing.Size(212, 20);
             this.lblGraficoPedidosTitulo.TabIndex = 0;
-            this.lblGraficoPedidosTitulo.Text = "Pedidos por cliente";
+            this.lblGraficoPedidosTitulo.Text = "Pedidos por cliente ( 30 dias)";
             // 
             // pnlStockResumen
             // 

@@ -31,7 +31,8 @@ namespace AviGestion_.Datos
                                 Estado = reader["Estado"].ToString(),      // estado de pago: Sin pagos / Parcial
                                 Productos = reader["Productos"].ToString(),
                                 Total = Convert.ToDecimal(reader["TotalPedido"]),
-                                SaldoPendiente = Convert.ToDecimal(reader["Saldo"])
+                                SaldoPendiente = Convert.ToDecimal(reader["Saldo"]),
+                                MetodoPago = reader["UltimoMetodo"].ToString()   // método del último cobro ('-' si no hay)
                             };
                             lista.Add(ped);
                         }
@@ -46,7 +47,7 @@ namespace AviGestion_.Datos
         }
 
         // Devuelve el código del SP: 0 = OK | 1 = pedido no disponible | 2 = monto inválido o mayor al saldo
-        public int RegistrarPagoTransaccional(int idPedido, decimal importeAbonar)
+        public int RegistrarPagoTransaccional(int idPedido, decimal importeAbonar, string metodoPago)
         {
             using (SqlConnection con = Conexion.ObtenerConexion())
             using (SqlCommand cmd = new SqlCommand("sp_RegistrarPagoPedido", con))
@@ -54,6 +55,7 @@ namespace AviGestion_.Datos
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IdPedido", idPedido);
                 cmd.Parameters.AddWithValue("@Monto", importeAbonar);
+                cmd.Parameters.AddWithValue("@MetodoPago", metodoPago);
 
                 SqlParameter pResultado = new SqlParameter("@Resultado", SqlDbType.Int);
                 pResultado.Direction = ParameterDirection.Output;

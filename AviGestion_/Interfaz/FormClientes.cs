@@ -62,18 +62,19 @@ namespace AviGestion_.Interfaz
             lblAyuda.Text = "Doble clic en un cliente para poder modificar sus datos o ver su historial";
             lblAyuda.ForeColor = Color.FromArgb(91, 107, 79);
             lblAyuda.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
-
+            txtBusquedaFiltrado.Text = "Filtrar por Empresa, Nombre, Apellido, DNI/CUIL";
+            txtBusquedaFiltrado.ForeColor = Color.Gray;
             txtBusquedaFiltrado.TextChanged += txtBusquedaFiltrado_TextChanged;
             CargarDatosClientes();
         }
-
+        #region Filtrado y etiqueta de sugerencia en el TextBox de búsqueda
         private void txtBusquedaFiltrado_TextChanged(object sender, EventArgs e)
         {
             string textoABuscar = txtBusquedaFiltrado.Text.Trim().ToLower();
 
             List<Cliente> listaFiltrada = new List<Cliente>();
 
-            if (string.IsNullOrEmpty(textoABuscar))
+            if (string.IsNullOrEmpty(textoABuscar) || txtBusquedaFiltrado.Text == "Filtrar por Empresa, Nombre, Apellido, DNI/CUIL") 
             {
                 dgvTablaClientes.DataSource = null;
                 dgvTablaClientes.DataSource = listaOriginalClientes;
@@ -100,6 +101,27 @@ namespace AviGestion_.Interfaz
             dgvTablaClientes.DataSource = listaFiltrada;
         }
 
+        
+        private void txtBusquedaFiltrado_Enter(object sender, EventArgs e)
+        {
+            // Si el usuario hace clic y todavía está el texto de sugerencia, se borra y cambia la letra en negro
+            if (txtBusquedaFiltrado.Text == "Filtrar por Empresa, Nombre, Apellido, DNI/CUIL")
+            {
+                txtBusquedaFiltrado.Text = "";
+                txtBusquedaFiltrado.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtBusquedaFiltrado_Leave(object sender, EventArgs e)
+        {
+            // Si el usuario hace clic afuera y no escribió nada, vuelve a poner la sugerencia gris
+            if (string.IsNullOrWhiteSpace(txtBusquedaFiltrado.Text))
+            {
+                txtBusquedaFiltrado.Text = "Filtrar por Empresa, Nombre, Apellido, DNI/CUIL";
+                txtBusquedaFiltrado.ForeColor = Color.Gray;
+            }
+        }
+        #endregion
         private void btnAgregarCliente_Click(object sender, EventArgs e)
         {
             idClienteSeleccionado = -1; // Nos aseguramos que está en modo Alta
@@ -268,5 +290,7 @@ namespace AviGestion_.Interfaz
             txtDniCuil.Text = "";
         }
         #endregion
+
+        
     }
 }

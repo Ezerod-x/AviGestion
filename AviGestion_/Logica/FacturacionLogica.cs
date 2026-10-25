@@ -1,4 +1,5 @@
 ﻿using AviGestion_.Datos;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -32,6 +33,11 @@ namespace AviGestion_.Logica
                 return ResultadoDespacho.PedidoNoDisponible;
 
             return datos.ConfirmarDespacho(idPedido);
+        }
+
+        public DataTable ListarFacturadosPorFecha(DateTime fecha)
+        {
+            return datos.ObtenerFacturadosPorFecha(fecha);
         }
     }
 }

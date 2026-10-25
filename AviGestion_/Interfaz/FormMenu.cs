@@ -70,7 +70,7 @@ namespace AviGestion_.UI
             string[] deposito = { "Jefe de Deposito" };
 
             items.Clear();
-            items.Add(new ItemDeMenu { Seccion = "INICIO", Texto = "Inicio", Accion = MostrarInicio });
+            items.Add(new ItemDeMenu { Texto = "Inicio", Accion = MostrarInicio });
 
             items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Clientes", Titulo = "Gestión de Clientes", Roles = pedidos, Crear = () => new FormClientes(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Pedidos", Titulo = "Gestión de Pedidos", Roles = pedidos, Crear = () => new FrmPedidos() });
@@ -382,13 +382,17 @@ namespace AviGestion_.UI
 
         private List<ItemGrafico> ObtenerProductosVendidos()
         {
-            // Pendiente: falta el procedimiento SP_ProductosVendidos (ver mensaje anterior). Por ahora, ejemplo.
-            return new List<ItemGrafico>
-            {
-                new ItemGrafico { Nombre = "Pollo entero", Valor = 30 },
-                new ItemGrafico { Nombre = "Huevo C1", Valor = 25 },
-                new ItemGrafico { Nombre = "Huevo B1", Valor = 20 }
-            };
+            if (USAR_DATOS_DEMO)
+                return new List<ItemGrafico>
+        {
+            new ItemGrafico { Nombre = "Pollo entero", Valor = 30 },
+            new ItemGrafico { Nombre = "Huevo C1", Valor = 25 },
+            new ItemGrafico { Nombre = "Huevo B1", Valor = 20 }
+        };
+
+            return dashboard.ProductosVendidos()
+                .Select(kv => new ItemGrafico { Nombre = kv.Key, Valor = kv.Value })
+                .ToList();
         }
         #endregion
 
