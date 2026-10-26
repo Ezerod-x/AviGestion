@@ -13,9 +13,6 @@
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.btnCerrarSesion = new System.Windows.Forms.Button();
-            this.lblTitulo = new System.Windows.Forms.Label();
             this.pnlContenido = new System.Windows.Forms.Panel();
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblCarpeta = new System.Windows.Forms.Label();
@@ -25,45 +22,8 @@
             this.btnDescargarBackup = new System.Windows.Forms.Button();
             this.lblResultado = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.pnlHeader.SuspendLayout();
             this.pnlContenido.SuspendLayout();
             this.SuspendLayout();
-            //
-            // pnlHeader
-            //
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.pnlHeader.Controls.Add(this.btnCerrarSesion);
-            this.pnlHeader.Controls.Add(this.lblTitulo);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(700, 60);
-            this.pnlHeader.TabIndex = 0;
-            //
-            // btnCerrarSesion
-            //
-            this.btnCerrarSesion.BackColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.btnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCerrarSesion.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnCerrarSesion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnCerrarSesion.ForeColor = System.Drawing.Color.White;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(550, 16);
-            this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(130, 28);
-            this.btnCerrarSesion.TabIndex = 1;
-            this.btnCerrarSesion.Text = "Cerrar Sesión";
-            this.btnCerrarSesion.UseVisualStyleBackColor = false;
-            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
-            //
-            // lblTitulo
-            //
-            this.lblTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Text = "Generar Backup";
-            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             //
             // pnlContenido
             //
@@ -76,8 +36,9 @@
             this.pnlContenido.Controls.Add(this.btnGenerarBackup);
             this.pnlContenido.Controls.Add(this.btnDescargarBackup);
             this.pnlContenido.Controls.Add(this.lblResultado);
-            this.pnlContenido.Location = new System.Drawing.Point(20, 80);
+            this.pnlContenido.Location = new System.Drawing.Point(110, 120);
             this.pnlContenido.Name = "pnlContenido";
+            this.pnlContenido.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlContenido.Size = new System.Drawing.Size(660, 260);
             this.pnlContenido.TabIndex = 1;
             //
@@ -153,40 +114,20 @@
             this.lblResultado.Name = "lblResultado";
             this.lblResultado.Size = new System.Drawing.Size(600, 50);
             //
-            // btnVolver
-            //
-            this.btnVolver.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.btnVolver.Location = new System.Drawing.Point(20, 355);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(160, 32);
-            this.btnVolver.TabIndex = 2;
-            this.btnVolver.Text = "Volver al Menú";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
-            //
             // FormBackup
             //
             this.BackColor = System.Drawing.Color.FromArgb(255, 255, 240);
-            this.ClientSize = new System.Drawing.Size(700, 410);
-            this.Controls.Add(this.btnVolver);
+            this.ClientSize = new System.Drawing.Size(880, 500);
             this.Controls.Add(this.pnlContenido);
-            this.Controls.Add(this.pnlHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MinimizeBox = false;
             this.Name = "FormBackup";
             this.Text = "Sistema AviGestión";
-            this.pnlHeader.ResumeLayout(false);
             this.pnlContenido.ResumeLayout(false);
             this.pnlContenido.PerformLayout();
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Button btnCerrarSesion;
-        private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.Panel pnlContenido;
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.Label lblCarpeta;
@@ -196,6 +137,5 @@
         private System.Windows.Forms.Button btnDescargarBackup;
         private System.Windows.Forms.Label lblResultado;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.Button btnVolver;
     }
 }

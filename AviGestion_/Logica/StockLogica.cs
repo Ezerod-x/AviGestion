@@ -60,6 +60,20 @@ namespace AviGestion_.Logica
             };
         }
 
+        // Revisa TODOS los productos activos y deja las alertas al día:
+        //  - crea la alerta de Stock Mínimo / Máximo si corresponde y todavía no existe,
+        //  - resuelve las alertas que ya no corresponden.
+        // Se llama al abrir Gestión de Alertas y al guardar un producto, porque el stock también
+        // cambia por fuera de la pantalla de Stock (pedidos, alta de productos, etc.).
+        public void SincronizarAlertas()
+        {
+            foreach (var p in datos.ListarProductosConStock())
+            {
+                if (p.Estado != "Activo") continue;
+                ActualizarAlertas(p.Id, p.EstadoStock);
+            }
+        }
+
         private void ActualizarAlertas(int idProducto, string estadoActual)
         {
             // Según el CU-05, solo "Stock Mínimo" y "Stock Máximo" generan alerta.

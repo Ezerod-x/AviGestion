@@ -61,6 +61,9 @@ namespace AviGestion_.Logica
 
             BitacoraLogica.Registrar(usuarioActual, esAlta ? "Alta" : "Modificación", "Productos",
                 $"Código: {p.Codigo} - {p.Descripcion}");
+
+            // El stock mínimo/máximo o el stock pudieron cambiar: se actualizan las alertas.
+            new StockLogica().SincronizarAlertas();
         }
 
         public void EliminarProducto(int id, string usuarioActual = "Sistema")

@@ -15,6 +15,7 @@ namespace AviGestion_.UI
             InitializeComponent();
             usuarioActual = usuario;
             ConfigurarPlaceholderBuscar();
+            new ToolTip().SetToolTip(dgvProductos, "Doble clic en una fila para seleccionar el producto");
             this.Load += FormProducto_Load;
         }
 
@@ -65,10 +66,10 @@ namespace AviGestion_.UI
             LimpiarFormulario();
         }
 
-        private void dgvProductos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        // Doble clic en una fila = seleccionar el producto y cargarlo en el formulario
+        private void dgvProductos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            if (dgvProductos.Columns[e.ColumnIndex].Name != "colSeleccionar") return;
 
             var producto = (Producto)dgvProductos.Rows[e.RowIndex].DataBoundItem;
 
@@ -145,31 +146,6 @@ namespace AviGestion_.UI
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             LimpiarFormulario();
-        }
-
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            FormMenu menu = new FormMenu(usuarioActual);
-            menu.Show();
-            this.Close();
-        }
-
-        private void btnGestionAlertas_Click(object sender, EventArgs e)
-        {
-            FormAlertas alertas = new FormAlertas(usuarioActual);
-            alertas.Show();
-            this.Close();
-        }
-
-        private void btnCerrarSesion_Click(object sender, EventArgs e)
-        {
-            var confirmacion = MessageBox.Show("¿Desea cerrar la sesión actual?", "Cerrar sesión",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirmacion != DialogResult.Yes) return;
-
-            AviGestion_.Form1 login = new AviGestion_.Form1();
-            login.Show();
-            this.Close();
         }
 
         private void LimpiarFormulario()

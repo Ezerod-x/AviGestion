@@ -15,9 +15,6 @@
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.btnCerrarSesion = new System.Windows.Forms.Button();
-            this.lblTitulo = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.cmbTipoAlerta = new System.Windows.Forms.ComboBox();
             this.cmbEstadoAlerta = new System.Windows.Forms.ComboBox();
@@ -37,7 +34,6 @@
             this.colEstadoAlerta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFechaGeneracion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFechaResolucion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSeleccionarAlerta = new System.Windows.Forms.DataGridViewButtonColumn();
             this.lblSinResultados = new System.Windows.Forms.Label();
             this.grpDetalle = new System.Windows.Forms.GroupBox();
             this.lblLCodigo = new System.Windows.Forms.Label();
@@ -59,8 +55,7 @@
             this.pnlGraficos = new System.Windows.Forms.Panel();
             this.cmbVistaGrafico = new System.Windows.Forms.ComboBox();
             this.chartAlertas = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.pnlHeader.SuspendLayout();
+            this.lblFiltros = new System.Windows.Forms.Label();
             this.pnlGrilla.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAlertas)).BeginInit();
             this.grpDetalle.SuspendLayout();
@@ -68,50 +63,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartAlertas)).BeginInit();
             this.SuspendLayout();
             //
-            // pnlHeader
-            //
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.pnlHeader.Controls.Add(this.btnCerrarSesion);
-            this.pnlHeader.Controls.Add(this.lblTitulo);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(900, 60);
-            this.pnlHeader.TabIndex = 0;
-            //
-            // btnCerrarSesion
-            //
-            this.btnCerrarSesion.BackColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.btnCerrarSesion.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCerrarSesion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnCerrarSesion.ForeColor = System.Drawing.Color.White;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(750, 16);
-            this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(130, 28);
-            this.btnCerrarSesion.TabIndex = 1;
-            this.btnCerrarSesion.Text = "Cerrar Sesión";
-            this.btnCerrarSesion.UseVisualStyleBackColor = false;
-            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
-            //
-            // lblTitulo
-            //
-            this.lblTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.Location = new System.Drawing.Point(0, 0);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(900, 60);
-            this.lblTitulo.TabIndex = 2;
-            this.lblTitulo.Text = "Gestión de Alertas de Stock";
-            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            //
             // txtBuscar
             //
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.txtBuscar.Location = new System.Drawing.Point(20, 80);
+            this.txtBuscar.Location = new System.Drawing.Point(15, 30);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(260, 24);
+            this.txtBuscar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.txtBuscar.Size = new System.Drawing.Size(300, 24);
             this.txtBuscar.TabIndex = 1;
             this.txtBuscar.TextChanged += new System.EventHandler(this.Filtro_Changed);
             //
@@ -122,7 +80,7 @@
             "Todas",
             "Stock Mínimo",
             "Stock Máximo"});
-            this.cmbTipoAlerta.Location = new System.Drawing.Point(290, 80);
+            this.cmbTipoAlerta.Location = new System.Drawing.Point(325, 30);
             this.cmbTipoAlerta.Name = "cmbTipoAlerta";
             this.cmbTipoAlerta.Size = new System.Drawing.Size(150, 21);
             this.cmbTipoAlerta.TabIndex = 2;
@@ -135,7 +93,7 @@
             "Todas",
             "Activa",
             "Resuelta"});
-            this.cmbEstadoAlerta.Location = new System.Drawing.Point(450, 80);
+            this.cmbEstadoAlerta.Location = new System.Drawing.Point(485, 30);
             this.cmbEstadoAlerta.Name = "cmbEstadoAlerta";
             this.cmbEstadoAlerta.Size = new System.Drawing.Size(150, 21);
             this.cmbEstadoAlerta.TabIndex = 3;
@@ -147,9 +105,10 @@
             this.btnAlternarVista.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAlternarVista.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.btnAlternarVista.ForeColor = System.Drawing.Color.White;
-            this.btnAlternarVista.Location = new System.Drawing.Point(700, 78);
+            this.btnAlternarVista.Location = new System.Drawing.Point(705, 28);
             this.btnAlternarVista.Name = "btnAlternarVista";
-            this.btnAlternarVista.Size = new System.Drawing.Size(180, 27);
+            this.btnAlternarVista.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.btnAlternarVista.Size = new System.Drawing.Size(160, 27);
             this.btnAlternarVista.TabIndex = 4;
             this.btnAlternarVista.Text = "📊 Ver Gráficos";
             this.btnAlternarVista.UseVisualStyleBackColor = false;
@@ -159,7 +118,7 @@
             //
             this.chkFiltrarFecha.AutoSize = true;
             this.chkFiltrarFecha.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.chkFiltrarFecha.Location = new System.Drawing.Point(20, 117);
+            this.chkFiltrarFecha.Location = new System.Drawing.Point(15, 69);
             this.chkFiltrarFecha.Name = "chkFiltrarFecha";
             this.chkFiltrarFecha.Size = new System.Drawing.Size(109, 19);
             this.chkFiltrarFecha.TabIndex = 13;
@@ -171,7 +130,7 @@
             //
             this.lblDesde.AutoSize = true;
             this.lblDesde.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblDesde.Location = new System.Drawing.Point(150, 117);
+            this.lblDesde.Location = new System.Drawing.Point(140, 71);
             this.lblDesde.Name = "lblDesde";
             this.lblDesde.Size = new System.Drawing.Size(42, 15);
             this.lblDesde.TabIndex = 12;
@@ -181,7 +140,7 @@
             //
             this.dtpDesde.Enabled = false;
             this.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDesde.Location = new System.Drawing.Point(200, 113);
+            this.dtpDesde.Location = new System.Drawing.Point(185, 67);
             this.dtpDesde.Name = "dtpDesde";
             this.dtpDesde.Size = new System.Drawing.Size(120, 20);
             this.dtpDesde.TabIndex = 5;
@@ -191,7 +150,7 @@
             //
             this.lblHasta.AutoSize = true;
             this.lblHasta.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblHasta.Location = new System.Drawing.Point(335, 117);
+            this.lblHasta.Location = new System.Drawing.Point(320, 71);
             this.lblHasta.Name = "lblHasta";
             this.lblHasta.Size = new System.Drawing.Size(40, 15);
             this.lblHasta.TabIndex = 11;
@@ -201,7 +160,7 @@
             //
             this.dtpHasta.Enabled = false;
             this.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpHasta.Location = new System.Drawing.Point(380, 113);
+            this.dtpHasta.Location = new System.Drawing.Point(365, 67);
             this.dtpHasta.Name = "dtpHasta";
             this.dtpHasta.Size = new System.Drawing.Size(120, 20);
             this.dtpHasta.TabIndex = 6;
@@ -213,9 +172,10 @@
             this.btnLimpiarFiltros.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiarFiltros.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnLimpiarFiltros.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.btnLimpiarFiltros.Location = new System.Drawing.Point(700, 111);
+            this.btnLimpiarFiltros.Location = new System.Drawing.Point(705, 65);
             this.btnLimpiarFiltros.Name = "btnLimpiarFiltros";
-            this.btnLimpiarFiltros.Size = new System.Drawing.Size(180, 27);
+            this.btnLimpiarFiltros.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.btnLimpiarFiltros.Size = new System.Drawing.Size(160, 27);
             this.btnLimpiarFiltros.TabIndex = 7;
             this.btnLimpiarFiltros.Text = "Limpiar Filtros";
             this.btnLimpiarFiltros.UseVisualStyleBackColor = true;
@@ -226,9 +186,10 @@
             this.pnlGrilla.Controls.Add(this.dgvAlertas);
             this.pnlGrilla.Controls.Add(this.lblSinResultados);
             this.pnlGrilla.Controls.Add(this.grpDetalle);
-            this.pnlGrilla.Location = new System.Drawing.Point(20, 155);
+            this.pnlGrilla.Location = new System.Drawing.Point(15, 102);
             this.pnlGrilla.Name = "pnlGrilla";
-            this.pnlGrilla.Size = new System.Drawing.Size(860, 460);
+            this.pnlGrilla.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Bottom;
+            this.pnlGrilla.Size = new System.Drawing.Size(850, 388);
             this.pnlGrilla.TabIndex = 8;
             //
             // dgvAlertas
@@ -247,16 +208,17 @@
             this.colTipoAlerta,
             this.colEstadoAlerta,
             this.colFechaGeneracion,
-            this.colFechaResolucion,
-            this.colSeleccionarAlerta});
+            this.colFechaResolucion});
             this.dgvAlertas.Location = new System.Drawing.Point(0, 0);
             this.dgvAlertas.Name = "dgvAlertas";
+            this.dgvAlertas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvAlertas.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Bottom;
             this.dgvAlertas.ReadOnly = true;
             this.dgvAlertas.RowHeadersVisible = false;
             this.dgvAlertas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAlertas.Size = new System.Drawing.Size(860, 260);
+            this.dgvAlertas.Size = new System.Drawing.Size(850, 222);
             this.dgvAlertas.TabIndex = 0;
-            this.dgvAlertas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlertas_CellContentClick);
+            this.dgvAlertas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlertas_CellDoubleClick);
             this.dgvAlertas.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvAlertas_CellFormatting);
             //
             // colProductoAlerta
@@ -315,23 +277,15 @@
             this.colFechaResolucion.ReadOnly = true;
             this.colFechaResolucion.Width = 110;
             //
-            // colSeleccionarAlerta
-            //
-            this.colSeleccionarAlerta.HeaderText = "Acción";
-            this.colSeleccionarAlerta.Name = "colSeleccionarAlerta";
-            this.colSeleccionarAlerta.ReadOnly = true;
-            this.colSeleccionarAlerta.Text = "Ver Detalle";
-            this.colSeleccionarAlerta.UseColumnTextForButtonValue = true;
-            this.colSeleccionarAlerta.Width = 100;
-            //
             // lblSinResultados
             //
             this.lblSinResultados.BackColor = System.Drawing.Color.White;
             this.lblSinResultados.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Italic);
             this.lblSinResultados.ForeColor = System.Drawing.Color.Gray;
-            this.lblSinResultados.Location = new System.Drawing.Point(0, 100);
+            this.lblSinResultados.Location = new System.Drawing.Point(0, 80);
             this.lblSinResultados.Name = "lblSinResultados";
-            this.lblSinResultados.Size = new System.Drawing.Size(860, 60);
+            this.lblSinResultados.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.lblSinResultados.Size = new System.Drawing.Size(850, 60);
             this.lblSinResultados.TabIndex = 1;
             this.lblSinResultados.Text = "No existen alertas con los criterios aplicados.";
             this.lblSinResultados.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -356,9 +310,10 @@
             this.grpDetalle.Controls.Add(this.lblLCantAlertas);
             this.grpDetalle.Controls.Add(this.lblVCantAlertas);
             this.grpDetalle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.grpDetalle.Location = new System.Drawing.Point(0, 270);
+            this.grpDetalle.Location = new System.Drawing.Point(0, 230);
             this.grpDetalle.Name = "grpDetalle";
-            this.grpDetalle.Size = new System.Drawing.Size(860, 190);
+            this.grpDetalle.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.grpDetalle.Size = new System.Drawing.Size(850, 158);
             this.grpDetalle.TabIndex = 1;
             this.grpDetalle.TabStop = false;
             this.grpDetalle.Text = "Detalle del Producto Seleccionado";
@@ -366,7 +321,7 @@
             // lblLCodigo
             //
             this.lblLCodigo.AutoSize = true;
-            this.lblLCodigo.Location = new System.Drawing.Point(20, 35);
+            this.lblLCodigo.Location = new System.Drawing.Point(20, 25);
             this.lblLCodigo.Name = "lblLCodigo";
             this.lblLCodigo.Size = new System.Drawing.Size(48, 15);
             this.lblLCodigo.TabIndex = 0;
@@ -377,7 +332,7 @@
             this.lblVCodigo.AutoSize = true;
             this.lblVCodigo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblVCodigo.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.lblVCodigo.Location = new System.Drawing.Point(100, 35);
+            this.lblVCodigo.Location = new System.Drawing.Point(100, 25);
             this.lblVCodigo.Name = "lblVCodigo";
             this.lblVCodigo.Size = new System.Drawing.Size(12, 15);
             this.lblVCodigo.TabIndex = 1;
@@ -386,7 +341,7 @@
             // lblLProducto
             //
             this.lblLProducto.AutoSize = true;
-            this.lblLProducto.Location = new System.Drawing.Point(280, 35);
+            this.lblLProducto.Location = new System.Drawing.Point(280, 25);
             this.lblLProducto.Name = "lblLProducto";
             this.lblLProducto.Size = new System.Drawing.Size(61, 15);
             this.lblLProducto.TabIndex = 2;
@@ -397,7 +352,7 @@
             this.lblVProducto.AutoSize = true;
             this.lblVProducto.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblVProducto.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.lblVProducto.Location = new System.Drawing.Point(370, 35);
+            this.lblVProducto.Location = new System.Drawing.Point(370, 25);
             this.lblVProducto.Name = "lblVProducto";
             this.lblVProducto.Size = new System.Drawing.Size(12, 15);
             this.lblVProducto.TabIndex = 3;
@@ -406,7 +361,7 @@
             // lblLCategoria
             //
             this.lblLCategoria.AutoSize = true;
-            this.lblLCategoria.Location = new System.Drawing.Point(20, 65);
+            this.lblLCategoria.Location = new System.Drawing.Point(20, 52);
             this.lblLCategoria.Name = "lblLCategoria";
             this.lblLCategoria.Size = new System.Drawing.Size(63, 15);
             this.lblLCategoria.TabIndex = 4;
@@ -417,7 +372,7 @@
             this.lblVCategoria.AutoSize = true;
             this.lblVCategoria.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblVCategoria.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.lblVCategoria.Location = new System.Drawing.Point(100, 65);
+            this.lblVCategoria.Location = new System.Drawing.Point(100, 52);
             this.lblVCategoria.Name = "lblVCategoria";
             this.lblVCategoria.Size = new System.Drawing.Size(12, 15);
             this.lblVCategoria.TabIndex = 5;
@@ -426,7 +381,7 @@
             // lblLStockActual
             //
             this.lblLStockActual.AutoSize = true;
-            this.lblLStockActual.Location = new System.Drawing.Point(280, 65);
+            this.lblLStockActual.Location = new System.Drawing.Point(280, 52);
             this.lblLStockActual.Name = "lblLStockActual";
             this.lblLStockActual.Size = new System.Drawing.Size(80, 15);
             this.lblLStockActual.TabIndex = 6;
@@ -437,7 +392,7 @@
             this.lblVStockActual.AutoSize = true;
             this.lblVStockActual.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblVStockActual.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.lblVStockActual.Location = new System.Drawing.Point(390, 65);
+            this.lblVStockActual.Location = new System.Drawing.Point(390, 52);
             this.lblVStockActual.Name = "lblVStockActual";
             this.lblVStockActual.Size = new System.Drawing.Size(12, 15);
             this.lblVStockActual.TabIndex = 7;
@@ -446,7 +401,7 @@
             // lblLStockMin
             //
             this.lblLStockMin.AutoSize = true;
-            this.lblLStockMin.Location = new System.Drawing.Point(20, 95);
+            this.lblLStockMin.Location = new System.Drawing.Point(20, 79);
             this.lblLStockMin.Name = "lblLStockMin";
             this.lblLStockMin.Size = new System.Drawing.Size(87, 15);
             this.lblLStockMin.TabIndex = 8;
@@ -457,7 +412,7 @@
             this.lblVStockMin.AutoSize = true;
             this.lblVStockMin.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblVStockMin.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.lblVStockMin.Location = new System.Drawing.Point(120, 95);
+            this.lblVStockMin.Location = new System.Drawing.Point(120, 79);
             this.lblVStockMin.Name = "lblVStockMin";
             this.lblVStockMin.Size = new System.Drawing.Size(12, 15);
             this.lblVStockMin.TabIndex = 9;
@@ -466,7 +421,7 @@
             // lblLStockMax
             //
             this.lblLStockMax.AutoSize = true;
-            this.lblLStockMax.Location = new System.Drawing.Point(280, 95);
+            this.lblLStockMax.Location = new System.Drawing.Point(280, 79);
             this.lblLStockMax.Name = "lblLStockMax";
             this.lblLStockMax.Size = new System.Drawing.Size(90, 15);
             this.lblLStockMax.TabIndex = 10;
@@ -477,7 +432,7 @@
             this.lblVStockMax.AutoSize = true;
             this.lblVStockMax.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblVStockMax.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.lblVStockMax.Location = new System.Drawing.Point(385, 95);
+            this.lblVStockMax.Location = new System.Drawing.Point(385, 79);
             this.lblVStockMax.Name = "lblVStockMax";
             this.lblVStockMax.Size = new System.Drawing.Size(12, 15);
             this.lblVStockMax.TabIndex = 11;
@@ -486,7 +441,7 @@
             // lblLEstado
             //
             this.lblLEstado.AutoSize = true;
-            this.lblLEstado.Location = new System.Drawing.Point(20, 125);
+            this.lblLEstado.Location = new System.Drawing.Point(20, 106);
             this.lblLEstado.Name = "lblLEstado";
             this.lblLEstado.Size = new System.Drawing.Size(84, 15);
             this.lblLEstado.TabIndex = 12;
@@ -497,7 +452,7 @@
             this.lblVEstado.AutoSize = true;
             this.lblVEstado.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblVEstado.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.lblVEstado.Location = new System.Drawing.Point(125, 125);
+            this.lblVEstado.Location = new System.Drawing.Point(125, 106);
             this.lblVEstado.Name = "lblVEstado";
             this.lblVEstado.Size = new System.Drawing.Size(12, 15);
             this.lblVEstado.TabIndex = 13;
@@ -506,7 +461,7 @@
             // lblLCantAlertas
             //
             this.lblLCantAlertas.AutoSize = true;
-            this.lblLCantAlertas.Location = new System.Drawing.Point(280, 125);
+            this.lblLCantAlertas.Location = new System.Drawing.Point(280, 106);
             this.lblLCantAlertas.Name = "lblLCantAlertas";
             this.lblLCantAlertas.Size = new System.Drawing.Size(106, 15);
             this.lblLCantAlertas.TabIndex = 14;
@@ -517,7 +472,7 @@
             this.lblVCantAlertas.AutoSize = true;
             this.lblVCantAlertas.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblVCantAlertas.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.lblVCantAlertas.Location = new System.Drawing.Point(410, 125);
+            this.lblVCantAlertas.Location = new System.Drawing.Point(410, 106);
             this.lblVCantAlertas.Name = "lblVCantAlertas";
             this.lblVCantAlertas.Size = new System.Drawing.Size(12, 15);
             this.lblVCantAlertas.TabIndex = 15;
@@ -527,9 +482,10 @@
             //
             this.pnlGraficos.Controls.Add(this.cmbVistaGrafico);
             this.pnlGraficos.Controls.Add(this.chartAlertas);
-            this.pnlGraficos.Location = new System.Drawing.Point(20, 155);
+            this.pnlGraficos.Location = new System.Drawing.Point(15, 102);
             this.pnlGraficos.Name = "pnlGraficos";
-            this.pnlGraficos.Size = new System.Drawing.Size(860, 460);
+            this.pnlGraficos.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Bottom;
+            this.pnlGraficos.Size = new System.Drawing.Size(850, 388);
             this.pnlGraficos.TabIndex = 9;
             this.pnlGraficos.Visible = false;
             //
@@ -551,29 +507,25 @@
             //
             this.chartAlertas.Location = new System.Drawing.Point(0, 35);
             this.chartAlertas.Name = "chartAlertas";
-            this.chartAlertas.Size = new System.Drawing.Size(860, 425);
+            this.chartAlertas.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Bottom;
+            this.chartAlertas.Size = new System.Drawing.Size(850, 353);
             this.chartAlertas.TabIndex = 1;
             this.chartAlertas.Text = "chartAlertas";
-            //
-            // btnVolver
-            //
-            this.btnVolver.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
-            this.btnVolver.Location = new System.Drawing.Point(20, 630);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(160, 32);
-            this.btnVolver.TabIndex = 10;
-            this.btnVolver.Text = "Volver al Menú";
-            this.btnVolver.UseVisualStyleBackColor = true;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             //
             // FormAlertas
             //
             this.BackColor = System.Drawing.Color.FromArgb(255, 255, 240);
-            this.ClientSize = new System.Drawing.Size(900, 695);
-            this.Controls.Add(this.btnVolver);
+            // 
+            // lblFiltros
+            // 
+            this.lblFiltros.AutoSize = true;
+            this.lblFiltros.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblFiltros.ForeColor = System.Drawing.Color.FromArgb(46, 92, 45);
+            this.lblFiltros.Location = new System.Drawing.Point(15, 8);
+            this.lblFiltros.Name = "lblFiltros";
+            this.lblFiltros.Text = "Aplicar filtros de búsqueda: escribí texto, elegí tipo y estado, o filtrá por fecha";
+            this.Controls.Add(this.lblFiltros);
+            this.ClientSize = new System.Drawing.Size(880, 500);
             this.Controls.Add(this.pnlGraficos);
             this.Controls.Add(this.pnlGrilla);
             this.Controls.Add(this.btnLimpiarFiltros);
@@ -586,12 +538,10 @@
             this.Controls.Add(this.cmbEstadoAlerta);
             this.Controls.Add(this.cmbTipoAlerta);
             this.Controls.Add(this.txtBuscar);
-            this.Controls.Add(this.pnlHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MinimizeBox = false;
             this.Name = "FormAlertas";
             this.Text = "Sistema AviGestión";
-            this.pnlHeader.ResumeLayout(false);
             this.pnlGrilla.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAlertas)).EndInit();
             this.grpDetalle.ResumeLayout(false);
@@ -603,9 +553,6 @@
 
         }
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Button btnCerrarSesion;
-        private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.ComboBox cmbTipoAlerta;
         private System.Windows.Forms.ComboBox cmbEstadoAlerta;
@@ -625,7 +572,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstadoAlerta;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFechaGeneracion;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFechaResolucion;
-        private System.Windows.Forms.DataGridViewButtonColumn colSeleccionarAlerta;
         private System.Windows.Forms.Label lblSinResultados;
         private System.Windows.Forms.GroupBox grpDetalle;
         private System.Windows.Forms.Label lblLCodigo;
@@ -646,7 +592,7 @@
         private System.Windows.Forms.Label lblVCantAlertas;
         private System.Windows.Forms.Panel pnlGraficos;
         private System.Windows.Forms.ComboBox cmbVistaGrafico;
+        private System.Windows.Forms.Label lblFiltros;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartAlertas;
-        private System.Windows.Forms.Button btnVolver;
     }
 }

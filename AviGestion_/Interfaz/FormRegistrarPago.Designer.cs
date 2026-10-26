@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.splitPagos = new System.Windows.Forms.SplitContainer();
@@ -166,9 +166,9 @@
             // colFecha
             // 
             this.colFecha.DataPropertyName = "Fecha";
-            dataGridViewCellStyle4.Format = "d";
-            dataGridViewCellStyle4.NullValue = null;
-            this.colFecha.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Format = "d";
+            dataGridViewCellStyle1.NullValue = null;
+            this.colFecha.DefaultCellStyle = dataGridViewCellStyle1;
             this.colFecha.HeaderText = "Fecha";
             this.colFecha.MinimumWidth = 6;
             this.colFecha.Name = "colFecha";
@@ -184,8 +184,8 @@
             // colTotal
             // 
             this.colTotal.DataPropertyName = "Total";
-            dataGridViewCellStyle5.Format = "C2";
-            this.colTotal.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Format = "C2";
+            this.colTotal.DefaultCellStyle = dataGridViewCellStyle2;
             this.colTotal.HeaderText = "Total";
             this.colTotal.MinimumWidth = 6;
             this.colTotal.Name = "colTotal";
@@ -194,8 +194,8 @@
             // colSaldo
             // 
             this.colSaldo.DataPropertyName = "SaldoPendiente";
-            dataGridViewCellStyle6.Format = "C2";
-            this.colSaldo.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Format = "C2";
+            this.colSaldo.DefaultCellStyle = dataGridViewCellStyle3;
             this.colSaldo.HeaderText = "Saldo Pendiente";
             this.colSaldo.MinimumWidth = 6;
             this.colSaldo.Name = "colSaldo";
@@ -242,7 +242,7 @@
             this.cboMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMetodoPago.FormattingEnabled = true;
             this.cboMetodoPago.Location = new System.Drawing.Point(120, 120);
-            this.cboMetodoPago.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboMetodoPago.Margin = new System.Windows.Forms.Padding(2);
             this.cboMetodoPago.Name = "cboMetodoPago";
             this.cboMetodoPago.Size = new System.Drawing.Size(92, 21);
             this.cboMetodoPago.TabIndex = 32;

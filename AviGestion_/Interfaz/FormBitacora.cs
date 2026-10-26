@@ -13,13 +13,52 @@ namespace AviGestion_.UI
         {
             InitializeComponent();
             usuarioActual = usuario;
+            ConfigurarPlaceholderBuscar();
             this.Load += FormBitacora_Load;
+        }
+
+
+        // ---- Texto de ayuda dentro del buscador ----
+        private const string PH_BUSCAR = "Buscar por usuario...";
+        private bool inicializando = true;     // evita consultas mientras se arma la pantalla
+
+        // Texto que realmente se usa para buscar (el texto de ayuda no cuenta como búsqueda)
+        private string TextoBusqueda
+        {
+            get { return txtBuscarUsuario.Text == PH_BUSCAR ? "" : txtBuscarUsuario.Text; }
+        }
+
+        private void PonerPlaceholder()
+        {
+            txtBuscarUsuario.Text = PH_BUSCAR;
+            txtBuscarUsuario.ForeColor = System.Drawing.Color.Gray;
+        }
+
+        private void ConfigurarPlaceholderBuscar()
+        {
+            PonerPlaceholder();
+
+            txtBuscarUsuario.Enter += (s, e) =>
+            {
+                if (txtBuscarUsuario.Text == PH_BUSCAR)
+                {
+                    txtBuscarUsuario.Text = "";
+                    txtBuscarUsuario.ForeColor = System.Drawing.Color.Black;
+                }
+            };
+
+            txtBuscarUsuario.Leave += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtBuscarUsuario.Text))
+                    PonerPlaceholder();
+            };
         }
 
         private void FormBitacora_Load(object sender, EventArgs e)
         {
             cmbAccion.SelectedIndex = 0;
             cmbModulo.SelectedIndex = 0;
+            inicializando = false;
             CargarGrilla();
         }
 
@@ -28,7 +67,7 @@ namespace AviGestion_.UI
             DateTime? desde = chkFiltrarFecha.Checked ? dtpDesde.Value.Date : (DateTime?)null;
             DateTime? hasta = chkFiltrarFecha.Checked ? dtpHasta.Value.Date.AddDays(1).AddSeconds(-1) : (DateTime?)null;
 
-            var lista = logica.Buscar(txtBuscarUsuario.Text, cmbAccion.Text, cmbModulo.Text, desde, hasta);
+            var lista = logica.Buscar(TextoBusqueda, cmbAccion.Text, cmbModulo.Text, desde, hasta);
 
             dgvBitacora.DataSource = null;
             dgvBitacora.DataSource = lista;
@@ -39,6 +78,7 @@ namespace AviGestion_.UI
 
         private void Filtro_Changed(object sender, EventArgs e)
         {
+            if (inicializando) return;
             CargarGrilla();
         }
 
@@ -51,31 +91,11 @@ namespace AviGestion_.UI
 
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
-            txtBuscarUsuario.Clear();
+            PonerPlaceholder();
             cmbAccion.SelectedIndex = 0;
             cmbModulo.SelectedIndex = 0;
             chkFiltrarFecha.Checked = false;
             CargarGrilla();
-        }
-
-        private void btnCerrarSesion_Click(object sender, EventArgs e)
-        {
-            var confirmacion = MessageBox.Show("¿Desea cerrar la sesión actual?", "Cerrar sesión",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirmacion != DialogResult.Yes) return;
-
-            BitacoraLogica.Registrar(usuarioActual.Nombre, "Cierre de Sesión", "Seguridad");
-
-            AviGestion_.Form1 login = new AviGestion_.Form1();
-            login.Show();
-            this.Close();
-        }
-
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            FormMenu menu = new FormMenu(usuarioActual);
-            menu.Show();
-            this.Close();
         }
     }
 }

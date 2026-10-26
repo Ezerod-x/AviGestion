@@ -104,25 +104,5 @@ namespace AviGestion_.UI
                 }
             }
         }
-
-        private void btnCerrarSesion_Click(object sender, EventArgs e)
-        {
-            var confirmacion = MessageBox.Show("¿Desea cerrar la sesión actual?", "Cerrar sesión",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirmacion != DialogResult.Yes) return;
-
-            BitacoraLogica.Registrar(usuarioActual.Nombre, "Cierre de Sesión", "Seguridad");
-
-            AviGestion_.Form1 login = new AviGestion_.Form1();
-            login.Show();
-            this.Close();
-        }
-
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            FormMenu menu = new FormMenu(usuarioActual);
-            menu.Show();
-            this.Close();
-        }
     }
 }

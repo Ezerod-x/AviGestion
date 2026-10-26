@@ -12,7 +12,7 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlBusqueda = new System.Windows.Forms.Panel();
             this.lblLupa = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
@@ -58,7 +58,7 @@
             this.lblLupa.Font = new System.Drawing.Font("Segoe UI Emoji", 13F);
             this.lblLupa.Location = new System.Drawing.Point(11, 10);
             this.lblLupa.Name = "lblLupa";
-            this.lblLupa.Size = new System.Drawing.Size(43, 30);
+            this.lblLupa.Size = new System.Drawing.Size(35, 24);
             this.lblLupa.TabIndex = 3;
             this.lblLupa.Text = "🔍";
             // 
@@ -68,7 +68,7 @@
             this.txtBuscar.Font = new System.Drawing.Font("Verdana", 9F);
             this.txtBuscar.Location = new System.Drawing.Point(60, 14);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(780, 26);
+            this.txtBuscar.Size = new System.Drawing.Size(780, 22);
             this.txtBuscar.TabIndex = 1;
             this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
             // 
@@ -94,10 +94,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCategorias.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCategorias.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 9F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            this.dgvCategorias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 9F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.dgvCategorias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCategorias.ColumnHeadersHeight = 32;
             this.dgvCategorias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -155,7 +155,7 @@
             this.lblAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(107)))), ((int)(((byte)(79)))));
             this.lblAyuda.Location = new System.Drawing.Point(7, 352);
             this.lblAyuda.Name = "lblAyuda";
-            this.lblAyuda.Size = new System.Drawing.Size(339, 18);
+            this.lblAyuda.Size = new System.Drawing.Size(268, 14);
             this.lblAyuda.TabIndex = 3;
             this.lblAyuda.Text = "Doble clic en una categoría para modificarla.";
             // 
@@ -180,7 +180,7 @@
             this.lblTituloDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.lblTituloDetalle.Location = new System.Drawing.Point(15, 12);
             this.lblTituloDetalle.Name = "lblTituloDetalle";
-            this.lblTituloDetalle.Size = new System.Drawing.Size(230, 25);
+            this.lblTituloDetalle.Size = new System.Drawing.Size(181, 18);
             this.lblTituloDetalle.TabIndex = 0;
             this.lblTituloDetalle.Text = "Registrar Categoría";
             // 
@@ -207,9 +207,9 @@
             this.lblNombre.AutoSize = true;
             this.lblNombre.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
             this.lblNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.lblNombre.Location = new System.Drawing.Point(3, 23);
+            this.lblNombre.Location = new System.Drawing.Point(3, 25);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(80, 18);
+            this.lblNombre.Size = new System.Drawing.Size(65, 14);
             this.lblNombre.TabIndex = 0;
             this.lblNombre.Text = "NOMBRE";
             // 
@@ -220,7 +220,7 @@
             this.txtNombre.Location = new System.Drawing.Point(200, 18);
             this.txtNombre.Margin = new System.Windows.Forms.Padding(0, 18, 10, 0);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(526, 26);
+            this.txtNombre.Size = new System.Drawing.Size(526, 22);
             this.txtNombre.TabIndex = 1;
             // 
             // lblDescripcion
@@ -229,9 +229,9 @@
             this.lblDescripcion.AutoSize = true;
             this.lblDescripcion.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
             this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.lblDescripcion.Location = new System.Drawing.Point(3, 88);
+            this.lblDescripcion.Location = new System.Drawing.Point(3, 90);
             this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(127, 18);
+            this.lblDescripcion.Size = new System.Drawing.Size(103, 14);
             this.lblDescripcion.TabIndex = 2;
             this.lblDescripcion.Text = "DESCRIPCIÓN";
             // 
@@ -242,7 +242,7 @@
             this.txtDescripcion.Location = new System.Drawing.Point(200, 83);
             this.txtDescripcion.Margin = new System.Windows.Forms.Padding(0, 18, 10, 0);
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(526, 26);
+            this.txtDescripcion.Size = new System.Drawing.Size(526, 22);
             this.txtDescripcion.TabIndex = 3;
             // 
             // flpBotones

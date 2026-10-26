@@ -30,11 +30,56 @@ namespace AviGestion_.UI
             InitializeComponent();
             usuarioActual = usuario;
             ConfigurarChart();
+            ConfigurarPlaceholderBuscar();
+            new ToolTip().SetToolTip(dgvAlertas, "Doble clic en una fila para ver el detalle del producto");
             this.Load += FormAlertas_Load;
+        }
+
+
+        // ---- Texto de ayuda dentro del buscador ----
+        private const string PH_BUSCAR = "Buscar alerta por producto o código...";
+        private bool inicializando = true;     // evita consultas mientras se arma la pantalla
+
+        // Texto que realmente se usa para buscar (el texto de ayuda no cuenta como búsqueda)
+        private string TextoBusqueda
+        {
+            get { return txtBuscar.Text == PH_BUSCAR ? "" : txtBuscar.Text; }
+        }
+
+        private void PonerPlaceholder()
+        {
+            txtBuscar.Text = PH_BUSCAR;
+            txtBuscar.ForeColor = System.Drawing.Color.Gray;
+        }
+
+        private void ConfigurarPlaceholderBuscar()
+        {
+            PonerPlaceholder();
+
+            txtBuscar.Enter += (s, e) =>
+            {
+                if (txtBuscar.Text == PH_BUSCAR)
+                {
+                    txtBuscar.Text = "";
+                    txtBuscar.ForeColor = System.Drawing.Color.Black;
+                }
+            };
+
+            txtBuscar.Leave += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtBuscar.Text))
+                    PonerPlaceholder();
+            };
         }
 
         private void FormAlertas_Load(object sender, EventArgs e)
         {
+            inicializando = false;
+
+            // Antes de mostrar, se ponen al día las alertas de todos los productos
+            // (cubre los que bajaron de stock por pedidos o se cargaron fuera de la pantalla de Stock).
+            try { new StockLogica().SincronizarAlertas(); } catch { }
+
             // El flujo normal del CU-08 arranca mostrando las alertas ACTIVAS.
             cmbTipoAlerta.SelectedItem = "Todas";
             cmbEstadoAlerta.SelectedItem = "Activa";
@@ -78,7 +123,7 @@ namespace AviGestion_.UI
             DateTime? desde = chkFiltrarFecha.Checked ? dtpDesde.Value.Date : (DateTime?)null;
             DateTime? hasta = chkFiltrarFecha.Checked ? dtpHasta.Value.Date.AddDays(1).AddSeconds(-1) : (DateTime?)null;
 
-            var lista = logica.Buscar(txtBuscar.Text, cmbTipoAlerta.Text, cmbEstadoAlerta.Text, desde, hasta);
+            var lista = logica.Buscar(TextoBusqueda, cmbTipoAlerta.Text, cmbEstadoAlerta.Text, desde, hasta);
 
             dgvAlertas.AutoGenerateColumns = false;
             dgvAlertas.DataSource = null;
@@ -93,7 +138,7 @@ namespace AviGestion_.UI
             // Alternativas 2.1 / 6.1 del CU-08: informar cuando no hay alertas para mostrar.
             lblSinResultados.Visible = lista.Count == 0;
             lblSinResultados.Text = lista.Count == 0
-                ? (cmbEstadoAlerta.Text == "Activa" && string.IsNullOrWhiteSpace(txtBuscar.Text) && cmbTipoAlerta.Text == "Todas" && !chkFiltrarFecha.Checked
+                ? (cmbEstadoAlerta.Text == "Activa" && string.IsNullOrWhiteSpace(TextoBusqueda) && cmbTipoAlerta.Text == "Todas" && !chkFiltrarFecha.Checked
                     ? "No hay alertas activas pendientes en este momento."
                     : "No existen alertas con los criterios aplicados.")
                 : "";
@@ -101,6 +146,7 @@ namespace AviGestion_.UI
 
         private void Filtro_Changed(object sender, EventArgs e)
         {
+            if (inicializando) return;
             CargarGrilla();
         }
 
@@ -113,7 +159,7 @@ namespace AviGestion_.UI
 
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
-            txtBuscar.Clear();
+            PonerPlaceholder();
             cmbTipoAlerta.SelectedItem = "Todas";
             cmbEstadoAlerta.SelectedItem = "Todas";
             chkFiltrarFecha.Checked = false;
@@ -135,10 +181,10 @@ namespace AviGestion_.UI
             }
         }
 
-        private void dgvAlertas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        // Doble clic en una fila = ver el detalle del producto de esa alerta
+        private void dgvAlertas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            if (dgvAlertas.Columns[e.ColumnIndex].Name != "colSeleccionarAlerta") return;
 
             var alerta = (AlertaVista)dgvAlertas.Rows[e.RowIndex].DataBoundItem;
             var resumen = logica.ObtenerResumenProducto(alerta.ProductoId);
@@ -239,24 +285,6 @@ namespace AviGestion_.UI
                 serie.Points.AddXY(item.Etiqueta, item.Cantidad);
 
             chartAlertas.Series.Add(serie);
-        }
-
-        private void btnCerrarSesion_Click(object sender, EventArgs e)
-        {
-            var confirmacion = MessageBox.Show("¿Desea cerrar la sesión actual?", "Cerrar sesión",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirmacion != DialogResult.Yes) return;
-
-            AviGestion_.Form1 login = new AviGestion_.Form1();
-            login.Show();
-            this.Close();
-        }
-
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            FormMenu menu = new FormMenu(usuarioActual);
-            menu.Show();
-            this.Close();
         }
 
         private void chartAlertas_Click(object sender, EventArgs e)

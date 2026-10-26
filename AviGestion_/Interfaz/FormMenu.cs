@@ -80,6 +80,7 @@ namespace AviGestion_.UI
             items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Productos", Etiqueta = "catálogo", Titulo = "Gestión de Productos", Roles = deposito, Crear = () => new FormProducto(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Asignar Pedidos", Titulo = "Asignar Pedidos", Roles = deposito, Crear = () => new FormAsignarPedidos(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Stock", Etiqueta = "inventario", Titulo = "Stock e Inventario", Roles = deposito, Crear = () => new FormCargaStock(usuarioActual) });
+            items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Alertas", Etiqueta = "stock", Titulo = "Gestión de Alertas", Roles = deposito, Crear = () => new FormAlertas(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Categorías", Titulo = "Gestión de Categorías", Roles = deposito, Crear = () => new FrmCategorias() });
             items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Vehículos", Titulo = "Gestión de Vehículos", Roles = deposito, Crear = () => new FormVehiculo(usuarioActual) });
 
