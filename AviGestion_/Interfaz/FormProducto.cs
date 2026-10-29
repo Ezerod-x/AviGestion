@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using AviGestion_.Datos;
 using AviGestion_.Logica;
 
 namespace AviGestion_.UI
@@ -45,7 +46,29 @@ namespace AviGestion_.UI
 
         private void FormProducto_Load(object sender, EventArgs e)
         {
+            try { logica.VincularCategorias(); } catch { }   // completa el vínculo en productos viejos
+            CargarCategorias();
             CargarGrilla();
+        }
+
+        // Las categorías salen de la tabla Categorias: las que se cargan en el módulo de Categorías
+        private void CargarCategorias()
+        {
+            try
+            {
+                var categorias = logica.ObtenerCategorias();
+                cmbCategoria.DataSource = null;
+                cmbCategoria.Items.Clear();
+                cmbCategoria.DisplayMember = "Nombre";
+                cmbCategoria.ValueMember = "Id_Categoria";
+                cmbCategoria.DataSource = categorias;
+                cmbCategoria.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudieron cargar las categorías.\n" + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void CargarGrilla(string filtro = "")
@@ -76,7 +99,10 @@ namespace AviGestion_.UI
             idSeleccionado = producto.Id;
             txtCodigo.Text = producto.Codigo;
             txtDescripcion.Text = producto.Descripcion;
-            cmbCategoria.Text = producto.Categoria;
+            if (producto.Id_Categoria > 0)
+                cmbCategoria.SelectedValue = producto.Id_Categoria;
+            else
+                cmbCategoria.SelectedIndex = -1;   // producto viejo sin categoría vinculada: elegir una
             nudPrecio.Value = producto.Precio;
             nudStock.Value = producto.Stock;
             nudStockMinimo.Value = producto.StockMinimo;
@@ -93,7 +119,8 @@ namespace AviGestion_.UI
                     Id = idSeleccionado,
                     Codigo = txtCodigo.Text.Trim(),
                     Descripcion = txtDescripcion.Text.Trim(),
-                    Categoria = cmbCategoria.Text,
+                    Id_Categoria = cmbCategoria.SelectedValue is int ? (int)cmbCategoria.SelectedValue : 0,
+                    Categoria = cmbCategoria.SelectedItem is Categoria ? ((Categoria)cmbCategoria.SelectedItem).Nombre : "",
                     Precio = nudPrecio.Value,
                     Stock = (int)nudStock.Value,
                     StockMinimo = (int)nudStockMinimo.Value,

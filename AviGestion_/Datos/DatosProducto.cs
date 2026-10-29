@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using AviGestion_.Logica;
 using AviGestion_.Seguridad;
@@ -12,7 +13,7 @@ namespace AviGestion_.Datos
             var lista = new List<Producto>();
             using (SqlConnection cn = Conexion.ObtenerConexion())
             {
-                string sql = @"SELECT Id, Codigo, Descripcion, Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado, DigitoVerificador 
+                string sql = @"SELECT Id, Codigo, Descripcion, Categoria, Id_Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado, DigitoVerificador 
                                FROM Productos";
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
                 {
@@ -32,7 +33,7 @@ namespace AviGestion_.Datos
             var lista = new List<Producto>();
             using (SqlConnection cn = Conexion.ObtenerConexion())
             {
-                string sql = @"SELECT Id, Codigo, Descripcion, Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado, DigitoVerificador 
+                string sql = @"SELECT Id, Codigo, Descripcion, Categoria, Id_Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado, DigitoVerificador 
                                FROM Productos 
                                WHERE Codigo LIKE @filtro OR Descripcion LIKE @filtro";
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
@@ -57,6 +58,7 @@ namespace AviGestion_.Datos
                 Codigo = reader["Codigo"].ToString(),
                 Descripcion = reader["Descripcion"].ToString(),
                 Categoria = reader["Categoria"].ToString(),
+                Id_Categoria = reader["Id_Categoria"] == DBNull.Value ? 0 : (int)reader["Id_Categoria"],
                 Precio = (decimal)reader["Precio"],
                 Stock = (int)reader["Stock"],
                 StockMinimo = (int)reader["StockMinimo"],
@@ -89,13 +91,14 @@ namespace AviGestion_.Datos
             p.DigitoVerificador = DigitoVerificador.Calcular(p.Codigo);
             using (SqlConnection cn = Conexion.ObtenerConexion())
             {
-                string sql = @"INSERT INTO Productos (Codigo, Descripcion, Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado, DigitoVerificador) 
-                               VALUES (@codigo, @descripcion, @categoria, @precio, @stock, @stockMinimo, @stockMaximo, @estado, @digito)";
+                string sql = @"INSERT INTO Productos (Codigo, Descripcion, Categoria, Id_Categoria, Precio, Stock, StockMinimo, StockMaximo, Estado, DigitoVerificador) 
+                               VALUES (@codigo, @descripcion, @categoria, @idCategoria, @precio, @stock, @stockMinimo, @stockMaximo, @estado, @digito)";
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
                 {
                     cmd.Parameters.AddWithValue("@codigo", p.Codigo);
                     cmd.Parameters.AddWithValue("@descripcion", p.Descripcion);
                     cmd.Parameters.AddWithValue("@categoria", p.Categoria);
+                    cmd.Parameters.AddWithValue("@idCategoria", p.Id_Categoria > 0 ? (object)p.Id_Categoria : DBNull.Value);
                     cmd.Parameters.AddWithValue("@precio", p.Precio);
                     cmd.Parameters.AddWithValue("@stock", p.Stock);
                     cmd.Parameters.AddWithValue("@stockMinimo", p.StockMinimo);
@@ -114,7 +117,7 @@ namespace AviGestion_.Datos
             using (SqlConnection cn = Conexion.ObtenerConexion())
             {
                 string sql = @"UPDATE Productos SET Codigo=@codigo, Descripcion=@descripcion, 
-                               Categoria=@categoria, Precio=@precio, Stock=@stock, 
+                               Categoria=@categoria, Id_Categoria=@idCategoria, Precio=@precio, Stock=@stock, 
                                StockMinimo=@stockMinimo, StockMaximo=@stockMaximo, Estado=@estado, DigitoVerificador=@digito 
                                WHERE Id=@id";
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
@@ -122,6 +125,7 @@ namespace AviGestion_.Datos
                     cmd.Parameters.AddWithValue("@codigo", p.Codigo);
                     cmd.Parameters.AddWithValue("@descripcion", p.Descripcion);
                     cmd.Parameters.AddWithValue("@categoria", p.Categoria);
+                    cmd.Parameters.AddWithValue("@idCategoria", p.Id_Categoria > 0 ? (object)p.Id_Categoria : DBNull.Value);
                     cmd.Parameters.AddWithValue("@precio", p.Precio);
                     cmd.Parameters.AddWithValue("@stock", p.Stock);
                     cmd.Parameters.AddWithValue("@stockMinimo", p.StockMinimo);
@@ -129,6 +133,24 @@ namespace AviGestion_.Datos
                     cmd.Parameters.AddWithValue("@estado", p.Estado);
                     cmd.Parameters.AddWithValue("@digito", p.DigitoVerificador);
                     cmd.Parameters.AddWithValue("@id", p.Id);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Completa Id_Categoria en los productos que solo tienen el nombre de la categoría
+        // (cargados antes del vínculo). Es seguro repetirlo: solo toca los que están vacíos.
+        public void VincularCategorias()
+        {
+            using (SqlConnection cn = Conexion.ObtenerConexion())
+            {
+                string sql = @"UPDATE p SET p.Id_Categoria = c.Id_Categoria
+                               FROM Productos p
+                               INNER JOIN Categorias c ON c.Nombre = p.Categoria
+                               WHERE p.Id_Categoria IS NULL";
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
                     cn.Open();
                     cmd.ExecuteNonQuery();
                 }

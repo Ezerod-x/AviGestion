@@ -8,6 +8,19 @@ namespace AviGestion_.Logica
     public class ABM_Producto
     {
         private DatosProducto datos = new DatosProducto();
+        private CategoriaLogica categorias = new CategoriaLogica();
+
+        // Categorías cargadas en el módulo de Categorías (para el combo de Productos)
+        public List<Categoria> ObtenerCategorias()
+        {
+            return categorias.ObtenerCategorias();
+        }
+
+        // Completa el vínculo producto-categoría en los productos viejos
+        public void VincularCategorias()
+        {
+            datos.VincularCategorias();
+        }
 
         public List<Producto> ListarProductos()
         {
@@ -27,7 +40,7 @@ namespace AviGestion_.Logica
                 throw new Exception("El código es obligatorio.");
             if (string.IsNullOrWhiteSpace(p.Descripcion))
                 throw new Exception("La descripción es obligatoria.");
-            if (string.IsNullOrWhiteSpace(p.Categoria))
+            if (p.Id_Categoria <= 0 || string.IsNullOrWhiteSpace(p.Categoria))
                 throw new Exception("La categoría es obligatoria.");
             if (string.IsNullOrWhiteSpace(p.Estado))
                 throw new Exception("El estado es obligatorio.");

@@ -6,6 +6,10 @@
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
         public string Categoria { get; set; }
+
+        // Vínculo real con la tabla Categorias (0 = sin categoría). No se muestra en las grillas.
+        [System.ComponentModel.Browsable(false)]
+        public int Id_Categoria { get; set; }
         public decimal Precio { get; set; }
         public int Stock { get; set; }
         public string Estado { get; set; }

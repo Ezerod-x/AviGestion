@@ -110,12 +110,32 @@ namespace AviGestion_.Datos
                 using (SqlConnection con = Conexion.ObtenerConexion())
                 {
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SP_ModificarCategoria", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Id_Categoria", idCategoria);
-                    cmd.Parameters.AddWithValue("@Nombre", nombre);
-                    cmd.Parameters.AddWithValue("@Descripcion", descripcion);
-                    cmd.ExecuteNonQuery();
+                    using (SqlTransaction tx = con.BeginTransaction())
+                    {
+                        try
+                        {
+                            SqlCommand cmd = new SqlCommand("SP_ModificarCategoria", con, tx);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("@Id_Categoria", idCategoria);
+                            cmd.Parameters.AddWithValue("@Nombre", nombre);
+                            cmd.Parameters.AddWithValue("@Descripcion", descripcion);
+                            cmd.ExecuteNonQuery();
+
+                            // Los productos de la categoría muestran el nombre nuevo
+                            SqlCommand prod = new SqlCommand(
+                                "UPDATE Productos SET Categoria = @Nombre WHERE Id_Categoria = @Id_Categoria", con, tx);
+                            prod.Parameters.AddWithValue("@Nombre", nombre);
+                            prod.Parameters.AddWithValue("@Id_Categoria", idCategoria);
+                            prod.ExecuteNonQuery();
+
+                            tx.Commit();
+                        }
+                        catch
+                        {
+                            tx.Rollback();
+                            throw;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
