@@ -236,6 +236,7 @@ namespace AviGestion_.UI
             pantalla.AutoScrollMinSize = pantalla.Size;                // tamaño original del diseño
             pantalla.Dock = DockStyle.Fill;
             OcultarEncabezadoPropio(pantalla);
+            BloquearGrillas(pantalla);
 
             MostrarPanelesInicio(false);                          // oculta los gráficos del inicio
             pnlContenido.Controls.Add(pantalla);
@@ -245,6 +246,23 @@ namespace AviGestion_.UI
 
             lblTitulo.Text = titulo;
             Resaltar(botonMenu);
+        }
+
+        // Todas las grillas: una sola fila seleccionable y sin redimensionar ni mover filas o columnas
+        private void BloquearGrillas(Control padre)
+        {
+            foreach (Control c in padre.Controls)
+            {
+                DataGridView dgv = c as DataGridView;
+                if (dgv != null)
+                {
+                    dgv.MultiSelect = false;
+                    dgv.AllowUserToResizeRows = false;
+                    dgv.AllowUserToResizeColumns = false;
+                    dgv.AllowUserToOrderColumns = false;
+                }
+                if (c.HasChildren) BloquearGrillas(c);
+            }
         }
 
         // Cuando se cierra la pantalla incrustada, vuelve al inicio.
