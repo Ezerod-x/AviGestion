@@ -16,13 +16,18 @@ namespace AviGestion
         {
             _usuarioActual = usuarioActual;
         }
+
         // Textos de ayuda (placeholders)
         private const string PhBuscar = "🔍 Buscar por marca, modelo o patente...";
         private const string PhModelo = "Ej: Atego 1721";
         private const string PhPatente = "Ej: AB 123 CD";
 
-        private static readonly Color Verde = Color.FromArgb(46, 125, 50);
-        private static readonly Color Rojo = Color.FromArgb(198, 40, 40);
+        // Alto de la grilla según el panel de alta esté visible u oculto
+        private const int AltoGrillaConPanel = 190;
+        private const int AltoGrillaSinPanel = 445;
+
+        private static readonly Color Verde = Color.FromArgb(46, 92, 45);
+        private static readonly Color Rojo = Color.FromArgb(150, 30, 30);
 
         private readonly VehiculoLogica _logica = new VehiculoLogica();
         private List<Vehiculo> _vehiculos = new List<Vehiculo>();
@@ -43,6 +48,7 @@ namespace AviGestion
         private void FormVehiculo_Load(object sender, EventArgs e)
         {
             LimpiarFormulario();
+            MostrarPanelAlta(false); // el panel aparece recién al apretar "Agregar Vehículo"
             CargarVehiculos();
         }
 
@@ -54,21 +60,10 @@ namespace AviGestion
         {
             _fuenteNegrita = new Font(dgvVehiculos.DefaultCellStyle.Font, FontStyle.Bold);
 
-            dgvVehiculos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvVehiculos.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvVehiculos.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
 
-            AjustarPesoColumna("colNro", 40);
-            AjustarPesoColumna("colCapacidad", 130);
-            AjustarPesoColumna("colEditar", 80);
-            AjustarPesoColumna("colBaja", 90);
-        }
-        private void AjustarPesoColumna(string nombre, float peso)
-        {
-            DataGridViewColumn columna = dgvVehiculos.Columns[nombre];
-            if (columna != null)
-                columna.FillWeight = peso;
-        }
         private void ConfigurarPlaceholders()
         {
             AplicarPlaceholder(txtBuscar, PhBuscar);
@@ -118,6 +113,13 @@ namespace AviGestion
             txt.ForeColor = Color.Gray;
         }
 
+        // Muestra u oculta el panel de alta/edición y reacomoda la grilla
+        private void MostrarPanelAlta(bool visible)
+        {
+            pnlAltaModificacion.Visible = visible;
+            dgvVehiculos.Height = visible ? AltoGrillaConPanel : AltoGrillaSinPanel;
+        }
+
         // =============================================================
         // Carga y visualización de la grilla
         // =============================================================
@@ -149,12 +151,12 @@ namespace AviGestion
 
             dgvVehiculos.Rows.Clear();
 
-            int nro = 1;
             foreach (Vehiculo v in lista)
             {
-                // Las 2 últimas columnas son los botones (su texto lo pone CellFormatting)
-                int fila = dgvVehiculos.Rows.Add(nro++, v.Marca, v.Modelo, v.Patente,
-                                                 v.CapacidadMax, v.Estado, null, null);
+                // Las 2 últimas columnas son botones (su texto lo pone CellFormatting)
+                int fila = dgvVehiculos.Rows.Add(v.Marca, v.Modelo, v.Patente,
+                                                 v.CapacidadMax, v.CapacidadActual,
+                                                 v.Estado, null, null);
                 dgvVehiculos.Rows[fila].Tag = v; // guardamos el vehículo completo en la fila
             }
 
@@ -253,7 +255,10 @@ namespace AviGestion
 
             // Si justo se estaba editando este vehículo, salimos del modo edición
             if (_vehiculoEnEdicion != null && _vehiculoEnEdicion.Id == v.Id)
+            {
                 LimpiarFormulario();
+                MostrarPanelAlta(false);
+            }
 
             CargarVehiculos();
         }
@@ -295,13 +300,14 @@ namespace AviGestion
             SetTexto(txtModelo, v.Modelo);
             SetTexto(txtPatente, v.Patente);
 
-            numCapacidadMax.Value = Math.Min(v.CapacidadMax, (int)numCapacidadMax.Maximum);
+            nudCapacidadMax.Value = Math.Min(v.CapacidadMax, (int)nudCapacidadMax.Maximum);
             cmbEstado.SelectedItem = v.Estado;
 
-            lblAltaVehiculo.Text = "Modificación de Vehículo";
-            lblRegistrarNuevo.Text = "Editar Vehículo";
-            btnRegistrar.Text = "Guardar Cambios";
+            lblAltaModificacion.Text = "Modificación de Vehículo";
+            lblRegistrarVehiculo.Text = "Editar Vehículo";
+            btnRegistrarVehiculo.Text = "Guardar Cambios";
 
+            MostrarPanelAlta(true);
             cmbMarca.Focus();
         }
 
@@ -313,26 +319,28 @@ namespace AviGestion
             cmbMarca.SelectedIndex = -1;
             RestaurarPlaceholder(txtModelo, PhModelo);
             RestaurarPlaceholder(txtPatente, PhPatente);
-            numCapacidadMax.Value = 0;
+            nudCapacidadMax.Value = 0;
             cmbEstado.SelectedIndex = 0; // "Activo"
 
-            lblAltaVehiculo.Text = "Alta de Vehículo";
-            lblRegistrarNuevo.Text = "Registrar Nuevo Vehículo";
-            btnRegistrar.Text = "Registrar Vehículo";
+            lblAltaModificacion.Text = "Alta de Vehículo";
+            lblRegistrarVehiculo.Text = "Registrar Nuevo Vehículo";
+            btnRegistrarVehiculo.Text = "Registrar Vehículo";
         }
 
         private void btnAgregarVehiculo_Click(object sender, EventArgs e)
         {
             LimpiarFormulario();
+            MostrarPanelAlta(true);
             cmbMarca.Focus();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            LimpiarFormulario();
+            MostrarPanelAlta(false);
         }
 
-        private void btnRegistrar_Click(object sender, EventArgs e)
+        private void btnRegistrarVehiculo_Click(object sender, EventArgs e)
         {
             bool esEdicion = _vehiculoEnEdicion != null;
 
@@ -342,7 +350,7 @@ namespace AviGestion
                 Marca = cmbMarca.Text,
                 Modelo = ObtenerTexto(txtModelo, PhModelo),
                 Patente = ObtenerTexto(txtPatente, PhPatente),
-                CapacidadMax = (int)numCapacidadMax.Value,
+                CapacidadMax = (int)nudCapacidadMax.Value,
                 CapacidadActual = esEdicion ? _vehiculoEnEdicion.CapacidadActual : 0,
                 Estado = cmbEstado.Text
             };
@@ -365,6 +373,7 @@ namespace AviGestion
                 "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             LimpiarFormulario();
+            MostrarPanelAlta(false);
             CargarVehiculos();
         }
 
