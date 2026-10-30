@@ -3,12 +3,9 @@ using AviGestion_.Interfaz;
 using AviGestion_.Logica;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AviGestion_.UI
@@ -83,6 +80,7 @@ namespace AviGestion_.UI
             items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Alertas", Etiqueta = "stock", Titulo = "Gestión de Alertas", Roles = deposito, Crear = () => new FormAlertas(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Categorías", Titulo = "Gestión de Categorías", Roles = deposito, Crear = () => new FrmCategorias() });
             items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Vehículos", Titulo = "Gestión de Vehículos", Roles = deposito, Crear = () => new FormVehiculo(usuarioActual) });
+            items.Add(new ItemDeMenu { Seccion = "DEPÓSITO", Texto = "Entregas", Titulo = "Registrar Entregas", Roles = deposito, Crear = () => new FormControlEntregas(usuarioActual) });
 
             items.Add(new ItemDeMenu { Seccion = "ADMINISTRACIÓN", Texto = "Usuarios", Titulo = "Gestión de Usuarios", Roles = admin, Crear = () => new FormUsuarios(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "ADMINISTRACIÓN", Texto = "Bitácora", Titulo = "Bitácora", Roles = admin, Crear = () => new FormBitacora(usuarioActual) });
