@@ -127,6 +127,7 @@ namespace AviGestion_.Interfaz
             idClienteSeleccionado = -1; // Nos aseguramos que está en modo Alta
 
             LimpiarCampos();
+            btnVerHistorial.Visible = false;
             grbRegistrarModificar.Text = "Alta";
             lblRegistrarModificar.Text = "Registrar Nuevo Cliente";
             grbRegistrarModificar.Visible = true;
