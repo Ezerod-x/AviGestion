@@ -3,7 +3,9 @@ using AviGestion_.Logica;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace AviGestion_.Interfaz
@@ -469,26 +471,36 @@ namespace AviGestion_.Interfaz
             }
 
             y += 4;
-            bool puedeSalir = pedidos.Length > 0;
-            var btnSalio = new Button
+            bool tienePedidos = pedidos.Length > 0;
+            int cantidadPedidos = pedidos.Length;
+
+            // Dos botones lado a lado: "Hoja de carga (PDF)" y "Camión salió"
+            var botones = new TableLayoutPanel
             {
-                Text = "Camión salió",
-                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                FlatStyle = FlatStyle.Flat,
-                Enabled = puedeSalir,
-                BackColor = puedeSalir ? Verde : Color.Gainsboro,
-                ForeColor = puedeSalir ? Color.White : Color.Gray,
-                Cursor = puedeSalir ? Cursors.Hand : Cursors.Default,
-                Size = new Size(ancho - 24, 28),
+                ColumnCount = 2,
+                RowCount = 1,
+                Size = new Size(ancho - 24, 30),
                 Location = new Point(10, y),
                 Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-                UseVisualStyleBackColor = false
+                Margin = Padding.Empty,
+                Padding = Padding.Empty
             };
-            btnSalio.FlatAppearance.BorderColor = btnSalio.BackColor;
-            int cantidadPedidos = pedidos.Length;
+            botones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            botones.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            botones.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
+            var btnHoja = CrearBotonTarjeta("Hoja de carga (PDF)", tienePedidos, false);
+            btnHoja.Margin = new Padding(0, 0, 3, 0);
+            btnHoja.Click += (s, e) => GenerarHojaCarga(idVehiculo, AsignacionLogica.EstadoEnCamion);
+
+            var btnSalio = CrearBotonTarjeta("Camión salió", tienePedidos, true);
+            btnSalio.Margin = new Padding(3, 0, 0, 0);
             btnSalio.Click += (s, e) => DespacharCamion(idVehiculo, patente, cantidadPedidos, cajasCargadas);
-            card.Controls.Add(btnSalio);
-            y += 28 + 10;
+
+            botones.Controls.Add(btnHoja, 0, 0);
+            botones.Controls.Add(btnSalio, 1, 0);
+            card.Controls.Add(botones);
+            y += 30 + 10;
 
             card.Height = y;
             return card;
@@ -513,8 +525,47 @@ namespace AviGestion_.Interfaz
             foreach (DataRow p in pedidos)
                 AgregarFilaPedido(card, ref y, p, ancho, patente, false);
 
+            // Volver a generar la hoja de carga de un camión que ya salió
+            if (!sinCamion)
+            {
+                int idVehiculo = Convert.ToInt32(primero["Id_Vehiculo"]);
+                var lnkHoja = new LinkLabel
+                {
+                    Text = "Hoja de carga (PDF)",
+                    LinkColor = Verde,
+                    ActiveLinkColor = Verde,
+                    AutoSize = true,
+                    Location = new Point(10, y + 2)
+                };
+                lnkHoja.LinkClicked += (s, e) => GenerarHojaCarga(idVehiculo, AsignacionLogica.EstadoEnCamino);
+                card.Controls.Add(lnkHoja);
+                y += 24;
+            }
+
             card.Height = y + 8;
             return card;
+        }
+
+        // Botón de las tarjetas de camión (principal = verde lleno, secundario = borde verde)
+        private Button CrearBotonTarjeta(string texto, bool habilitado, bool principal)
+        {
+            Color fondo = !habilitado ? Color.Gainsboro : (principal ? Verde : Color.White);
+            Color letra = !habilitado ? Color.Gray : (principal ? Color.White : Verde);
+
+            var btn = new Button
+            {
+                Text = texto,
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                Enabled = habilitado,
+                BackColor = fondo,
+                ForeColor = letra,
+                Cursor = habilitado ? Cursors.Hand : Cursors.Default,
+                Dock = DockStyle.Fill,
+                UseVisualStyleBackColor = false
+            };
+            btn.FlatAppearance.BorderColor = habilitado ? Verde : Color.Gainsboro;
+            return btn;
         }
 
         // ---------------------------------------------------------------
@@ -587,6 +638,53 @@ namespace AviGestion_.Interfaz
                 "Registró la salida del vehículo " + patente + " con " + cantidadPedidos + " pedido(s)", "Pedidos");
 
             BeginInvoke((Action)CargarTablero);
+        }
+
+        // Genera el PDF con todos los pedidos del camión, lo guarda en el escritorio y lo abre
+        private void GenerarHojaCarga(int idVehiculo, string estadoPedidos)
+        {
+            DataRow[] encontrado = vehiculos.Select("Id = " + idVehiculo);
+            if (encontrado.Length == 0)
+            {
+                MessageBox.Show("No se encontró el camión.", "Hoja de carga",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DataRow vehiculo = encontrado[0];
+            string patente = Convert.ToString(vehiculo["Patente"]).Trim();
+
+            try
+            {
+                DataTable detalle = logica.DetalleCarga(idVehiculo, estadoPedidos);
+                if (detalle.Rows.Count == 0)
+                {
+                    MessageBox.Show("El camión " + patente + " no tiene pedidos cargados.", "Hoja de carga",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                string ruta = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                    "HojaDeCarga_" + patente + "_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".pdf");
+
+                HojaDeCargaPdf.Generar(ruta, vehiculo, detalle, usuarioActual.Nombre);
+
+                BitacoraLogica.Registrar(usuarioActual.Nombre,
+                    "Generó la hoja de carga del vehículo " + patente, "Pedidos");
+
+                Process.Start(new ProcessStartInfo(ruta) { UseShellExecute = true });
+            }
+            catch (IOException)
+            {
+                MessageBox.Show("No se pudo guardar el PDF. Si tenés abierta una hoja de carga con el mismo nombre, cerrala y probá de nuevo.",
+                    "Hoja de carga", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al generar el PDF: " + ex.Message,
+                    "Hoja de carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
