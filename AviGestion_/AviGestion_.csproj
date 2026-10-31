@@ -202,6 +202,7 @@
       <DependentUpon>FrmPedidos.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaz\GraficoBarras.cs" />
+    <Compile Include="Interfaz\HojaDeCargaPdf.cs" />
     <Compile Include="Logica\ABM_Producto.cs" />
     <Compile Include="Logica\Alerta.cs" />
     <Compile Include="Logica\AsignacionLogica.cs" />
