@@ -271,6 +271,9 @@
     <EmbeddedResource Include="Interfaz\FormRegistrarPago.resx">
       <DependentUpon>FormRegistrarPago.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaz\FormVehiculo.resx">
+      <DependentUpon>FormVehiculo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FrmAgregarCliente.resx">
       <DependentUpon>FrmAgregarCliente.cs</DependentUpon>
     </EmbeddedResource>
