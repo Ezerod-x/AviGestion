@@ -318,6 +318,11 @@ namespace AviGestion_.UI
             pantalla.TopLevel = false;
             pantalla.FormBorderStyle = FormBorderStyle.None;
             pantalla.MaximumSize = Size.Empty;
+            pantalla.AutoScroll = true;                                // si el espacio es chico, scroll en vez de cortarse
+            pantalla.AutoScrollMinSize = pantalla.Size;                // tamaño original del diseño
+            pantalla.Dock = DockStyle.Fill;
+            OcultarEncabezadoPropio(pantalla);
+            BloquearGrillas(pantalla);
 
             int altoEncabezado = OcultarEncabezadoPropio(pantalla);       // devuelve el alto que se liberó
             disenio.Height -= altoEncabezado;
@@ -339,6 +344,23 @@ namespace AviGestion_.UI
             Resaltar(botonMenu);
             pnlContenido.ResumeLayout(true);
             pnlFondo.ResumeLayout(true);
+        }
+
+        // Todas las grillas: una sola fila seleccionable y sin redimensionar ni mover filas o columnas
+        private void BloquearGrillas(Control padre)
+        {
+            foreach (Control c in padre.Controls)
+            {
+                DataGridView dgv = c as DataGridView;
+                if (dgv != null)
+                {
+                    dgv.MultiSelect = false;
+                    dgv.AllowUserToResizeRows = false;
+                    dgv.AllowUserToResizeColumns = false;
+                    dgv.AllowUserToOrderColumns = false;
+                }
+                if (c.HasChildren) BloquearGrillas(c);
+            }
         }
 
         // Cuando se cierra la pantalla incrustada, vuelve al inicio.

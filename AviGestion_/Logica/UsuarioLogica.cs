@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,14 +35,11 @@ namespace AviGestion_.Logica
         #endregion
 
         #region ABM de usuarios
-        public List<Usuario> ObtenerTodos()
-        {
-            return usuarioDatos.ObtenerTodos();
-        }
 
         // Recibe la contraseña en texto plano y la guarda encriptada.
         public void Insertar(Usuario usuario)
         {
+            ValidarMailDelUsuario(usuario);
             usuario.Contrasena = Encriptador.EncriptarSHA256((usuario.Contrasena ?? "").Trim());
             usuarioDatos.Insertar(usuario);
         }
@@ -49,11 +47,54 @@ namespace AviGestion_.Logica
         // No modifica la contraseña: eso se hace con CambiarContrasena o con el recupero.
         public void Actualizar(Usuario usuario)
         {
+            ValidarMailDelUsuario(usuario);
             usuarioDatos.Actualizar(usuario);
+        }
+
+        // El correo es obligatorio, tiene que ser válido y no puede repetirse:
+        // con él se recupera la contraseña, así que debe identificar a un único usuario.
+        private void ValidarMailDelUsuario(Usuario usuario)
+        {
+            usuario.Mail = (usuario.Mail ?? "").Trim();
+
+            string error = ValidarMail(usuario.Mail);
+            if (error != null)
+                throw new Exception(error);
+
+            Usuario existente = usuarioDatos.ObtenerUsuarioPorMail(usuario.Mail);
+            if (existente != null && existente.IdUsuario != usuario.IdUsuario)
+                throw new Exception("Ya existe un usuario con ese correo electrónico.");
+        }
+
+        // Devuelve null si el correo es válido, o el mensaje del problema
+        public static string ValidarMail(string mail)
+        {
+            if (string.IsNullOrWhiteSpace(mail))
+                return "El correo electrónico es obligatorio.";
+
+            if (!Regex.IsMatch(mail.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                return "El correo electrónico no es válido. Ejemplo: nombre@dominio.com";
+
+            return null;
         }
 
         public void Eliminar(int idUsuario)
         {
+            usuarioDatos.Eliminar(idUsuario);
+        }
+
+        // Búsqueda por nombre, apellido o rol (texto vacío = todos los usuarios)
+        public List<Usuario> BuscarUsuarios(string busqueda)
+        {
+            return usuarioDatos.BuscarUsuarios((busqueda ?? "").Trim());
+        }
+
+        // Un usuario no puede eliminarse a sí mismo: se quedaría sin acceso al sistema
+        public void Eliminar(int idUsuario, int idUsuarioActual)
+        {
+            if (idUsuario == idUsuarioActual)
+                throw new Exception("No podés eliminar tu propio usuario.");
+
             usuarioDatos.Eliminar(idUsuario);
         }
         #endregion

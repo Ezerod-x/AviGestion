@@ -13,6 +13,13 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblLupa = new System.Windows.Forms.Label();
             this.pnlBusqueda = new System.Windows.Forms.Panel();
             this.txtBuscar = new System.Windows.Forms.TextBox();
@@ -78,6 +85,7 @@
             // 
             this.lblLupa.AutoSize = true;
             this.lblLupa.Font = new System.Drawing.Font("Segoe UI Emoji", 13F);
+            this.lblLupa.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblLupa.Location = new System.Drawing.Point(4, 10);
             this.lblLupa.Name = "lblLupa";
             this.lblLupa.Size = new System.Drawing.Size(43, 30);
@@ -86,7 +94,7 @@
             // 
             // pnlBusqueda
             // 
-            this.pnlBusqueda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(220)))));
+            this.pnlBusqueda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(220)))));
             this.pnlBusqueda.Controls.Add(this.lblLupa);
             this.pnlBusqueda.Controls.Add(this.txtBuscar);
             this.pnlBusqueda.Controls.Add(this.btnAgregarPedido);
@@ -107,9 +115,9 @@
             // 
             // btnAgregarPedido
             // 
-            this.btnAgregarPedido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnAgregarPedido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnAgregarPedido.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAgregarPedido.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnAgregarPedido.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAgregarPedido.ForeColor = System.Drawing.Color.White;
             this.btnAgregarPedido.Location = new System.Drawing.Point(870, 7);
             this.btnAgregarPedido.Name = "btnAgregarPedido";
@@ -121,7 +129,7 @@
             // 
             // pnlDetalle
             // 
-            this.pnlDetalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(210)))));
+            this.pnlDetalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(220)))));
             this.pnlDetalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlDetalle.Controls.Add(this.lblDetNroPedido);
             this.pnlDetalle.Controls.Add(this.lblDetCliente);
@@ -143,7 +151,7 @@
             // 
             this.lblDetNroPedido.AutoSize = true;
             this.lblDetNroPedido.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold);
-            this.lblDetNroPedido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblDetNroPedido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblDetNroPedido.Location = new System.Drawing.Point(14, 12);
             this.lblDetNroPedido.Name = "lblDetNroPedido";
             this.lblDetNroPedido.Size = new System.Drawing.Size(216, 25);
@@ -154,7 +162,7 @@
             // 
             this.lblDetCliente.AutoSize = true;
             this.lblDetCliente.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblDetCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblDetCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblDetCliente.Location = new System.Drawing.Point(14, 52);
             this.lblDetCliente.Name = "lblDetCliente";
             this.lblDetCliente.Size = new System.Drawing.Size(79, 18);
@@ -174,7 +182,7 @@
             // 
             this.lblDetFecha.AutoSize = true;
             this.lblDetFecha.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblDetFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblDetFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblDetFecha.Location = new System.Drawing.Point(14, 110);
             this.lblDetFecha.Name = "lblDetFecha";
             this.lblDetFecha.Size = new System.Drawing.Size(63, 18);
@@ -194,7 +202,7 @@
             // 
             this.lblDetEstado.AutoSize = true;
             this.lblDetEstado.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblDetEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblDetEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblDetEstado.Location = new System.Drawing.Point(14, 168);
             this.lblDetEstado.Name = "lblDetEstado";
             this.lblDetEstado.Size = new System.Drawing.Size(76, 18);
@@ -214,7 +222,7 @@
             // 
             this.lblDetProductos.AutoSize = true;
             this.lblDetProductos.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblDetProductos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblDetProductos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblDetProductos.Location = new System.Drawing.Point(511, 52);
             this.lblDetProductos.Name = "lblDetProductos";
             this.lblDetProductos.Size = new System.Drawing.Size(221, 18);
@@ -226,20 +234,38 @@
             this.dgvDetProductos.AllowUserToAddRows = false;
             this.dgvDetProductos.AllowUserToDeleteRows = false;
             this.dgvDetProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvDetProductos.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(220)))));
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 9F);
+            this.dgvDetProductos.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             this.dgvDetProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvDetProductos.ColumnHeadersHeight = 30;
             this.dgvDetProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDetProducto,
             this.colDetCantidad});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvDetProductos.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvDetProductos.EnableHeadersVisualStyles = false;
             this.dgvDetProductos.Font = new System.Drawing.Font("Verdana", 9F);
             this.dgvDetProductos.Location = new System.Drawing.Point(514, 74);
             this.dgvDetProductos.Name = "dgvDetProductos";
             this.dgvDetProductos.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDetProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvDetProductos.RowHeadersVisible = false;
             this.dgvDetProductos.RowHeadersWidth = 51;
             this.dgvDetProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -276,9 +302,9 @@
             // 
             // btnGenerarComprobante
             // 
-            this.btnGenerarComprobante.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnGenerarComprobante.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnGenerarComprobante.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenerarComprobante.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnGenerarComprobante.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGenerarComprobante.ForeColor = System.Drawing.Color.White;
             this.btnGenerarComprobante.Location = new System.Drawing.Point(827, 3);
             this.btnGenerarComprobante.Name = "btnGenerarComprobante";
@@ -290,9 +316,9 @@
             // 
             // btnFacturacion
             // 
-            this.btnFacturacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnFacturacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnFacturacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFacturacion.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFacturacion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFacturacion.ForeColor = System.Drawing.Color.White;
             this.btnFacturacion.Location = new System.Drawing.Point(701, 3);
             this.btnFacturacion.Name = "btnFacturacion";
@@ -307,7 +333,7 @@
             this.btnCerrarDetalle.BackColor = System.Drawing.Color.White;
             this.btnCerrarDetalle.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCerrarDetalle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCerrarDetalle.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCerrarDetalle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCerrarDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCerrarDetalle.Location = new System.Drawing.Point(605, 3);
             this.btnCerrarDetalle.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
@@ -322,7 +348,7 @@
             // 
             this.btnCancelarPedido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.btnCancelarPedido.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelarPedido.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCancelarPedido.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelarPedido.ForeColor = System.Drawing.Color.White;
             this.btnCancelarPedido.Location = new System.Drawing.Point(109, 3);
             this.btnCancelarPedido.Margin = new System.Windows.Forms.Padding(3, 3, 350, 3);
@@ -339,10 +365,12 @@
             this.dgvPedidos.AllowUserToDeleteRows = false;
             this.dgvPedidos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPedidos.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 9F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            this.dgvPedidos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dgvPedidos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvPedidos.ColumnHeadersHeight = 32;
             this.dgvPedidos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -350,11 +378,27 @@
             this.colProductos,
             this.colFecha,
             this.colEstado});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvPedidos.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvPedidos.EnableHeadersVisualStyles = false;
             this.dgvPedidos.Font = new System.Drawing.Font("Verdana", 9F);
             this.dgvPedidos.Location = new System.Drawing.Point(10, 56);
             this.dgvPedidos.Name = "dgvPedidos";
             this.dgvPedidos.ReadOnly = true;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvPedidos.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvPedidos.RowHeadersVisible = false;
             this.dgvPedidos.RowHeadersWidth = 51;
             this.dgvPedidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -405,17 +449,17 @@
             // lblAyuda
             // 
             this.lblAyuda.AutoSize = true;
-            this.lblAyuda.Font = new System.Drawing.Font("Verdana", 8.5F, System.Drawing.FontStyle.Italic);
+            this.lblAyuda.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(107)))), ((int)(((byte)(79)))));
             this.lblAyuda.Location = new System.Drawing.Point(12, 622);
             this.lblAyuda.Name = "lblAyuda";
-            this.lblAyuda.Size = new System.Drawing.Size(467, 18);
+            this.lblAyuda.Size = new System.Drawing.Size(410, 18);
             this.lblAyuda.TabIndex = 2;
             this.lblAyuda.Text = "Doble clic en un pedido para ver el detalle y realizar acciones.";
             // 
             // pnlAlta
             // 
-            this.pnlAlta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(210)))));
+            this.pnlAlta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(220)))));
             this.pnlAlta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlAlta.Controls.Add(this.lblTituloAlta);
             this.pnlAlta.Controls.Add(this.lblEstadoTitulo);
@@ -442,7 +486,7 @@
             // 
             this.lblTituloAlta.AutoSize = true;
             this.lblTituloAlta.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTituloAlta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblTituloAlta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblTituloAlta.Location = new System.Drawing.Point(14, 12);
             this.lblTituloAlta.Name = "lblTituloAlta";
             this.lblTituloAlta.Size = new System.Drawing.Size(278, 25);
@@ -453,7 +497,7 @@
             // 
             this.lblEstadoTitulo.AutoSize = true;
             this.lblEstadoTitulo.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblEstadoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblEstadoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblEstadoTitulo.Location = new System.Drawing.Point(808, 16);
             this.lblEstadoTitulo.Name = "lblEstadoTitulo";
             this.lblEstadoTitulo.Size = new System.Drawing.Size(76, 18);
@@ -477,7 +521,7 @@
             // 
             this.lblCliente.AutoSize = true;
             this.lblCliente.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblCliente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblCliente.Location = new System.Drawing.Point(14, 52);
             this.lblCliente.Name = "lblCliente";
             this.lblCliente.Size = new System.Drawing.Size(79, 18);
@@ -498,7 +542,7 @@
             // 
             this.lblFecha.AutoSize = true;
             this.lblFecha.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblFecha.Location = new System.Drawing.Point(14, 110);
             this.lblFecha.Name = "lblFecha";
             this.lblFecha.Size = new System.Drawing.Size(63, 18);
@@ -518,7 +562,7 @@
             // 
             this.lblProductos.AutoSize = true;
             this.lblProductos.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblProductos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblProductos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblProductos.Location = new System.Drawing.Point(14, 168);
             this.lblProductos.Name = "lblProductos";
             this.lblProductos.Size = new System.Drawing.Size(113, 18);
@@ -528,7 +572,7 @@
             // lstProductos
             // 
             this.lstProductos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lstProductos.Font = new System.Drawing.Font("Verdana", 9F);
+            this.lstProductos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstProductos.ItemHeight = 18;
             this.lstProductos.Location = new System.Drawing.Point(14, 190);
             this.lstProductos.Name = "lstProductos";
@@ -539,7 +583,7 @@
             // 
             this.lblCantidad.AutoSize = true;
             this.lblCantidad.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblCantidad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblCantidad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblCantidad.Location = new System.Drawing.Point(14, 298);
             this.lblCantidad.Name = "lblCantidad";
             this.lblCantidad.Size = new System.Drawing.Size(97, 18);
@@ -556,9 +600,9 @@
             // 
             // btnAgregarProducto
             // 
-            this.btnAgregarProducto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnAgregarProducto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnAgregarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAgregarProducto.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnAgregarProducto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAgregarProducto.ForeColor = System.Drawing.Color.White;
             this.btnAgregarProducto.Location = new System.Drawing.Point(124, 318);
             this.btnAgregarProducto.Name = "btnAgregarProducto";
@@ -572,7 +616,7 @@
             // 
             this.lblDetalleTitle.AutoSize = true;
             this.lblDetalleTitle.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblDetalleTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblDetalleTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblDetalleTitle.Location = new System.Drawing.Point(511, 52);
             this.lblDetalleTitle.Name = "lblDetalleTitle";
             this.lblDetalleTitle.Size = new System.Drawing.Size(190, 18);
@@ -584,7 +628,14 @@
             this.dgvProductosPedido.AllowUserToAddRows = false;
             this.dgvProductosPedido.AllowUserToDeleteRows = false;
             this.dgvProductosPedido.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvProductosPedido.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(220)))));
+            this.dgvProductosPedido.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProductosPedido.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvProductosPedido.ColumnHeadersHeight = 32;
             this.dgvProductosPedido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvProductosPedido.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -592,10 +643,26 @@
             this.colProdCantidad,
             this.colProdStock,
             this.colProdQuitar});
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvProductosPedido.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvProductosPedido.EnableHeadersVisualStyles = false;
             this.dgvProductosPedido.Font = new System.Drawing.Font("Verdana", 9F);
             this.dgvProductosPedido.Location = new System.Drawing.Point(514, 74);
             this.dgvProductosPedido.Name = "dgvProductosPedido";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProductosPedido.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvProductosPedido.RowHeadersVisible = false;
             this.dgvProductosPedido.RowHeadersWidth = 51;
             this.dgvProductosPedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -676,7 +743,7 @@
             // 
             // FrmPedidos
             // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(220)))));
+            this.BackColor = System.Drawing.Color.Ivory;
             this.ClientSize = new System.Drawing.Size(1060, 781);
             this.Controls.Add(this.pnlBusqueda);
             this.Controls.Add(this.dgvPedidos);

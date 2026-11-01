@@ -55,6 +55,37 @@ namespace AviGestion_.Datos
             return tabla;
         }
 
+        // Detalle de carga de un camión: una fila por producto de cada pedido,
+        // con los datos del cliente (para la hoja de carga en PDF)
+        public DataTable DetalleCarga(int idVehiculo, string estado)
+        {
+            string sql = @"
+                SELECT pc.Id_Pedido,
+                       pc.Fecha,
+                       CONCAT(c.Nombre, ' ', ISNULL(c.Apellido, '')) AS Cliente,
+                       c.Empresa, c.Direccion, c.Telefono,
+                       d.Producto, d.Cantidad
+                FROM PedidosCompra pc
+                INNER JOIN Cliente c ON pc.Id_Cliente = c.Id_Cliente
+                INNER JOIN DetallePedidoCompra d ON d.Id_Pedido = pc.Id_Pedido
+                WHERE pc.Id_Vehiculo = @Id_Vehiculo
+                  AND pc.Estado = @Estado
+                ORDER BY pc.Id_Pedido, d.Id_Detaille";
+
+            var tabla = new DataTable();
+            using (SqlConnection cn = Conexion.ObtenerConexion())
+            using (var cmd = new SqlCommand(sql, cn))
+            {
+                cmd.Parameters.AddWithValue("@Id_Vehiculo", idVehiculo);
+                cmd.Parameters.AddWithValue("@Estado", estado);
+                using (var da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(tabla);
+                }
+            }
+            return tabla;
+        }
+
         // Valida capacidad, suma las cajas al camión y pasa el pedido a "En camión"
         public void Asignar(int idPedido, int idVehiculo)
         {

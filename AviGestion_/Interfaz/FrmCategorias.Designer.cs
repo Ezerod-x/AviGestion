@@ -12,7 +12,8 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlBusqueda = new System.Windows.Forms.Panel();
             this.lblLupa = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
@@ -43,7 +44,7 @@
             // 
             // pnlBusqueda
             // 
-            this.pnlBusqueda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(220)))));
+            this.pnlBusqueda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(220)))));
             this.pnlBusqueda.Controls.Add(this.lblLupa);
             this.pnlBusqueda.Controls.Add(this.txtBuscar);
             this.pnlBusqueda.Controls.Add(this.btnNuevaCategoria);
@@ -56,9 +57,10 @@
             // 
             this.lblLupa.AutoSize = true;
             this.lblLupa.Font = new System.Drawing.Font("Segoe UI Emoji", 13F);
+            this.lblLupa.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblLupa.Location = new System.Drawing.Point(11, 10);
             this.lblLupa.Name = "lblLupa";
-            this.lblLupa.Size = new System.Drawing.Size(35, 24);
+            this.lblLupa.Size = new System.Drawing.Size(43, 30);
             this.lblLupa.TabIndex = 3;
             this.lblLupa.Text = "🔍";
             // 
@@ -68,15 +70,15 @@
             this.txtBuscar.Font = new System.Drawing.Font("Verdana", 9F);
             this.txtBuscar.Location = new System.Drawing.Point(60, 14);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(780, 22);
+            this.txtBuscar.Size = new System.Drawing.Size(780, 26);
             this.txtBuscar.TabIndex = 1;
             this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
             // 
             // btnNuevaCategoria
             // 
-            this.btnNuevaCategoria.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnNuevaCategoria.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnNuevaCategoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNuevaCategoria.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnNuevaCategoria.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNuevaCategoria.ForeColor = System.Drawing.Color.White;
             this.btnNuevaCategoria.Location = new System.Drawing.Point(860, 7);
             this.btnNuevaCategoria.Name = "btnNuevaCategoria";
@@ -94,10 +96,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCategorias.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCategorias.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 9F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            this.dgvCategorias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dgvCategorias.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCategorias.ColumnHeadersHeight = 32;
             this.dgvCategorias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -105,10 +109,18 @@
             this.colDescripcion,
             this.colProductos});
             this.dgvCategorias.EnableHeadersVisualStyles = false;
-            this.dgvCategorias.Font = new System.Drawing.Font("Verdana", 9F);
+            this.dgvCategorias.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.dgvCategorias.Location = new System.Drawing.Point(10, 62);
             this.dgvCategorias.Name = "dgvCategorias";
             this.dgvCategorias.ReadOnly = true;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCategorias.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvCategorias.RowHeadersVisible = false;
             this.dgvCategorias.RowHeadersWidth = 51;
             this.dgvCategorias.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -151,11 +163,11 @@
             // lblAyuda
             // 
             this.lblAyuda.AutoSize = true;
-            this.lblAyuda.Font = new System.Drawing.Font("Verdana", 8.5F, System.Drawing.FontStyle.Italic);
+            this.lblAyuda.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(107)))), ((int)(((byte)(79)))));
             this.lblAyuda.Location = new System.Drawing.Point(7, 352);
             this.lblAyuda.Name = "lblAyuda";
-            this.lblAyuda.Size = new System.Drawing.Size(268, 14);
+            this.lblAyuda.Size = new System.Drawing.Size(299, 18);
             this.lblAyuda.TabIndex = 3;
             this.lblAyuda.Text = "Doble clic en una categoría para modificarla.";
             // 
@@ -163,7 +175,7 @@
             // 
             this.pnlDetalle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlDetalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(210)))));
+            this.pnlDetalle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(220)))));
             this.pnlDetalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlDetalle.Controls.Add(this.lblTituloDetalle);
             this.pnlDetalle.Controls.Add(this.tlpCampos);
@@ -176,11 +188,11 @@
             // lblTituloDetalle
             // 
             this.lblTituloDetalle.AutoSize = true;
-            this.lblTituloDetalle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTituloDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.lblTituloDetalle.Font = new System.Drawing.Font("Verdana", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTituloDetalle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblTituloDetalle.Location = new System.Drawing.Point(15, 12);
             this.lblTituloDetalle.Name = "lblTituloDetalle";
-            this.lblTituloDetalle.Size = new System.Drawing.Size(181, 18);
+            this.lblTituloDetalle.Size = new System.Drawing.Size(261, 28);
             this.lblTituloDetalle.TabIndex = 0;
             this.lblTituloDetalle.Text = "Registrar Categoría";
             // 
@@ -206,10 +218,10 @@
             this.lblNombre.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblNombre.AutoSize = true;
             this.lblNombre.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.lblNombre.Location = new System.Drawing.Point(3, 25);
+            this.lblNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.lblNombre.Location = new System.Drawing.Point(3, 23);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(65, 14);
+            this.lblNombre.Size = new System.Drawing.Size(80, 18);
             this.lblNombre.TabIndex = 0;
             this.lblNombre.Text = "NOMBRE";
             // 
@@ -220,7 +232,7 @@
             this.txtNombre.Location = new System.Drawing.Point(200, 18);
             this.txtNombre.Margin = new System.Windows.Forms.Padding(0, 18, 10, 0);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(526, 22);
+            this.txtNombre.Size = new System.Drawing.Size(526, 26);
             this.txtNombre.TabIndex = 1;
             // 
             // lblDescripcion
@@ -228,10 +240,10 @@
             this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblDescripcion.AutoSize = true;
             this.lblDescripcion.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.lblDescripcion.Location = new System.Drawing.Point(3, 90);
+            this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.lblDescripcion.Location = new System.Drawing.Point(3, 88);
             this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(103, 14);
+            this.lblDescripcion.Size = new System.Drawing.Size(127, 18);
             this.lblDescripcion.TabIndex = 2;
             this.lblDescripcion.Text = "DESCRIPCIÓN";
             // 
@@ -242,7 +254,7 @@
             this.txtDescripcion.Location = new System.Drawing.Point(200, 83);
             this.txtDescripcion.Margin = new System.Windows.Forms.Padding(0, 18, 10, 0);
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(526, 22);
+            this.txtDescripcion.Size = new System.Drawing.Size(526, 26);
             this.txtDescripcion.TabIndex = 3;
             // 
             // flpBotones
@@ -258,9 +270,9 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGuardar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnGuardar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
             this.btnGuardar.Location = new System.Drawing.Point(867, 3);
             this.btnGuardar.Name = "btnGuardar";
@@ -275,8 +287,8 @@
             this.btnCancelar.BackColor = System.Drawing.Color.White;
             this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
-            this.btnCancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnCancelar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.btnCancelar.Location = new System.Drawing.Point(741, 3);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.btnCancelar.Name = "btnCancelar";
@@ -289,9 +301,9 @@
             // btnEliminar
             // 
             this.btnEliminar.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEliminar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
+            this.btnEliminar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.Color.White;
             this.btnEliminar.Location = new System.Drawing.Point(215, 3);
             this.btnEliminar.Margin = new System.Windows.Forms.Padding(3, 3, 400, 3);
@@ -305,7 +317,7 @@
             // 
             // FrmCategorias
             // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(220)))));
+            this.BackColor = System.Drawing.Color.Ivory;
             this.ClientSize = new System.Drawing.Size(1060, 664);
             this.Controls.Add(this.pnlBusqueda);
             this.Controls.Add(this.dgvCategorias);
