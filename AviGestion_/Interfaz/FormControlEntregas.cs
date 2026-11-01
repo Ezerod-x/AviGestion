@@ -16,7 +16,7 @@ namespace AviGestion_.Interfaz
         private DataTable tablaCamiones;
         private int idVehiculoSeleccionado = 0;
         private string patenteSeleccionada = "";
-        private string rutaComprobante = null;      // imagen elegida (null = todavía no hay)
+        private string rutaComprobante = null;     
 
         private static readonly Color Verde = Color.FromArgb(46, 125, 50);
         private static readonly Color Naranja = Color.OrangeRed;
@@ -25,15 +25,12 @@ namespace AviGestion_.Interfaz
         {
             InitializeComponent();
             usuarioActual = usuario;
-            // Los eventos se asignan desde la ventana Propiedades (rayo) del Designer. Ver tabla en la respuesta.
         }
 
-        // ---------------------------------------------------------------
         // Carga inicial
-        // ---------------------------------------------------------------
         private void FormControlEntregas_Load(object sender, EventArgs e)
         {
-            dgvPedidosCamion.ReadOnly = false;      // el tilde "Entregado" se puede editar (el resto de columnas, no)
+            dgvPedidosCamion.ReadOnly = false;     
 
             try
             {
@@ -55,9 +52,7 @@ namespace AviGestion_.Interfaz
             LimpiarPanel();
         }
 
-        // ---------------------------------------------------------------
-        // Grilla de camiones (arriba)
-        // ---------------------------------------------------------------
+        #region Grilla de camiones (arriba)
         private void CargarCamiones()
         {
             try
@@ -83,7 +78,6 @@ namespace AviGestion_.Interfaz
         private void AplicarBusqueda()
         {
             if (tablaCamiones == null) return;
-            // Sin texto, o con el texto gris de ayuda: se muestra todo y no se filtra
             if (txtBuscar.Text == "Filtrar por nro de Pantente, Vehículo o Estado" || txtBuscar.Text.Trim() == "")
             {
                 tablaCamiones = negocio.ListarCamionesEnCamino();
@@ -137,10 +131,9 @@ namespace AviGestion_.Interfaz
             LimpiarPanel();
         }
 
+        #endregion
 
-        // ---------------------------------------------------------------
-        // Panel inferior: pedidos del camión elegido
-        // ---------------------------------------------------------------
+        #region Panel inferior: pedidos del camión elegido
         private void AbrirCamionSeleccionado(int indiceFila = -1)
         {
             DataGridViewRow filaGrilla = indiceFila >= 0 ? dgvCamiones.Rows[indiceFila] : dgvCamiones.CurrentRow;
@@ -173,7 +166,7 @@ namespace AviGestion_.Interfaz
                 lblArchivo.Text = "Sin imagen adjunta";
                 cboResponsable.SelectedIndex = -1;
                 lblTituloEntrega.Text = "Camión " + patenteSeleccionada + " · Registrar entrega";
-                // Se ubica justo debajo del texto de ayuda, en el mismo contenedor que la grilla de camiones
+
                 if (grbEntrega.Parent != dgvCamiones.Parent)
                     dgvCamiones.Parent.Controls.Add(grbEntrega);
                 grbEntrega.Location = new Point(dgvCamiones.Left, lblAyuda.Bottom + 8);
@@ -255,10 +248,9 @@ namespace AviGestion_.Interfaz
             lblMensaje.ForeColor = listo ? Verde : Naranja;
             btnConfirmarEntrega.Enabled = listo;
         }
-
-        // ---------------------------------------------------------------
-        // Comprobante (imagen)
-        // ---------------------------------------------------------------
+        #endregion
+        
+        #region Comprobante (imagen)
         private void btnAdjuntar_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dialogo = new OpenFileDialog())
@@ -283,10 +275,9 @@ namespace AviGestion_.Interfaz
                 ActualizarResumen();
             }
         }
-
-        // ---------------------------------------------------------------
-        // Confirmar / cancelar
-        // ---------------------------------------------------------------
+        #endregion
+       
+        #region Confirmar / cancelar
         private void btnConfirmarEntrega_Click(object sender, EventArgs e)
         {
             List<int> entregados = new List<int>();
@@ -368,9 +359,10 @@ namespace AviGestion_.Interfaz
 
                 using (FormHistorialEntrega historial = new FormHistorialEntrega())
                 {
-                    historial.ShowDialog(velo);      // modal: no se puede tocar lo de atrás hasta cerrarlo
+                    historial.ShowDialog(velo);      
                 }
             }
         }
+        #endregion
     }
 }

@@ -309,14 +309,31 @@ namespace AviGestion_.Interfaz
         {
             if (cboCliente.SelectedItem?.ToString() == "+ Agregar nuevo cliente")
             {
-                FrmAgregarCliente frmAlta = new FrmAgregarCliente();
-                if (frmAlta.ShowDialog() == DialogResult.OK)
+                Form principal = this.TopLevelControl as Form ?? this;
+
+                // Capa oscura semitransparente sobre toda la pantalla, para que el historial "flote" encima
+                using (Form velo = new Form())
                 {
-                    CargarClientes();
-                    cboCliente.SelectedItem = frmAlta.NuevoClienteNombre;
+                    velo.FormBorderStyle = FormBorderStyle.None;
+                    velo.BackColor = Color.Black;
+                    velo.Opacity = 0.45;
+                    velo.ShowInTaskbar = false;
+                    velo.StartPosition = FormStartPosition.Manual;
+                    velo.Bounds = principal.Bounds;
+                    velo.Show(principal);
+
+                    using (FrmAgregarCliente frmAlta = new FrmAgregarCliente())
+                    {
+                        if (frmAlta.ShowDialog() == DialogResult.OK)
+                        {
+                            CargarClientes();
+                            cboCliente.SelectedItem = frmAlta.NuevoClienteNombre;
+                        }
+                        else
+                            cboCliente.SelectedIndex = -1;
+                        
+                    }
                 }
-                else
-                    cboCliente.SelectedIndex = -1;
             }
         }
 

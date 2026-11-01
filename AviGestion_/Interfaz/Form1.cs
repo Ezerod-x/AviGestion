@@ -2,13 +2,6 @@
 using AviGestion_.Logica;
 using AviGestion_.UI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AviGestion_
@@ -30,6 +23,7 @@ namespace AviGestion_
 
             if (usuarioValidado != null)
             {
+                BitacoraLogica.Registrar(usuario, "Inicio de Sesión", "Seguridad", "Ingreso exitoso al sistema" );
                 FormMenu menu = new FormMenu(usuarioValidado);
                 menu.Show();
                 this.Hide();

@@ -171,6 +171,8 @@
             // 
             // lblResumen
             // 
+            this.lblResumen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblResumen.AutoSize = true;
             this.lblResumen.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResumen.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -182,6 +184,7 @@
             // 
             // lblTituloEntrega
             // 
+            this.lblTituloEntrega.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTituloEntrega.AutoSize = true;
             this.lblTituloEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTituloEntrega.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));

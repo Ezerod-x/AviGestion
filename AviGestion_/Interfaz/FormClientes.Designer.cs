@@ -404,9 +404,9 @@
             this.lblDireccion.ForeColor = System.Drawing.Color.ForestGreen;
             this.lblDireccion.Location = new System.Drawing.Point(473, 142);
             this.lblDireccion.Name = "lblDireccion";
-            this.lblDireccion.Size = new System.Drawing.Size(78, 14);
+            this.lblDireccion.Size = new System.Drawing.Size(83, 14);
             this.lblDireccion.TabIndex = 8;
-            this.lblDireccion.Text = "DIRECCIÓN";
+            this.lblDireccion.Text = "*DIRECCIÓN";
             // 
             // lblCorreo
             // 

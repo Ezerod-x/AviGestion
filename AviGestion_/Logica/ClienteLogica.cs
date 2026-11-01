@@ -1,9 +1,10 @@
-﻿using System;
+﻿using AviGestion_.Datos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using AviGestion_.Datos;
 
 namespace AviGestion_.Logica
 {
@@ -16,23 +17,49 @@ namespace AviGestion_.Logica
             return clienteDatos.ListarTodos();
         }
 
-        public List<string> ValidarFormatosLogicos(string telefono, string dniCuil, string correo, string responsable)
+        public List<string> ValidarFormatosLogicos(string telefono, string dniCuil, string correo, string responsable, string direccion)
         {
             List<string> errores = new List<string>();
 
-            if (!responsable.Contains(" "))
+            // --- Validación de Responsable ---
+            if (string.IsNullOrWhiteSpace(responsable) || !responsable.Trim().Contains(" "))
                 errores.Add("- Debe ingresar nombre y apellido separados por un espacio.");
 
-            string telLimpio = telefono.Replace("-", "").Replace(" ", "");
+            // --- Validación de Teléfono ---
+            string telLimpio = (telefono ?? "").Replace("-", "").Replace(" ", "");
             if (telLimpio.Length < 10)
                 errores.Add("- El número de teléfono es demasiado corto.");
 
-            if (!correo.Contains("@") || !correo.Contains("."))
-                errores.Add("- El formato del correo electrónico no es válido.");
+            // --- Validación de Correo ---
+            string correoSeguro = correo ?? "";
+            if (!correoSeguro.Contains("@") || !correoSeguro.Contains("."))
+                errores.Add("- El correo electrónico debe contener @ y .com");
 
-            string dniLimpio = dniCuil.Replace("-", "");
+            // --- Validación de DNI/CUIL ---
+            string dniLimpio = (dniCuil ?? "").Replace("-", "").Replace(" ", "");
             if (dniLimpio.Length != 8 && dniLimpio.Length != 11)
                 errores.Add("- El DNI debe tener 8 dígitos o el CUIL 11 dígitos.");
+
+            // --- Validación de Dirección (Calle y Número) ---
+            if (string.IsNullOrWhiteSpace(direccion))
+            {
+                errores.Add("- La dirección es obligatoria.");
+            }
+            else
+            {
+                // Remueve espacios de más al inicio y al final
+                string dirLimpia = direccion.Trim();
+
+                // Expresión regular: Busca texto (calle) seguido de al menos un número (altura)
+                // Soporta nombres de calles con espacios, puntos, números (Ej: "Calle 14 452" o "Av. San Martín 1500")
+                bool tieneFormatoValido = Regex.IsMatch(dirLimpia, @"^.+?\s+\d+.*$");
+
+                if (!tieneFormatoValido)
+                {
+                    errores.Add("- La dirección debe contener el nombre de la calle seguido de su número (Ej: Rivadavia 123).");
+                }
+            }
+
 
             return errores; // Devuelve la lista de errores encontrados
         }

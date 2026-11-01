@@ -20,14 +20,25 @@ namespace AviGestion_.UI
 
         // Marco alrededor de pnlContenido y límites de tamaño
         private const int MARGEN_X = 110, MARGEN_Y = 50;
-        private const int MIN_ANCHO = 880, MIN_ALTO = 500;
-        private const int MAX_ANCHO = 1100, MAX_ALTO = 640;
+        private const int MIN_ANCHO = 700, MIN_ALTO = 450;
+        private const int MAX_ANCHO = 1300, MAX_ALTO = 700;
+
+        private const int MARGEN_MIN_X = 8;      // margen mínimo a los lados cuando una pantalla necesita lugar
+        private const int MARGEN_MIN_Y = 5;      // margen mínimo arriba y abajo
+        private Size tamanoDeseado = Size.Empty;           // tamaño de diseño de la pantalla abierta (vacío = inicio)
+
+        private const int ANCHO_BOTON = 170;     // ancho de botones y títulos del menú lateral
+        private const int PAD_MENU = 8;          // margen interno de flpSidebar
         #endregion
 
         #region Constructor
         public FormMenu(Usuario usuario)
         {
             InitializeComponent();
+            flpSidebar.Padding = new Padding(PAD_MENU);
+            pnlSidebar.Width = ANCHO_BOTON + 2 * PAD_MENU + SystemInformation.VerticalScrollBarWidth;   // 170 + 16 + 17 = 203
+            pnlFondo.AutoScroll = true;
+
             usuarioActual = usuario;
             WindowState = FormWindowState.Maximized;
 
@@ -124,7 +135,7 @@ namespace AviGestion_.UI
             {
                 Text = texto,
                 AutoSize = false,
-                Width = 200,
+                Width = ANCHO_BOTON,
                 Height = 22,
                 TextAlign = ContentAlignment.BottomLeft,
                 Font = new Font("Segoe UI", 8F, FontStyle.Bold),
@@ -138,7 +149,7 @@ namespace AviGestion_.UI
             var b = new Button
             {
                 Text = item.Texto,
-                Width = 200,
+                Width = ANCHO_BOTON,
                 Height = 34,
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Color.White,
@@ -176,9 +187,23 @@ namespace AviGestion_.UI
         // Cambio de contraseña del usuario con sesión iniciada: se abre como ventana modal.
         private void AbrirCambiarContrasena()
         {
-            using (FrmCambiarContrasena frm = new FrmCambiarContrasena(usuarioActual))
+            Form principal = this.TopLevelControl as Form ?? this;
+
+            // Capa oscura semitransparente sobre toda la pantalla
+            using (Form velo = new Form())
             {
-                frm.ShowDialog(this);
+                velo.FormBorderStyle = FormBorderStyle.None;
+                velo.BackColor = Color.Black;
+                velo.Opacity = 0.45;
+                velo.ShowInTaskbar = false;
+                velo.StartPosition = FormStartPosition.Manual;
+                velo.Bounds = principal.Bounds;
+                velo.Show(principal);
+
+                using (FrmCambiarContrasena frm = new FrmCambiarContrasena(usuarioActual))
+                {
+                    frm.ShowDialog(this);
+                }
             }
         }
 
@@ -204,19 +229,68 @@ namespace AviGestion_.UI
         #endregion
 
         #region Panel de fondo y panel de contenido
-        // Calcula el tamaño de pnlContenido según el espacio libre (con un marco fijo para que se vea
-        // el fondo decorativo, entre un mínimo y un máximo) y lo centra dentro de pnlFondo.
+        // Calcula el tamaño de pnlContenido. En el inicio usa el tamaño estándar con marco para el fondo.
+        // Con una pantalla abierta, se adapta a su tamaño de diseño sin pasarse del espacio libre.
+
         private void AjustarContenido()
         {
-            if (pnlFondo.ClientSize.Width <= 0 || pnlFondo.ClientSize.Height <= 0) return;
+            if (pnlFondo.AutoScroll)
+            {
+                pnlFondo.AutoScrollPosition = new Point(0, 0);
+            }
 
-            int w = Math.Max(MIN_ANCHO, Math.Min(MAX_ANCHO, pnlFondo.ClientSize.Width - 2 * MARGEN_X));
-            int h = Math.Max(MIN_ALTO, Math.Min(MAX_ALTO, pnlFondo.ClientSize.Height - 2 * MARGEN_Y));
+            int dispW = pnlFondo.ClientSize.Width, dispH = pnlFondo.ClientSize.Height;
+            if (dispW <= 0 || dispH <= 0) return;
+
+            int w, h;
+            if (tamanoDeseado.IsEmpty)
+            {
+                // Estado de inicio tradicional
+                w = Math.Max(MIN_ANCHO, Math.Min(MAX_ANCHO, dispW - 2 * MARGEN_X));
+                h = Math.Max(MIN_ALTO, Math.Min(MAX_ALTO, dispH - 2 * MARGEN_Y));
+            }
+            else
+            {
+                // El panel toma las dimensiones nativas exactas solicitadas por la pantalla + la holgura
+                w = tamanoDeseado.Width;
+                h = tamanoDeseado.Height;
+
+                // Si el ANCHO supera al monitor, se limita para que no tape el menú lateral
+                if (w > dispW - 2 * MARGEN_MIN_X)
+                {
+                    w = dispW - 2 * MARGEN_MIN_X;
+                }
+
+                // Si el ALTO supera al monitor no se recorta
+                // Se mantiene su altura completa para que 'pnlFondo' active la barra de scroll.
+                // Solo se recorta si superara el máximo histórico configurado (MAX_ALTO)
+                if (h > MAX_ALTO)
+                {
+                    h = MAX_ALTO;
+                }
+            }
+
             pnlContenido.Size = new Size(w, h);
+
+            // Centrado geométrico perfecto en el fondo de la aplicación
+            int contenedorW = pnlFondo.ClientSize.Width;
+            int contenedorH = pnlFondo.ClientSize.Height;
+
+            // Si la pantalla es más alta que el monitor, la posición 'Y' arranca arriba de todo (MARGEN_MIN_Y)
+            // para que el usuario pueda empezar a leer desde el principio y hacer scroll hacia abajo.
+            int posY = (contenedorH > h) ? (contenedorH - h) / 2 : MARGEN_MIN_Y;
+
             pnlContenido.Location = new Point(
-                Math.Max(0, (pnlFondo.ClientSize.Width - w) / 2),
-                Math.Max(0, (pnlFondo.ClientSize.Height - h) / 2));
+                Math.Max(MARGEN_MIN_X, (contenedorW - w) / 2),
+                posY
+            );
+
+            if (pantallaActual != null)
+            {
+                pantallaActual.Size = pnlContenido.ClientSize;
+            }
         }
+
         #endregion
 
         #region Pantallas incrustadas en el panel de contenido
@@ -224,25 +298,47 @@ namespace AviGestion_.UI
         // del header por el de la gestión y resalta el botón del menú.
         private void AbrirEnPanel(Form pantalla, string titulo, Control botonMenu)
         {
+            // Esto fuerza a Windows a dibujar la pantalla en memoria antes de mostrarla, eliminando el lag.
+            typeof(Form).InvokeMember("DoubleBuffered",
+                System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
+                null, pantalla, new object[] { true });
+
+            pnlContenido.SuspendLayout();
+            pnlFondo.SuspendLayout();
+
+            if (pnlFondo.AutoScroll)
+            {
+                pnlFondo.AutoScrollPosition = new Point(0, 0);
+            }
             CerrarPantalla();
             pantallaActual = pantalla;
 
-            pantalla.TopLevel = false;                                 // se muestra dentro de un panel
+            Size disenio = pantalla.ClientSize;                       
+
+            pantalla.TopLevel = false;
             pantalla.FormBorderStyle = FormBorderStyle.None;
             pantalla.MaximumSize = Size.Empty;
-            pantalla.AutoScroll = true;                                // si el espacio es chico, scroll en vez de cortarse
-            pantalla.AutoScrollMinSize = pantalla.Size;                // tamaño original del diseño
-            pantalla.Dock = DockStyle.Fill;
-            OcultarEncabezadoPropio(pantalla);
 
-            MostrarPanelesInicio(false);                          // oculta los gráficos del inicio
+            int altoEncabezado = OcultarEncabezadoPropio(pantalla);       // devuelve el alto que se liberó
+            disenio.Height -= altoEncabezado;
+
+            tamanoDeseado = new Size(disenio.Width, disenio.Height);      // el panel se adapta a la pantalla
+            AjustarContenido();
+
+            pantalla.AutoScroll = true;
+            pantalla.Dock = DockStyle.None;
+            pantalla.Location = new Point(0, 0);
+            pantalla.Size = pnlContenido.ClientSize;                      // Toma exactamente el tamaño del panel calculado
+
             pnlContenido.Controls.Add(pantalla);
-            pantalla.FormClosed += Pantalla_FormClosed;                // al cerrarse, vuelve al inicio
+            pantalla.FormClosed += Pantalla_FormClosed;
             pantalla.Show();
             pantalla.BringToFront();
 
             lblTitulo.Text = titulo;
             Resaltar(botonMenu);
+            pnlContenido.ResumeLayout(true);
+            pnlFondo.ResumeLayout(true);
         }
 
         // Cuando se cierra la pantalla incrustada, vuelve al inicio.
@@ -267,6 +363,8 @@ namespace AviGestion_.UI
         private void MostrarInicio()
         {
             CerrarPantalla();
+            tamanoDeseado = Size.Empty;                //el inicio vuelve al tamaño estándar
+            AjustarContenido();
             MostrarPanelesInicio(true);
             lblTitulo.Text = TITULO_INICIO;
             Resaltar(null);
@@ -274,10 +372,12 @@ namespace AviGestion_.UI
         }
 
         // Oculta el header propio del formulario (el panel que se llame "pnlEncabezado")
-        private void OcultarEncabezadoPropio(Form pantalla)
+        private int OcultarEncabezadoPropio(Form pantalla)
         {
             Control encabezado = pantalla.Controls.Find("pnlEncabezado", true).FirstOrDefault();
-            if (encabezado != null) encabezado.Visible = false;
+            if (encabezado == null) return 0;
+            encabezado.Visible = false;
+            return (encabezado.Dock == DockStyle.Top) ? encabezado.Height : 0;
         }
         #endregion
 
@@ -309,7 +409,6 @@ namespace AviGestion_.UI
         #endregion
 
         #region Gráficos del inicio
-        private const bool USAR_DATOS_DEMO = false;        // false = usa la base de datos | true= usa datos de ejemplo (para probar sin base)
         private GraficoBarras grafStock, grafPedidos, grafProductos;
         private readonly GraficosInicioLogica dashboard = new GraficosInicioLogica();
 
@@ -361,14 +460,6 @@ namespace AviGestion_.UI
 
         private List<ItemGrafico> ObtenerStock()
         {
-            if (USAR_DATOS_DEMO)
-                return new List<ItemGrafico>
-            {
-                ItemStock("Huevo B1", 120, 40, 200), ItemStock("Huevo B2", 35, 40, 200),
-                ItemStock("Huevo C1", 150, 30, 150), ItemStock("Pollo entero", 90, 30, 160),
-                ItemStock("Pollo trozado", 15, 25, 100), ItemStock("Huevo SUP", 60, 20, 100)
-            };
-
             return dashboard.StockActivo()
                 .Select(p => ItemStock(p.Descripcion, p.Stock, p.StockMinimo, p.StockMaximo))
                 .ToList();
@@ -376,14 +467,6 @@ namespace AviGestion_.UI
 
         private List<ItemGrafico> ObtenerPedidosPorCliente()
         {
-            if (USAR_DATOS_DEMO)
-                return new List<ItemGrafico>
-            {
-                new ItemGrafico { Nombre = "Almacén El Sol", Valor = 5 },
-                new ItemGrafico { Nombre = "Rotisería Don Pepe", Valor = 3 },
-                new ItemGrafico { Nombre = "Granja Los Aromos", Valor = 2 }
-            };
-
             return dashboard.PedidosPorCliente()
                 .Select(kv => new ItemGrafico { Nombre = kv.Key, Valor = kv.Value })
                 .ToList();
@@ -391,14 +474,6 @@ namespace AviGestion_.UI
 
         private List<ItemGrafico> ObtenerProductosVendidos()
         {
-            if (USAR_DATOS_DEMO)
-                return new List<ItemGrafico>
-        {
-            new ItemGrafico { Nombre = "Pollo entero", Valor = 30 },
-            new ItemGrafico { Nombre = "Huevo C1", Valor = 25 },
-            new ItemGrafico { Nombre = "Huevo B1", Valor = 20 }
-        };
-
             return dashboard.ProductosVendidos()
                 .Select(kv => new ItemGrafico { Nombre = kv.Key, Valor = kv.Value })
                 .ToList();
@@ -411,7 +486,7 @@ namespace AviGestion_.UI
             if (tecla == Keys.F11 || (tecla == Keys.Escape && FormBorderStyle == FormBorderStyle.None))
             {
                 bool completa = (FormBorderStyle == FormBorderStyle.None);
-                WindowState = FormWindowState.Normal;                  // truco: sin esto no cubre la barra de tareas
+                WindowState = FormWindowState.Normal;                  
                 FormBorderStyle = completa ? FormBorderStyle.Sizable : FormBorderStyle.None;
                 WindowState = FormWindowState.Maximized;
                 return true;
@@ -453,17 +528,53 @@ namespace AviGestion_.UI
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirmacion != DialogResult.Yes) return;
 
-            BitacoraLogica.Registrar(usuarioActual.Nombre, "Cierre de Sesión", "Seguridad");
+            BitacoraLogica.Registrar(usuarioActual.Nombre, "Cierre de Sesión", "Seguridad", "Cierre de sesión manual por el usuario.");
 
             CerrarPantalla();
             AviGestion_.Form1 login = new AviGestion_.Form1();
+            login.FormClosed += (s, args) => Application.Exit();
             login.Show();
+            this.FormClosed -= FormMenu_FormClosed_Bitacora;
             this.Close();
         }
+
+        // Captura el cierre abrupto desde la "X" del menú, registra en bitácora y apaga el sistema
+        private void FormMenu_FormClosed_Bitacora(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                // Registra de forma automática la salida directa por la X del programa
+                BitacoraLogica.Registrar(usuarioActual.Nombre, "Salida del Sistema", "Seguridad", "Cierre directo desde la ventana (X)");
+            }
+            catch
+            {
+                // Guarda de seguridad por si la base de datos ya se encuentra cerrada
+            }
+            finally
+            {
+                // Apaga por completo el proceso de fondo de manera segura
+                Application.Exit();
+            }
+        }
+
         #endregion
 
         #region Evento enlazado desde el Designer (dejar vacío)
         private void FormMenu_Load(object sender, EventArgs e) { }
+        #endregion
+
+        #region Arreglo de Lag
+        // Sobrescribe los parámetros de creación del formulario principal.
+        // Activa el doble búfer total en la ventana para eliminar el lag de los controles.
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000; // Fuerza el dibujado completo en memoria antes de mostrarlo.
+                return cp;
+            }
+        }
         #endregion
 
     }

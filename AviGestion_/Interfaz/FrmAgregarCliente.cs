@@ -33,6 +33,8 @@ namespace AviGestion_.Interfaz
                     errores.Add("- El correo es obligatorio.");
                 if (string.IsNullOrWhiteSpace(txtDniCuil.Text))
                     errores.Add("- El DNI/CUIL es obligatorio.");
+                if (string.IsNullOrWhiteSpace(txtDireccion.Text))
+                    errores.Add("- La dirección es obligatoria.");
 
                 if (errores.Count == 0)
                 {
@@ -40,7 +42,9 @@ namespace AviGestion_.Interfaz
                         txtTelefono.Text,
                         txtDniCuil.Text,
                         txtEmail.Text,
-                        txtResponsable.Text.Trim());
+                        txtResponsable.Text.Trim(), 
+                        txtDireccion.Text);
+
                     errores.AddRange(erroresLogica);
                 }
 

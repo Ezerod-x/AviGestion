@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlFiltros = new System.Windows.Forms.Panel();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
-            this.btnVerDetalle = new System.Windows.Forms.Button();
             this.pnlResumen = new System.Windows.Forms.Panel();
             this.lblUltimaCompraValor = new System.Windows.Forms.Label();
             this.lblUltimaCompra = new System.Windows.Forms.Label();
@@ -118,20 +117,6 @@
             this.txtBusqueda.TextChanged += new System.EventHandler(this.txtBusqueda_TextChanged);
             this.txtBusqueda.Enter += new System.EventHandler(this.txtBusqueda_Enter);
             this.txtBusqueda.Leave += new System.EventHandler(this.txtBusqueda_Leave);
-            // 
-            // btnVerDetalle
-            // 
-            this.btnVerDetalle.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnVerDetalle.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnVerDetalle.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVerDetalle.ForeColor = System.Drawing.Color.White;
-            this.btnVerDetalle.Location = new System.Drawing.Point(784, 529);
-            this.btnVerDetalle.Name = "btnVerDetalle";
-            this.btnVerDetalle.Size = new System.Drawing.Size(122, 41);
-            this.btnVerDetalle.TabIndex = 11;
-            this.btnVerDetalle.Text = "Ver Detalle";
-            this.btnVerDetalle.UseVisualStyleBackColor = false;
-            this.btnVerDetalle.Click += new System.EventHandler(this.btnVerDetalle_Click);
             // 
             // pnlResumen
             // 
@@ -288,19 +273,19 @@
             // 
             // dgvHistorial
             // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            this.dgvHistorial.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.dgvHistorial.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHistorial.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvHistorial.BackgroundColor = System.Drawing.Color.White;
             this.dgvHistorial.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHistorial.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHistorial.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHistorial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvHistorial.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colN,
@@ -529,7 +514,7 @@
             this.btnCerrar.FlatAppearance.BorderSize = 2;
             this.btnCerrar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCerrar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
-            this.btnCerrar.Location = new System.Drawing.Point(672, 532);
+            this.btnCerrar.Location = new System.Drawing.Point(816, 529);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(96, 35);
             this.btnCerrar.TabIndex = 13;
@@ -545,7 +530,6 @@
             this.ClientSize = new System.Drawing.Size(920, 576);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.pnlFiltros);
-            this.Controls.Add(this.btnVerDetalle);
             this.Controls.Add(this.pnlResumen);
             this.Controls.Add(this.dgvHistorial);
             this.Controls.Add(this.panel1);
@@ -572,7 +556,6 @@
         private System.Windows.Forms.Panel pnlFiltros;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.TextBox txtBusqueda;
-        private System.Windows.Forms.Button btnVerDetalle;
         private System.Windows.Forms.Panel pnlResumen;
         private System.Windows.Forms.Label lblUltimaCompraValor;
         private System.Windows.Forms.Label lblUltimaCompra;
