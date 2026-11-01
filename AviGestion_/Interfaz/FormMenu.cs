@@ -43,6 +43,7 @@ namespace AviGestion_.UI
             lblUsuario.Text = usuarioActual.Nombre + " · " + usuarioActual.Rol;
             AjustarContenido();
             MostrarInicio();
+            Idioma.Aplicar(this);
         }
         #endregion
 
@@ -89,7 +90,8 @@ namespace AviGestion_.UI
             items.Add(new ItemDeMenu { Seccion = "ADMINISTRACIÓN", Texto = "Backup", Titulo = "Backup", Roles = admin, Crear = () => new FormBackup(usuarioActual) });
 
             items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Cambiar contraseña", Accion = AbrirCambiarContrasena });
-            items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Ayuda", Accion = () => MessageBox.Show("Ayuda en construcción.", "AviGestión") });
+            items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Cambiar idioma", Accion = MostrarMenuIdioma });
+            items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Ayuda", Accion = () => MessageBox.Show(Idioma.T("Ayuda en construcción."), "AviGestión") });
         }
 
         //Indica si el usuario actual puede ver y usar el ítem (Roles == null significa "todos").
@@ -160,7 +162,7 @@ namespace AviGestion_.UI
                 {
                     Color c = (b.ForeColor == Color.White) ? Color.FromArgb(220, 240, 220) : Color.Gray;
                     using (var f = new Font("Segoe UI", 8F))
-                        TextRenderer.DrawText(e.Graphics, item.Etiqueta, f,
+                        TextRenderer.DrawText(e.Graphics, Idioma.T(item.Etiqueta), f,
                             new Rectangle(0, 0, b.Width - 10, b.Height), c,
                             TextFormatFlags.Right | TextFormatFlags.VerticalCenter);
                 };
@@ -239,11 +241,12 @@ namespace AviGestion_.UI
 
             MostrarPanelesInicio(false);                          // oculta los gráficos del inicio
             pnlContenido.Controls.Add(pantalla);
+            Idioma.Aplicar(pantalla);                                  // <-- nuevo
             pantalla.FormClosed += Pantalla_FormClosed;                // al cerrarse, vuelve al inicio
             pantalla.Show();
             pantalla.BringToFront();
 
-            lblTitulo.Text = titulo;
+            lblTitulo.Text = Idioma.T(titulo);                         // <-- cambiado
             Resaltar(botonMenu);
         }
 
@@ -270,7 +273,7 @@ namespace AviGestion_.UI
         {
             CerrarPantalla();
             MostrarPanelesInicio(true);
-            lblTitulo.Text = TITULO_INICIO;
+            lblTitulo.Text = Idioma.T(TITULO_INICIO);
             Resaltar(null);
             CargarGraficos();
         }
@@ -348,7 +351,7 @@ namespace AviGestion_.UI
                 foreach (GraficoBarras g in new[] { grafStock, grafPedidos, grafProductos })
                 {
                     g.Datos = new List<ItemGrafico>();
-                    g.TextoVacio = "No se pudieron cargar los datos.";
+                    g.TextoVacio = Idioma.T("No se pudieron cargar los datos.");
                 }
             }
             grafStock.Invalidate();
@@ -451,8 +454,8 @@ namespace AviGestion_.UI
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            var confirmacion = MessageBox.Show("¿Desea cerrar la sesión actual?", "Cerrar sesión",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var confirmacion = MessageBox.Show(Idioma.T("¿Desea cerrar la sesión actual?"), Idioma.T("Cerrar sesión"),
+                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirmacion != DialogResult.Yes) return;
 
             BitacoraLogica.Registrar(usuarioActual.Nombre, "Cierre de Sesión", "Seguridad");
@@ -469,4 +472,4 @@ namespace AviGestion_.UI
         #endregion
 
     }
-}
+} 
