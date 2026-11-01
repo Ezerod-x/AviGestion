@@ -98,6 +98,7 @@
             // 
             // pnlFondo
             // 
+            this.pnlFondo.AutoScroll = true;
             this.pnlFondo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(252)))), ((int)(((byte)(245)))));
             this.pnlFondo.BackgroundImage = global::AviGestion_.Properties.Resources.Fondo_patron_420x300;
             this.pnlFondo.Controls.Add(this.pnlContenido);
@@ -199,6 +200,7 @@
             this.Name = "FormMenu";
             this.Text = "FormMenu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMenu_FormClosed_Bitacora);
             this.Load += new System.EventHandler(this.FormMenu_Load);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();

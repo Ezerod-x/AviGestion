@@ -25,6 +25,12 @@ namespace AviGestion_.Logica
 
         public DataTable Vehiculos() { return datos.Vehiculos(); }
 
+        // Pedidos (con productos y datos del cliente) que lleva un camión
+        public DataTable DetalleCarga(int idVehiculo, string estadoPedidos)
+        {
+            return datos.DetalleCarga(idVehiculo, estadoPedidos);
+        }
+
         // Carga el pedido en el camión (pedido "En camión", camión "Cargando")
         public void Asignar(int idPedido, int idVehiculo)
         {

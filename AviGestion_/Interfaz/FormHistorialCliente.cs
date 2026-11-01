@@ -106,15 +106,6 @@ namespace AviGestion_.Interfaz
             this.Close();
         }
 
-        private void btnVerDetalle_Click(object sender, EventArgs e)
-        {
-            if (dgvHistorial.CurrentRow == null) return;
-            var pedido = (HistorialPedido)dgvHistorial.CurrentRow.DataBoundItem;
-            int idPedidoReal = pedido.NumeroPedido;
-
-            MessageBox.Show($"Abriendo el desglose de productos para el pedido N° {idPedidoReal}.", "Visor de Detalles");
-        }
-
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             txtBusqueda.Text = "Filtrar por N°Pedido, Fecha, Estado o Productos";

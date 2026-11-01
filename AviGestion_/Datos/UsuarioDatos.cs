@@ -71,6 +71,40 @@ namespace AviGestion_.Datos
             return usuarios;
         }
 
+        // Búsqueda por nombre, apellido o rol (texto vacío = todos los usuarios)
+        public List<Usuario> BuscarUsuarios(string busqueda)
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            using (SqlConnection conexion = Conexion.ObtenerConexion())
+            {
+                string query = "SELECT idUsuario, Nombre, Apellido, Contrasena, Rol, Mail FROM Usuarios " +
+                               "WHERE Nombre LIKE @Busqueda OR Apellido LIKE @Busqueda OR Rol LIKE @Busqueda " +
+                               "ORDER BY Nombre, Apellido";
+
+                SqlCommand comando = new SqlCommand(query, conexion);
+                comando.Parameters.AddWithValue("@Busqueda", "%" + busqueda + "%");
+
+                conexion.Open();
+                SqlDataReader lector = comando.ExecuteReader();
+
+                while (lector.Read())
+                {
+                    usuarios.Add(new Usuario
+                    {
+                        IdUsuario = (int)lector["idUsuario"],
+                        Nombre = lector["Nombre"].ToString(),
+                        Apellido = lector["Apellido"].ToString(),
+                        Contrasena = lector["Contrasena"].ToString(),
+                        Rol = lector["Rol"].ToString(),
+                        Mail = lector["Mail"] == DBNull.Value ? "" : lector["Mail"].ToString()
+                    });
+                }
+            }
+
+            return usuarios;
+        }
+
         public void Insertar(Usuario usuario)
         {
             using (SqlConnection conexion = Conexion.ObtenerConexion())
@@ -96,12 +130,13 @@ namespace AviGestion_.Datos
             {
                 // No modifica la contraseña: se cambia aparte (cambio de contraseña / recupero)
                 string query = "UPDATE Usuarios SET Nombre = @Nombre, Apellido = @Apellido, " +
-                                "Rol = @Rol WHERE idUsuario = @IdUsuario";
+                                "Rol = @Rol, Mail = @Mail WHERE idUsuario = @IdUsuario";
 
                 SqlCommand comando = new SqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@Nombre", usuario.Nombre);
                 comando.Parameters.AddWithValue("@Apellido", usuario.Apellido);
                 comando.Parameters.AddWithValue("@Rol", usuario.Rol);
+                comando.Parameters.AddWithValue("@Mail", (object)usuario.Mail ?? DBNull.Value);
                 comando.Parameters.AddWithValue("@IdUsuario", usuario.IdUsuario);
 
                 conexion.Open();

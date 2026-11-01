@@ -127,6 +127,7 @@ namespace AviGestion_.Interfaz
             idClienteSeleccionado = -1; // Nos aseguramos que está en modo Alta
 
             LimpiarCampos();
+            btnVerHistorial.Visible = false;
             grbRegistrarModificar.Text = "Alta";
             lblRegistrarModificar.Text = "Registrar Nuevo Cliente";
             grbRegistrarModificar.Visible = true;
@@ -143,12 +144,23 @@ namespace AviGestion_.Interfaz
                 if (string.IsNullOrWhiteSpace(txtTelefono.Text)) todosLosErrores.Add("- El teléfono es obligatorio.");
                 if (string.IsNullOrWhiteSpace(txtEmail.Text)) todosLosErrores.Add("- El correo es obligatorio.");
                 if (string.IsNullOrWhiteSpace(txtDniCuil.Text)) todosLosErrores.Add("- El DNI/CUIL es obligatorio.");
+                if (string.IsNullOrWhiteSpace(txtDireccion.Text)) todosLosErrores.Add("- La dirección es obligatoria.");
 
-                if (todosLosErrores.Count == 0)
+                List<string> erroresLogica = clienteLogica.ValidarFormatosLogicos(
+                    txtTelefono.Text,
+                    txtDniCuil.Text,
+                    txtEmail.Text,
+                    txtResponsable.Text.Trim(),
+                    txtDireccion.Text
+                );
+
+                foreach (var error in erroresLogica)
                 {
-                    List<string> erroresLogica = clienteLogica.ValidarFormatosLogicos(txtTelefono.Text, txtDniCuil.Text, txtEmail.Text, txtResponsable.Text.Trim());
-
-                    todosLosErrores.AddRange(erroresLogica);
+                    if (error.Contains("nombre y apellido") && !string.IsNullOrWhiteSpace(txtResponsable.Text)) todosLosErrores.Add(error);
+                    if (error.Contains("corto") && !string.IsNullOrWhiteSpace(txtTelefono.Text)) todosLosErrores.Add(error);
+                    if (error.Contains("correo") && !string.IsNullOrWhiteSpace(txtEmail.Text)) todosLosErrores.Add(error);
+                    if (error.Contains("DNI debe tener") && !string.IsNullOrWhiteSpace(txtDniCuil.Text)) todosLosErrores.Add(error);
+                    if (error.Contains("calle seguido de su número") && !string.IsNullOrWhiteSpace(txtDireccion.Text)) todosLosErrores.Add(error);
                 }
 
                 if (todosLosErrores.Count > 0)
@@ -234,8 +246,25 @@ namespace AviGestion_.Interfaz
                 string contacto = $"{txtEmail.Text.Trim()} | {txtTelefono.Text.Trim()}";
                 string direccion = string.IsNullOrWhiteSpace(txtDireccion.Text) ? "Sin dirección registrada" : txtDireccion.Text.Trim();
 
-                FormHistorialCliente frmHistorial = new FormHistorialCliente(idClienteSeleccionado, nombreCompleto, contacto, direccion);
-                frmHistorial.ShowDialog();
+                //Ventana principal completa(si este formulario está dentro de un panel, TopLevelControl es la ventana de afuera)
+                Form principal = this.TopLevelControl as Form ?? this;
+
+                // Capa oscura semitransparente sobre toda la pantalla, para que el historial "flote" encima
+                using (Form velo = new Form())
+                {
+                    velo.FormBorderStyle = FormBorderStyle.None;
+                    velo.BackColor = Color.Black;
+                    velo.Opacity = 0.45;
+                    velo.ShowInTaskbar = false;
+                    velo.StartPosition = FormStartPosition.Manual;
+                    velo.Bounds = principal.Bounds;
+                    velo.Show(principal);
+
+                    using (FormHistorialCliente historial = new FormHistorialCliente(idClienteSeleccionado, nombreCompleto, contacto, direccion))
+                    {
+                        historial.ShowDialog(velo);      // modal: no se puede tocar lo de atrás hasta cerrarlo
+                    }
+                }
             }
         }
 
