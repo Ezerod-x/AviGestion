@@ -318,11 +318,6 @@ namespace AviGestion_.UI
             pantalla.TopLevel = false;
             pantalla.FormBorderStyle = FormBorderStyle.None;
             pantalla.MaximumSize = Size.Empty;
-            pantalla.AutoScroll = true;                                // si el espacio es chico, scroll en vez de cortarse
-            pantalla.AutoScrollMinSize = pantalla.Size;                // tamaño original del diseño
-            pantalla.Dock = DockStyle.Fill;
-            OcultarEncabezadoPropio(pantalla);
-            BloquearGrillas(pantalla);
 
             int altoEncabezado = OcultarEncabezadoPropio(pantalla);       // devuelve el alto que se liberó
             disenio.Height -= altoEncabezado;
