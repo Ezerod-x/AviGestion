@@ -19,9 +19,11 @@ namespace AviGestion_.Logica
             return datos.ObtenerResumenProducto(productoId);
         }
 
-        public List<ConteoAgrupado> ConteoPorTipo() => datos.ConteoPorTipo();
-        public List<ConteoAgrupado> ConteoPorProducto() => datos.ConteoPorProducto();
-        public List<ConteoAgrupado> ConteoPorCategoria() => datos.ConteoPorCategoria();
-        public List<ConteoAgrupado> ConteoPorMes() => datos.ConteoPorMes();
+       
+        public List<ConteoAgrupado> Estadisticas(int criterio, string filtroTexto, string tipoAlerta, string estado,
+            DateTime? fechaDesde, DateTime? fechaHasta)
+        {
+            return datos.Contar(criterio, filtroTexto, tipoAlerta, estado, fechaDesde, fechaHasta);
+        }
     }
 }

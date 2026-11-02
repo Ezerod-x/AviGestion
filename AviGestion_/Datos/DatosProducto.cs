@@ -68,8 +68,7 @@ namespace AviGestion_.Datos
             };
         }
 
-        // NUEVO: evita productos con el mismo código (causa de las filas duplicadas).
-        // idExcluir sirve para que, al modificar un producto, no se choque consigo mismo.
+       
         public bool ExisteCodigo(string codigo, int idExcluir)
         {
             using (SqlConnection cn = Conexion.ObtenerConexion())
@@ -139,8 +138,7 @@ namespace AviGestion_.Datos
             }
         }
 
-        // Completa Id_Categoria en los productos que solo tienen el nombre de la categoría
-        // (cargados antes del vínculo). Es seguro repetirlo: solo toca los que están vacíos.
+       
         public void VincularCategorias()
         {
             using (SqlConnection cn = Conexion.ObtenerConexion())

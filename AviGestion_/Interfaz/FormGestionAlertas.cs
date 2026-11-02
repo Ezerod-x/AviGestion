@@ -13,16 +13,16 @@ namespace AviGestion_.UI
         private AlertaLogica logica = new AlertaLogica();
         private Usuario usuarioActual;
 
-        // Paleta de colores del gráfico (verde del sistema + colores de contraste)
+        
         private static readonly Color[] Paleta =
         {
-            Color.FromArgb(46, 92, 45),   // verde oscuro
-            Color.FromArgb(214, 137, 16), // ámbar
-            Color.FromArgb(180, 30, 30),  // rojo
-            Color.FromArgb(52, 120, 180), // azul
-            Color.FromArgb(129, 163, 74), // verde claro
-            Color.FromArgb(142, 99, 166), // violeta
-            Color.FromArgb(120, 120, 120) // gris
+            Color.FromArgb(46, 92, 45),   
+            Color.FromArgb(214, 137, 16), 
+            Color.FromArgb(180, 30, 30),  
+            Color.FromArgb(52, 120, 180), 
+            Color.FromArgb(129, 163, 74), 
+            Color.FromArgb(142, 99, 166), 
+            Color.FromArgb(120, 120, 120) 
         };
 
         public FormAlertas(Usuario usuario)
@@ -36,11 +36,11 @@ namespace AviGestion_.UI
         }
 
 
-        // ---- Texto de ayuda dentro del buscador ----
+        
         private const string PH_BUSCAR = "Buscar alerta por producto o código...";
-        private bool inicializando = true;     // evita consultas mientras se arma la pantalla
+        private bool inicializando = true;    
 
-        // Texto que realmente se usa para buscar (el texto de ayuda no cuenta como búsqueda)
+       
         private string TextoBusqueda
         {
             get { return txtBuscar.Text == PH_BUSCAR ? "" : txtBuscar.Text; }
@@ -74,16 +74,16 @@ namespace AviGestion_.UI
 
         private void FormAlertas_Load(object sender, EventArgs e)
         {
-            inicializando = false;
-
-            // Antes de mostrar, se ponen al día las alertas de todos los productos
-            // (cubre los que bajaron de stock por pedidos o se cargaron fuera de la pantalla de Stock).
+            
             try { new StockLogica().SincronizarAlertas(); } catch { }
 
-            // El flujo normal del CU-08 arranca mostrando las alertas ACTIVAS.
+           
             cmbTipoAlerta.SelectedItem = "Todas";
             cmbEstadoAlerta.SelectedItem = "Activa";
             cmbVistaGrafico.SelectedIndex = 0;
+            chkFiltrarFecha_CheckedChanged(null, EventArgs.Empty);   
+
+            inicializando = false;
             CargarGrilla();
         }
 
@@ -118,12 +118,26 @@ namespace AviGestion_.UI
             { Name = "titulo" });
         }
 
+       
+        private DateTime? FechaDesde { get { return chkFiltrarFecha.Checked ? dtpDesde.Value.Date : (DateTime?)null; } }
+        private DateTime? FechaHasta { get { return chkFiltrarFecha.Checked ? dtpHasta.Value.Date.AddDays(1).AddSeconds(-1) : (DateTime?)null; } }
+
+        private bool RangoFechasInvalido()
+        {
+            return chkFiltrarFecha.Checked && dtpDesde.Value.Date > dtpHasta.Value.Date;
+        }
+
         private void CargarGrilla()
         {
-            DateTime? desde = chkFiltrarFecha.Checked ? dtpDesde.Value.Date : (DateTime?)null;
-            DateTime? hasta = chkFiltrarFecha.Checked ? dtpHasta.Value.Date.AddDays(1).AddSeconds(-1) : (DateTime?)null;
-
-            var lista = logica.Buscar(TextoBusqueda, cmbTipoAlerta.Text, cmbEstadoAlerta.Text, desde, hasta);
+            List<AlertaVista> lista;
+            if (RangoFechasInvalido())
+            {
+                lista = new List<AlertaVista>();
+            }
+            else
+            {
+                lista = logica.Buscar(TextoBusqueda, cmbTipoAlerta.Text, cmbEstadoAlerta.Text, FechaDesde, FechaHasta);
+            }
 
             dgvAlertas.AutoGenerateColumns = false;
             dgvAlertas.DataSource = null;
@@ -135,35 +149,49 @@ namespace AviGestion_.UI
                 dgvAlertas.Columns["colFechaResolucion"].DefaultCellStyle.Format = "dd/MM/yyyy HH:mm";
             }
 
-            // Alternativas 2.1 / 6.1 del CU-08: informar cuando no hay alertas para mostrar.
+           
             lblSinResultados.Visible = lista.Count == 0;
-            lblSinResultados.Text = lista.Count == 0
-                ? (cmbEstadoAlerta.Text == "Activa" && string.IsNullOrWhiteSpace(TextoBusqueda) && cmbTipoAlerta.Text == "Todas" && !chkFiltrarFecha.Checked
+            if (RangoFechasInvalido())
+                lblSinResultados.Text = "La fecha \"Desde\" no puede ser posterior a la fecha \"Hasta\".";
+            else if (lista.Count == 0)
+                lblSinResultados.Text = (cmbEstadoAlerta.Text == "Activa" && string.IsNullOrWhiteSpace(TextoBusqueda) && cmbTipoAlerta.Text == "Todas" && !chkFiltrarFecha.Checked)
                     ? "No hay alertas activas pendientes en este momento."
-                    : "No existen alertas con los criterios aplicados.")
-                : "";
+                    : "No existen alertas con los criterios aplicados.";
+            else
+                lblSinResultados.Text = "";
+        }
+
+       
+        private void AplicarFiltros()
+        {
+            CargarGrilla();
+            if (pnlGraficos.Visible) CargarGrafico();
         }
 
         private void Filtro_Changed(object sender, EventArgs e)
         {
             if (inicializando) return;
-            CargarGrilla();
+            AplicarFiltros();
         }
 
         private void chkFiltrarFecha_CheckedChanged(object sender, EventArgs e)
         {
             dtpDesde.Enabled = chkFiltrarFecha.Checked;
             dtpHasta.Enabled = chkFiltrarFecha.Checked;
-            CargarGrilla();
+            if (inicializando) return;
+            AplicarFiltros();
         }
 
         private void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
+            inicializando = true;          
             PonerPlaceholder();
             cmbTipoAlerta.SelectedItem = "Todas";
             cmbEstadoAlerta.SelectedItem = "Todas";
             chkFiltrarFecha.Checked = false;
-            CargarGrilla();
+            inicializando = false;
+
+            AplicarFiltros();
         }
 
         private void dgvAlertas_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -181,7 +209,7 @@ namespace AviGestion_.UI
             }
         }
 
-        // Doble clic en una fila = ver el detalle del producto de esa alerta
+        
         private void dgvAlertas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -211,10 +239,13 @@ namespace AviGestion_.UI
 
             if (mostrandoGrilla)
                 CargarGrafico();
+            else
+                CargarGrilla();
         }
 
         private void cmbVistaGrafico_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (inicializando) return;
             CargarGrafico();
         }
 
@@ -224,25 +255,28 @@ namespace AviGestion_.UI
             var area = chartAlertas.ChartAreas["area1"];
             var leyenda = chartAlertas.Legends["leyenda1"];
 
-            List<ConteoAgrupado> datos;
+            int criterio = cmbVistaGrafico.SelectedIndex < 0 ? 0 : cmbVistaGrafico.SelectedIndex;
             string titulo;
-            bool esTorta = true;
+            bool esTorta = criterio != 3;
 
-            switch (cmbVistaGrafico.SelectedIndex)
+            switch (criterio)
             {
-                case 0: datos = logica.ConteoPorTipo(); titulo = "Alertas por tipo"; break;
-                case 1: datos = logica.ConteoPorProducto(); titulo = "Alertas por producto"; break;
-                case 2: datos = logica.ConteoPorCategoria(); titulo = "Alertas por categoría"; break;
-                default:
-                    datos = logica.ConteoPorMes();
-                    titulo = "Alertas por período (mes)";
-                    esTorta = false;
-                    break;
+                case 0: titulo = "Alertas por tipo"; break;
+                case 1: titulo = "Alertas por producto"; break;
+                case 2: titulo = "Alertas por categoría"; break;
+                default: titulo = "Alertas por período (mes)"; break;
             }
+
+            
+            List<ConteoAgrupado> datos = RangoFechasInvalido()
+                ? new List<ConteoAgrupado>()
+                : logica.Estadisticas(criterio, TextoBusqueda, cmbTipoAlerta.Text, cmbEstadoAlerta.Text, FechaDesde, FechaHasta);
 
             int total = 0;
             foreach (var d in datos) total += d.Cantidad;
-            chartAlertas.Titles["titulo"].Text = $"{titulo}  ·  Total: {total}";
+            chartAlertas.Titles["titulo"].Text = total == 0
+                ? titulo + "  ·  Sin alertas con los filtros aplicados"
+                : $"{titulo}  ·  Total: {total}";
 
             var serie = new Series("Alertas")
             {
@@ -258,7 +292,7 @@ namespace AviGestion_.UI
                 serie["PieLabelStyle"] = "Outside";
                 serie["PieLineColor"] = "Gray";
                 serie["PieStartAngle"] = "270";
-                // Agrupa las porciones muy chicas en "Otros"
+               
                 serie["CollectedThreshold"] = "5";
                 serie["CollectedThresholdUsePercent"] = "true";
                 serie["CollectedLabel"] = "Otros";

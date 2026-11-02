@@ -29,7 +29,7 @@
             this.lblAltaModificacion = new System.Windows.Forms.Label();
             this.lblRegistrarProducto = new System.Windows.Forms.Label();
             this.lblCodigo = new System.Windows.Forms.Label();
-            this.txtCodigo = new System.Windows.Forms.TextBox();
+            this.cmbCodigo = new System.Windows.Forms.ComboBox();
             this.lblDescripcion = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.lblCategoria = new System.Windows.Forms.Label();
@@ -176,7 +176,7 @@
             this.pnlAltaModificacion.Controls.Add(this.lblAltaModificacion);
             this.pnlAltaModificacion.Controls.Add(this.lblRegistrarProducto);
             this.pnlAltaModificacion.Controls.Add(this.lblCodigo);
-            this.pnlAltaModificacion.Controls.Add(this.txtCodigo);
+            this.pnlAltaModificacion.Controls.Add(this.cmbCodigo);
             this.pnlAltaModificacion.Controls.Add(this.lblDescripcion);
             this.pnlAltaModificacion.Controls.Add(this.txtDescripcion);
             this.pnlAltaModificacion.Controls.Add(this.lblCategoria);
@@ -229,12 +229,17 @@
             this.lblCodigo.TabIndex = 2;
             this.lblCodigo.Text = "CÓDIGO";
             // 
-            // txtCodigo
+            // cmbCodigo  (lista de códigos registrados; también permite escribir uno nuevo)
             // 
-            this.txtCodigo.Location = new System.Drawing.Point(20, 73);
-            this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.Size = new System.Drawing.Size(250, 20);
-            this.txtCodigo.TabIndex = 0;
+            this.cmbCodigo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbCodigo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbCodigo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.cmbCodigo.Location = new System.Drawing.Point(20, 73);
+            this.cmbCodigo.MaxLength = 20;
+            this.cmbCodigo.Name = "cmbCodigo";
+            this.cmbCodigo.Size = new System.Drawing.Size(250, 21);
+            this.cmbCodigo.TabIndex = 0;
+            this.cmbCodigo.SelectionChangeCommitted += new System.EventHandler(this.cmbCodigo_SelectionChangeCommitted);
             // 
             // lblDescripcion
             // 
@@ -450,7 +455,7 @@
         private System.Windows.Forms.Label lblAltaModificacion;
         private System.Windows.Forms.Label lblRegistrarProducto;
         private System.Windows.Forms.Label lblCodigo;
-        private System.Windows.Forms.TextBox txtCodigo;
+        private System.Windows.Forms.ComboBox cmbCodigo;
         private System.Windows.Forms.Label lblDescripcion;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Label lblCategoria;
