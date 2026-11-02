@@ -25,6 +25,7 @@ namespace AviGestion_.Interfaz
         {
             InitializeComponent();
             usuarioActual = usuario;
+            Idioma.Aplicar(this);
         }
 
         // Carga inicial
@@ -50,6 +51,7 @@ namespace AviGestion_.Interfaz
 
             CargarCamiones();
             LimpiarPanel();
+            Idioma.Aplicar(this);
         }
 
         #region Grilla de camiones (arriba)
