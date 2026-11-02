@@ -49,12 +49,14 @@ namespace AviGestion_.Logica
         #region Validar y Cancelar Pedido
         public void CancelarPedido(int idPedido, string estadoActual)
         {
-            if (estadoActual == "Enviado" || estadoActual == "Entregado")
-                throw new Exception(
-                    $"El pedido #{idPedido} está en estado \"{estadoActual}\" y no puede cancelarse.");
-
             if (estadoActual == "Cancelado")
                 throw new Exception("Este pedido ya está cancelado.");
+
+            // Solo se puede cancelar mientras el pedido no salió del depósito
+            // (los mismos estados que valida SP_CancelarPedido en la base)
+            if (estadoActual != "Pendiente" && estadoActual != "En preparación")
+                throw new Exception(
+                    $"El pedido #{idPedido} está en estado \"{estadoActual}\" y no puede cancelarse.");
 
             datos.CancelarPedido(idPedido);
         }
