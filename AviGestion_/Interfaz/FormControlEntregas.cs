@@ -160,22 +160,38 @@ namespace AviGestion_.Interfaz
                 dgvPedidosCamion.Columns["Cajas"].HeaderText = "Cajones";
                 dgvPedidosCamion.Columns["Cajas"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
-                // Solo el tilde se puede tocar
                 foreach (DataGridViewColumn col in dgvPedidosCamion.Columns)
                     col.ReadOnly = col.Name != "Entregado";
 
                 rutaComprobante = null;
                 lblArchivo.Text = "Sin imagen adjunta";
                 cboResponsable.SelectedIndex = -1;
-                lblTituloEntrega.Text = "Camión " + patenteSeleccionada + " · Registrar entrega";
 
+                // 1. MANTENER GRILLA SUPERIOR Y ETIQUETA DE AYUDA
+                lblAyuda.Location = new Point(dgvCamiones.Left, dgvCamiones.Bottom + 4);
+
+                // 2. CONFIGURAR EL GROUPBOX (Ampliamos la altura a 295px para incluir los botones completos)
                 if (grbEntrega.Parent != dgvCamiones.Parent)
                     dgvCamiones.Parent.Controls.Add(grbEntrega);
-                grbEntrega.Location = new Point(dgvCamiones.Left, lblAyuda.Bottom + 8);
-                grbEntrega.Width = dgvCamiones.Width;
 
+                grbEntrega.Location = new Point(dgvCamiones.Left, lblAyuda.Bottom + 4);
+                grbEntrega.Width = dgvCamiones.Width;
+                grbEntrega.Height = 295; // <--- ALTURA AJUSTADA PARA MOSTRAR LOS BOTONES COMPLETOS
                 grbEntrega.Visible = true;
                 grbEntrega.BringToFront();
+
+                // 3. TÍTULO EN EL GROUPBOX
+                lblTituloEntrega.Parent = grbEntrega;
+                lblTituloEntrega.Text = "Camión " + patenteSeleccionada + " · Registrar entrega";
+                lblTituloEntrega.Location = new Point(16, 14);
+                lblTituloEntrega.Visible = true;
+                lblTituloEntrega.BringToFront();
+
+                // 4. GRILLA INTERNA (Ajustamos Height a 145px)
+                dgvPedidosCamion.Parent = grbEntrega;
+                dgvPedidosCamion.Location = new Point(16, 38);
+                dgvPedidosCamion.Height = 145;
+                dgvPedidosCamion.BringToFront();
 
                 foreach (DataGridViewRow f in dgvPedidosCamion.Rows)
                     PintarEstado(f);
@@ -344,6 +360,10 @@ namespace AviGestion_.Interfaz
             lblMensaje.Text = "";
             btnConfirmarEntrega.Enabled = false;
             grbEntrega.Visible = false;
+
+            // Restaurar altura original de la grilla superior
+            dgvCamiones.Height = 260;
+            lblAyuda.Location = new Point(dgvCamiones.Left, dgvCamiones.Bottom + 4);
         }
 
         private void btnVerHistorial_Click(object sender, EventArgs e)

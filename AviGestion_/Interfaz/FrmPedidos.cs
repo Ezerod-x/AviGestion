@@ -36,10 +36,18 @@ namespace AviGestion_.Interfaz
             dgvDetProductos.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(245, 245, 220);
             dgvDetProductos.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             usuarioActual = usuario;
+            this.Load += new System.EventHandler(this.FormPedidos_Load);
         }
 
         #endregion
+        private void FormPedidos_Load(object sender, EventArgs e)
+        {
+            // Forzamos a que pnlAlta comparta el mismo control Padre que pnlDetalle
+            pnlAlta.Parent = pnlDetalle.Parent;
 
+            // Ocultamos el panel de alta al arrancar la ventana
+            pnlAlta.Visible = false;
+        }
         #region Helpers paneles
         private void OcultarPaneles()
         {
@@ -61,11 +69,22 @@ namespace AviGestion_.Interfaz
 
         private void MostrarPanelAlta()
         {
+            // 1. Ocultar detalle
             pnlDetalle.Visible = false;
-            // Achicamos la grilla superior a 160px para que entre cómodo el panel de alta
-            dgvPedidos.Size = new System.Drawing.Size(1040, 160);
-            lblAyuda.Location = new System.Drawing.Point(12, dgvPedidos.Bottom + 4);
-            pnlAlta.Location = new System.Drawing.Point(10, lblAyuda.Bottom + 4);
+
+            // 2. Achicar la grilla a 160px
+            dgvPedidos.Height = 160;
+
+            // 3. Posicionar el label de ayuda justo debajo de la grilla
+            lblAyuda.Location = new System.Drawing.Point(dgvPedidos.Left, dgvPedidos.Bottom + 4);
+
+            // 4. Posicionar el panel de alta justo debajo del label de ayuda (o de la grilla + offset)
+            pnlAlta.Location = new System.Drawing.Point(dgvPedidos.Left, lblAyuda.Bottom + 4);
+
+            // 5. Ajustar el ancho para que empareje con la grilla
+            pnlAlta.Width = dgvPedidos.Width;
+
+            // 6. Mostrar y traer al frente
             pnlAlta.Visible = true;
             pnlAlta.BringToFront();
         }
@@ -307,10 +326,8 @@ namespace AviGestion_.Interfaz
             nudCantidad.Value = 1;
             dtpFecha.Value = DateTime.Today;
 
-            // Aseguramos que el panel de detalle esté oculto y el de alta visible
-            pnlDetalle.Visible = false;
-            pnlAlta.Visible = true;
-            pnlAlta.BringToFront();
+            // Llamamos al método que posiciona e incrusta el panel
+            MostrarPanelAlta();
 
             cboCliente.Focus();
         }
