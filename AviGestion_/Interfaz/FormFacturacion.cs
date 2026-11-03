@@ -54,6 +54,8 @@ namespace AviGestion_.Interfaz
                 lblPedidoCliente.ForeColor = VERDE;
                 
                 CargarGrilla();
+                dtpFechaFacturados.MaxDate = DateTime.Today;    // no permite elegir días futuros
+                dtpFechaFacturados.Value = DateTime.Today;      // siempre arranca en el día de hoy
                 CargarFacturados();
                 LimpiarCampos();
             }
