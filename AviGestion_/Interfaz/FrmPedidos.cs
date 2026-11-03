@@ -1,12 +1,10 @@
 ﻿using AviGestion_.Datos;
-using AviGestion_.Interfaz;
 using AviGestion_.Logica;
 using AviGestion_.UI;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using PdfDocument = iTextSharp.text.Document;

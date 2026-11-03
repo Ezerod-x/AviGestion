@@ -16,7 +16,7 @@ namespace AviGestion_.UI
         private Usuario usuarioActual;
         private Form pantallaActual;                           // pantalla abierta en pnlContenido (null = inicio)
         private const string TITULO_INICIO = "Menú Principal - Sistema AviGestión";
-        private static readonly Color VERDE = Color.FromArgb(46, 125, 50);
+        private static readonly Color VERDE = Color.FromArgb(46, 92, 45);
 
         // Marco alrededor de pnlContenido y límites de tamaño
         private const int MARGEN_X = 110, MARGEN_Y = 50;

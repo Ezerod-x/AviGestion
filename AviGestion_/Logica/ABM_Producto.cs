@@ -53,7 +53,7 @@ namespace AviGestion_.Logica
             if (p.StockMinimo >= p.StockMaximo)
                 throw new Exception("El stock mínimo debe ser menor al stock máximo.");
 
-            // NUEVO: evita registrar dos veces el mismo código de producto.
+           
             if (datos.ExisteCodigo(p.Codigo, p.Id))
                 throw new Exception($"Ya existe un producto registrado con el código '{p.Codigo}'.");
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace AviGestion_.Datos
@@ -38,49 +39,56 @@ namespace AviGestion_.Datos
 
     public class DatosAlerta
     {
+      
+        private string ArmarFiltro(SqlCommand cmd, string filtroTexto, string tipoAlerta, string estado,
+            DateTime? fechaDesde, DateTime? fechaHasta)
+        {
+            cmd.Parameters.Add("@filtro", SqlDbType.NVarChar, 200).Value = "%" + (filtroTexto ?? "").Trim() + "%";
+            cmd.Parameters.Add("@tipo", SqlDbType.NVarChar, 50).Value = string.IsNullOrEmpty(tipoAlerta) ? "Todas" : tipoAlerta;
+            cmd.Parameters.Add("@estado", SqlDbType.NVarChar, 50).Value = string.IsNullOrEmpty(estado) ? "Todas" : estado;
+            cmd.Parameters.Add("@fechaDesde", SqlDbType.DateTime).Value = (object)fechaDesde ?? DBNull.Value;
+            cmd.Parameters.Add("@fechaHasta", SqlDbType.DateTime).Value = (object)fechaHasta ?? DBNull.Value;
+
+            return @"WHERE (p.Codigo LIKE @filtro OR p.Descripcion LIKE @filtro)
+                       AND (@tipo = 'Todas' OR a.TipoAlerta = @tipo)
+                       AND (@estado = 'Todas' OR a.Estado = @estado)
+                       AND (@fechaDesde IS NULL OR a.FechaGeneracion >= @fechaDesde)
+                       AND (@fechaHasta IS NULL OR a.FechaGeneracion <= @fechaHasta)";
+        }
+
         public List<AlertaVista> Listar(string filtroTexto, string tipoAlerta, string estado,
             DateTime? fechaDesde, DateTime? fechaHasta)
         {
             var lista = new List<AlertaVista>();
             using (SqlConnection cn = Conexion.ObtenerConexion())
+            using (SqlCommand cmd = new SqlCommand())
             {
-                string sql = @"SELECT a.Id, a.ProductoId, p.Codigo, p.Descripcion, p.Categoria,
-                                      a.TipoAlerta, a.Estado, a.FechaGeneracion, a.FechaResolucion
-                               FROM Alertas a
-                               INNER JOIN Productos p ON p.Id = a.ProductoId
-                               WHERE (p.Codigo LIKE @filtro OR p.Descripcion LIKE @filtro)
-                                 AND (@tipo = 'Todas' OR a.TipoAlerta = @tipo)
-                                 AND (@estado = 'Todas' OR a.Estado = @estado)
-                                 AND (@fechaDesde IS NULL OR a.FechaGeneracion >= @fechaDesde)
-                                 AND (@fechaHasta IS NULL OR a.FechaGeneracion <= @fechaHasta)
-                               ORDER BY a.FechaGeneracion DESC";
-                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                cmd.Connection = cn;
+                string where = ArmarFiltro(cmd, filtroTexto, tipoAlerta, estado, fechaDesde, fechaHasta);
+                cmd.CommandText = @"SELECT a.Id, a.ProductoId, p.Codigo, p.Descripcion, p.Categoria,
+                                           a.TipoAlerta, a.Estado, a.FechaGeneracion, a.FechaResolucion
+                                    FROM Alertas a
+                                    INNER JOIN Productos p ON p.Id = a.ProductoId " + where + @"
+                                    ORDER BY a.FechaGeneracion DESC";
+                cn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    cmd.Parameters.AddWithValue("@filtro", "%" + (filtroTexto ?? "") + "%");
-                    cmd.Parameters.AddWithValue("@tipo", string.IsNullOrEmpty(tipoAlerta) ? "Todas" : tipoAlerta);
-                    cmd.Parameters.AddWithValue("@estado", string.IsNullOrEmpty(estado) ? "Todas" : estado);
-                    cmd.Parameters.AddWithValue("@fechaDesde", (object)fechaDesde ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@fechaHasta", (object)fechaHasta ?? DBNull.Value);
-                    cn.Open();
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        lista.Add(new AlertaVista
                         {
-                            lista.Add(new AlertaVista
-                            {
-                                Id = (int)reader["Id"],
-                                ProductoId = (int)reader["ProductoId"],
-                                Codigo = reader["Codigo"].ToString(),
-                                Producto = reader["Descripcion"].ToString(),
-                                Categoria = reader["Categoria"].ToString(),
-                                TipoAlerta = reader["TipoAlerta"].ToString(),
-                                Estado = reader["Estado"].ToString(),
-                                FechaGeneracion = (DateTime)reader["FechaGeneracion"],
-                                FechaResolucion = reader["FechaResolucion"] == DBNull.Value
-                                    ? (DateTime?)null
-                                    : (DateTime)reader["FechaResolucion"]
-                            });
-                        }
+                            Id = (int)reader["Id"],
+                            ProductoId = (int)reader["ProductoId"],
+                            Codigo = reader["Codigo"].ToString(),
+                            Producto = reader["Descripcion"].ToString(),
+                            Categoria = reader["Categoria"].ToString(),
+                            TipoAlerta = reader["TipoAlerta"].ToString(),
+                            Estado = reader["Estado"].ToString(),
+                            FechaGeneracion = (DateTime)reader["FechaGeneracion"],
+                            FechaResolucion = reader["FechaResolucion"] == DBNull.Value
+                                ? (DateTime?)null
+                                : (DateTime)reader["FechaResolucion"]
+                        });
                     }
                 }
             }
@@ -123,52 +131,38 @@ namespace AviGestion_.Datos
             return resumen;
         }
 
-        public List<ConteoAgrupado> ConteoPorTipo()
+        
+        public List<ConteoAgrupado> Contar(int criterio, string filtroTexto, string tipoAlerta, string estado,
+            DateTime? fechaDesde, DateTime? fechaHasta)
         {
-            return EjecutarConteo(@"SELECT TipoAlerta AS Etiqueta, COUNT(*) AS Cantidad
-                                     FROM Alertas GROUP BY TipoAlerta ORDER BY Cantidad DESC");
-        }
+            string columna, orden;
+            switch (criterio)
+            {
+                case 0: columna = "a.TipoAlerta"; orden = "Cantidad DESC"; break;
+                case 1: columna = "p.Descripcion"; orden = "Cantidad DESC"; break;
+                case 2: columna = "p.Categoria"; orden = "Cantidad DESC"; break;
+                default: columna = "CONVERT(VARCHAR(7), a.FechaGeneracion, 120)"; orden = "Etiqueta ASC"; break;
+            }
 
-        public List<ConteoAgrupado> ConteoPorProducto()
-        {
-            return EjecutarConteo(@"SELECT p.Descripcion AS Etiqueta, COUNT(*) AS Cantidad
-                                     FROM Alertas a INNER JOIN Productos p ON p.Id = a.ProductoId
-                                     GROUP BY p.Descripcion ORDER BY Cantidad DESC");
-        }
-
-        public List<ConteoAgrupado> ConteoPorCategoria()
-        {
-            return EjecutarConteo(@"SELECT p.Categoria AS Etiqueta, COUNT(*) AS Cantidad
-                                     FROM Alertas a INNER JOIN Productos p ON p.Id = a.ProductoId
-                                     GROUP BY p.Categoria ORDER BY Cantidad DESC");
-        }
-
-        public List<ConteoAgrupado> ConteoPorMes()
-        {
-            return EjecutarConteo(@"SELECT FORMAT(a.FechaGeneracion, 'yyyy-MM') AS Etiqueta, COUNT(*) AS Cantidad
-                                     FROM Alertas a
-                                     GROUP BY FORMAT(a.FechaGeneracion, 'yyyy-MM')
-                                     ORDER BY Etiqueta ASC");
-        }
-
-        private List<ConteoAgrupado> EjecutarConteo(string sql)
-        {
             var lista = new List<ConteoAgrupado>();
             using (SqlConnection cn = Conexion.ObtenerConexion())
+            using (SqlCommand cmd = new SqlCommand())
             {
-                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                cmd.Connection = cn;
+                string where = ArmarFiltro(cmd, filtroTexto, tipoAlerta, estado, fechaDesde, fechaHasta);
+                cmd.CommandText = "SELECT " + columna + " AS Etiqueta, COUNT(*) AS Cantidad " +
+                                  "FROM Alertas a INNER JOIN Productos p ON p.Id = a.ProductoId " + where + " " +
+                                  "GROUP BY " + columna + " ORDER BY " + orden;
+                cn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    cn.Open();
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        lista.Add(new ConteoAgrupado
                         {
-                            lista.Add(new ConteoAgrupado
-                            {
-                                Etiqueta = reader["Etiqueta"].ToString(),
-                                Cantidad = Convert.ToInt32(reader["Cantidad"])
-                            });
-                        }
+                            Etiqueta = reader["Etiqueta"].ToString(),
+                            Cantidad = Convert.ToInt32(reader["Cantidad"])
+                        });
                     }
                 }
             }
