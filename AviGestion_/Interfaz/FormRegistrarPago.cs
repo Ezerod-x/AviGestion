@@ -165,7 +165,7 @@ namespace AviGestion_.Interfaz
         }
         #endregion
 
-        #region Botones 
+        #region Botones (Confirmar, cancelar) 
         private void btnConfirmarPago_Click(object sender, EventArgs e)
         {
             if (pedidoSeleccionado == null)
@@ -207,7 +207,8 @@ namespace AviGestion_.Interfaz
                 pagosLogica.RegistrarPago(pedidoSeleccionado.NºPedido, importeABonar, metodoPago);
                 MessageBox.Show("El pago fue registrado correctamente en la base de datos.", "Pago Registrado",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                BitacoraLogica.Registrar(usuarioActual.Nombre,
+                   "Registro de Pago", "Pedidos", "Se registro correctamente el pago de del pedido #"+ pedidoSeleccionado.NºPedido+" con el importe de: $"+importeABonar+".");
                 CargarPedidos();
                 LimpiarPanelPago();
             }
@@ -221,6 +222,9 @@ namespace AviGestion_.Interfaz
             {
                 splitPagos.Panel2.Enabled = true;              // falló: se puede reintentar
                 MessageBox.Show("Error al procesar el abono: " + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                BitacoraLogica.Registrar(usuarioActual.Nombre,
+                   "Registro de Pago", "Pedidos", "Error al intentar abonar el pago de del pedido #" + pedidoSeleccionado.NºPedido+".");
             }
         }
         private void btnCancelarPago_Click(object sender, EventArgs e)

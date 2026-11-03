@@ -4,7 +4,9 @@ using AviGestion_.Logica;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -16,7 +18,7 @@ namespace AviGestion_.UI
         private Usuario usuarioActual;
         private Form pantallaActual;                           // pantalla abierta en pnlContenido (null = inicio)
         private const string TITULO_INICIO = "Menú Principal - Sistema AviGestión";
-        private static readonly Color VERDE = Color.FromArgb(46, 125, 50);
+        private static readonly Color VERDE = Color.FromArgb(46, 92, 45);
 
         // Marco alrededor de pnlContenido y límites de tamaño
         private const int MARGEN_X = 110, MARGEN_Y = 50;
@@ -82,7 +84,7 @@ namespace AviGestion_.UI
             items.Add(new ItemDeMenu { Texto = "Inicio", Accion = MostrarInicio });
 
             items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Clientes", Titulo = "Gestión de Clientes", Roles = pedidos, Crear = () => new FormClientes(usuarioActual) });
-            items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Pedidos", Titulo = "Gestión de Pedidos", Roles = pedidos, Crear = () => new FrmPedidos() });
+            items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Pedidos", Titulo = "Gestión de Pedidos", Roles = pedidos, Crear = () => new FrmPedidos(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Facturación", Titulo = "Facturación y Despacho de Pedidos", Roles = pedidos, Crear = () => new FormFacturacion(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Registrar Pagos", Titulo = "Registrar Pago", Roles = pedidos, Crear = () => new FormRegistrarPago(usuarioActual) });
 
@@ -99,8 +101,11 @@ namespace AviGestion_.UI
             items.Add(new ItemDeMenu { Seccion = "ADMINISTRACIÓN", Texto = "Backup", Titulo = "Backup", Roles = admin, Crear = () => new FormBackup(usuarioActual) });
 
             items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Cambiar contraseña", Accion = AbrirCambiarContrasena });
+
             items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Cambiar idioma", Accion = MostrarMenuIdioma });
-            items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Ayuda", Accion = () => MessageBox.Show(Idioma.T("Ayuda en construcción."), "AviGestión") });
+
+            items.Add(new ItemDeMenu { Seccion = "SISTEMA", Texto = "Ayuda", Accion = AbrirAyuda });
+
         }
 
         //Indica si el usuario actual puede ver y usar el ítem (Roles == null significa "todos").
@@ -184,6 +189,48 @@ namespace AviGestion_.UI
             if (!TieneAcceso(item)) return;                            // doble control de seguridad
             if (item.Crear != null) AbrirEnPanel(item.Crear(), item.Titulo ?? item.Texto, item.Boton);
             else if (item.Accion != null) item.Accion();
+        }
+
+        // =====================================================================
+        // AYUDA (todos los roles): abre el PDF con las instrucciones de uso.
+        // El PDF va en la carpeta "Resources" del proyecto y se copia junto al .exe
+        // (en Visual Studio: clic en el PDF > Propiedades > "Copiar en el directorio
+        // de salida" = "Copiar si es posterior"). Para cambiar el nombre del archivo,
+        // modificar la constante ARCHIVO_AYUDA.
+        // =====================================================================
+        private const string ARCHIVO_AYUDA = "Manual_de_usuario_AviGestion.pdf";
+
+        private void AbrirAyuda()
+        {
+            try
+            {
+                string carpeta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
+                string ruta = Path.Combine(carpeta, ARCHIVO_AYUDA);
+
+                // Si el archivo tiene otro nombre, se usa el primer PDF de la carpeta Resources
+                if (!File.Exists(ruta) && Directory.Exists(carpeta))
+                {
+                    string[] pdfs = Directory.GetFiles(carpeta, "*.pdf");
+                    ruta = pdfs.FirstOrDefault(p => Path.GetFileName(p).IndexOf("ayuda", StringComparison.OrdinalIgnoreCase) >= 0)
+                           ?? pdfs.FirstOrDefault()
+                           ?? ruta;
+                }
+
+                if (!File.Exists(ruta))
+                {
+                    MessageBox.Show("No se encontró el archivo de ayuda (" + ARCHIVO_AYUDA + ").\n\n" +
+                        "Buscado en: " + carpeta, "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Lo abre con el lector de PDF que tenga instalado el equipo
+                Process.Start(new ProcessStartInfo(ruta) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo abrir la ayuda: " + ex.Message, "Ayuda",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // Cambio de contraseña del usuario con sesión iniciada: se abre como ventana modal.
@@ -315,7 +362,7 @@ namespace AviGestion_.UI
             CerrarPantalla();
             pantallaActual = pantalla;
 
-            Size disenio = pantalla.ClientSize;                       
+            Size disenio = pantalla.ClientSize;
 
             pantalla.TopLevel = false;
             pantalla.FormBorderStyle = FormBorderStyle.None;
@@ -510,7 +557,7 @@ namespace AviGestion_.UI
             if (tecla == Keys.F11 || (tecla == Keys.Escape && FormBorderStyle == FormBorderStyle.None))
             {
                 bool completa = (FormBorderStyle == FormBorderStyle.None);
-                WindowState = FormWindowState.Normal;                  
+                WindowState = FormWindowState.Normal;
                 FormBorderStyle = completa ? FormBorderStyle.Sizable : FormBorderStyle.None;
                 WindowState = FormWindowState.Maximized;
                 return true;

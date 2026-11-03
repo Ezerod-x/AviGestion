@@ -263,6 +263,9 @@
     <EmbeddedResource Include="Interfaz\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaz\FormAsignarPedidos.resx">
+      <DependentUpon>FormAsignarPedidos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FormControlEntregas.resx">
       <DependentUpon>FormControlEntregas.cs</DependentUpon>
     </EmbeddedResource>
@@ -272,6 +275,9 @@
     <EmbeddedResource Include="Interfaz\FormHistorialEntrega.resx">
       <DependentUpon>FormHistorialEntrega.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaz\FormRecuperoContrasena.resx">
+      <DependentUpon>FormRecuperoContrasena.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FormRegistrarPago.resx">
       <DependentUpon>FormRegistrarPago.cs</DependentUpon>
     </EmbeddedResource>
@@ -280,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FrmAgregarCliente.resx">
       <DependentUpon>FrmAgregarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaz\FrmCambiarContrasena.resx">
+      <DependentUpon>FrmCambiarContrasena.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FrmCargaStock.resx">
       <DependentUpon>FrmCargaStock.cs</DependentUpon>
@@ -325,6 +334,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Manual_de_usuario_AviGestion.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -197,12 +197,24 @@ namespace AviGestion_.Interfaz
                 clienteLogica.GuardarCliente(cliente);
 
                 MessageBox.Show("Los datos se guardaron correctamente en la base de datos.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                if (grbRegistrarModificar.Text == "Alta")
+                {
+                    BitacoraLogica.Registrar(usuarioActual.Nombre, "Alta", "Clientes", "Se registro correctamente cliente: " + responsableCompleto + ".");
+                }
+                else
+                {
+                    BitacoraLogica.Registrar(usuarioActual.Nombre, "Modificación", "Clientes", "Se guardaron correctamente los datos modificados del cliente "+responsableCompleto+".");
+
+                }
+
                 grbRegistrarModificar.Visible = false;
                 CargarDatosClientes();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                BitacoraLogica.Registrar(usuarioActual.Nombre,"Guardado fallido", "Clientes","Error al registrar nuevo cliente/modificacion de datos"); 
             }
         }
 

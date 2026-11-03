@@ -16,7 +16,7 @@ namespace AviGestion_.Interfaz
         private readonly AsignacionLogica logica = new AsignacionLogica();
         private DataTable vehiculos;
 
-        private static readonly Color Verde = Color.FromArgb(46, 125, 50);
+        private static readonly Color Verde = Color.FromArgb(46, 92, 45);
         private static readonly Color Rojo = Color.FromArgb(139, 0, 0);
 
         // Item del desplegable de camiones
@@ -43,11 +43,6 @@ namespace AviGestion_.Interfaz
         private void FormAsignarPedidos_Load(object sender, EventArgs e)
         {
             CargarTablero();
-        }
-
-        private void btnVolverMenu_Click(object sender, EventArgs e)
-        {
-            this.Close(); // FormMenu se vuelve a mostrar con FormClosed
         }
 
         // Camiones que están en el depósito (pueden recibir pedidos)
@@ -217,7 +212,7 @@ namespace AviGestion_.Interfaz
             {
                 Text = "Pedido #" + idPedido,
                 Font = new Font("Segoe UI", 10F, FontStyle.Bold),
-                ForeColor = Verde,
+                ForeColor = Color.FromArgb(46, 92, 45),
                 AutoSize = true,
                 Location = new Point(10, 8)
             });
@@ -327,7 +322,7 @@ namespace AviGestion_.Interfaz
             {
                 Text = patente,
                 Font = fuentePatente,
-                ForeColor = Verde,
+                ForeColor = Color.FromArgb(46, 92, 45),
                 AutoSize = true,
                 Location = new Point(10, 8)
             });
@@ -586,7 +581,7 @@ namespace AviGestion_.Interfaz
             }
 
             BitacoraLogica.Registrar(usuarioActual.Nombre,
-                "Cargó el pedido #" + idPedido + " en el vehículo " + camion.Patente, "Pedidos");
+                "Cargó el pedido #" + idPedido + " en el vehículo " + camion.Patente, "Pedidos", "Carga exitosa del pedido #"+idPedido+" en el vehiculo");
 
             // Se recarga después del evento para no destruir el combo mientras se usa
             BeginInvoke((Action)CargarTablero);

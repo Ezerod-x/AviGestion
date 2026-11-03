@@ -8,6 +8,12 @@ namespace AviGestion_.Datos
         private static string cadenaConexion =
             @"Data Source=.\SQLEXPRESS;Initial Catalog=Avigestion;Integrated Security=True;";
 
+
+        //conexion notebook victor
+       // private static string cadenaConexion =
+       //     @"Data Source=.;Initial Catalog=Avigestion;Integrated Security=True;";
+
+
         public static SqlConnection ObtenerConexion()
         {
             return new SqlConnection(cadenaConexion);

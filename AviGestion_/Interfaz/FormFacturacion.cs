@@ -13,8 +13,8 @@ namespace AviGestion_.Interfaz
         private FacturacionLogica negocio = new FacturacionLogica();
         private List<PagoPedido> listaPedidos = new List<PagoPedido>();
         private int idPedidoSeleccionado = 0;
-        private Usuario usuarioActual;
-        private static readonly Color VERDE = Color.FromArgb(46, 125, 50);
+        private Usuario usuarioActual; 
+        private static readonly Color VERDE = Color.FromArgb(46, 92, 45);
 
 
         public FormFacturacion(Usuario usuarioActual)//nuevo form
@@ -261,14 +261,22 @@ namespace AviGestion_.Interfaz
                     case ResultadoDespacho.Exito:
                         MessageBox.Show("La compra fue registrada correctamente. El pedido quedó listo para que Logística lo asigne a un camión.",
                                         "Despacho confirmado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        BitacoraLogica.Registrar(usuarioActual.Nombre, "Pedido despachado/facturado", "Pedidos", 
+                            "Se registro correctamente la facturación del pedido #"+idPedidoSeleccionado +", se habilito su asignación a un vehículo");
                         break;
                     case ResultadoDespacho.CompraYaRegistrada:
                         MessageBox.Show("La compra ya fue registrada. La operación se cancela.",
                                         "Compra ya registrada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        BitacoraLogica.Registrar(usuarioActual.Nombre, "Error de pedido despachado/facturado", "Pedidos", 
+                            "La operación fue cancelada, la compra fue registrada por otro usuario");
+
                         break;
                     case ResultadoDespacho.PedidoNoDisponible:
                         MessageBox.Show("El pedido ya fue procesado o cancelado por otro usuario. Se actualiza el listado.",
                                         "Pedido ya procesado o cancelado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        BitacoraLogica.Registrar(usuarioActual.Nombre, "Error de pedido despachado/facturado", "Pedidos", 
+                            "La operación fue cancelada, la compra fue procesada/cancelada por otro usuario");
+
                         break;
                 }
 
@@ -291,7 +299,7 @@ namespace AviGestion_.Interfaz
         #endregion
 
         #region Interfaz y estilo
-        // ---- Estilo (verde 46; 125; 50) ----
+        // ---- Estilo (verde 46; 92; 45) ----
         private void EstiloGrilla(DataGridView g)
         {
             g.ReadOnly = true;

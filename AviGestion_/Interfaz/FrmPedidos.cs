@@ -1,12 +1,10 @@
 ﻿using AviGestion_.Datos;
-using AviGestion_.Interfaz;
 using AviGestion_.Logica;
 using AviGestion_.UI;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using PdfDocument = iTextSharp.text.Document;
@@ -17,12 +15,13 @@ namespace AviGestion_.Interfaz
     public partial class FrmPedidos : Form
     {
         private PedidoLogica logica = new PedidoLogica();
+        private Usuario usuarioActual;
         private Dictionary<string, string> _codigoPorNombre = new Dictionary<string, string>();
         private int _idPedidoDetalle = -1;
         private const string SUGERENCIA = "Filtrar por N°Pedido, Cliente, Fecha, Estado o Productos";
 
         #region Constructor
-        public FrmPedidos()
+        public FrmPedidos(Usuario usuario)
         {
             InitializeComponent();
             CargarClientes();
@@ -36,6 +35,7 @@ namespace AviGestion_.Interfaz
             OcultarPaneles();
             dgvDetProductos.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(245, 245, 220);
             dgvDetProductos.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            usuarioActual = usuario;
         }
 
         #endregion
@@ -208,6 +208,8 @@ namespace AviGestion_.Interfaz
                     logica.CancelarPedido(_idPedidoDetalle, txtDetEstado.Text);
                     MessageBox.Show("Pedido cancelado. El stock fue restaurado.",
                         "Cancelación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    BitacoraLogica.Registrar(usuarioActual.Nombre, "Cancelación", "Pedidos", "Cancelación de pedido #" + _idPedidoDetalle + ".");
+
                     OcultarPaneles();
                     CargarPedidos();
                     CargarProductos();
@@ -215,6 +217,7 @@ namespace AviGestion_.Interfaz
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    BitacoraLogica.Registrar(usuarioActual.Nombre, "Cancelación", "Pedidos", "Error al intentar cancelar un pedido");
                 }
             }
         }
@@ -439,6 +442,7 @@ namespace AviGestion_.Interfaz
                 MessageBox.Show("Pedido registrado exitosamente con estado Pendiente.",
                     "Pedido registrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                BitacoraLogica.Registrar(usuarioActual.Nombre, "Alta", "Pedidos", "Alta de un nuevo Pedido #"+_idPedidoDetalle+".");
                 OcultarPaneles();
                 _codigoPorNombre.Clear();
                 CargarPedidos();
@@ -447,6 +451,7 @@ namespace AviGestion_.Interfaz
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                BitacoraLogica.Registrar(usuarioActual.Nombre, "Alta", "Pedidos", "Error al intentar registrar un nuevo pedido");
             }
         }
 
