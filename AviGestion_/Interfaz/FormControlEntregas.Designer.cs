@@ -61,9 +61,10 @@
             // txtBuscar
             // 
             this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscar.Location = new System.Drawing.Point(57, 13);
+            this.txtBuscar.Location = new System.Drawing.Point(76, 16);
+            this.txtBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(275, 21);
+            this.txtBuscar.Size = new System.Drawing.Size(365, 24);
             this.txtBuscar.TabIndex = 0;
             this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
             this.txtBuscar.Enter += new System.EventHandler(this.txtBuscar_Enter);
@@ -73,10 +74,11 @@
             // 
             this.picLupa.AutoSize = true;
             this.picLupa.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.picLupa.ForeColor = System.Drawing.Color.DarkGreen;
-            this.picLupa.Location = new System.Drawing.Point(15, 8);
+            this.picLupa.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.picLupa.Location = new System.Drawing.Point(20, 10);
+            this.picLupa.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.picLupa.Name = "picLupa";
-            this.picLupa.Size = new System.Drawing.Size(36, 24);
+            this.picLupa.Size = new System.Drawing.Size(45, 29);
             this.picLupa.TabIndex = 1;
             this.picLupa.Text = "🔍 ";
             // 
@@ -93,10 +95,10 @@
             this.dgvCamiones.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvCamiones.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SteelBlue;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvCamiones.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
@@ -112,16 +114,18 @@
             this.dgvCamiones.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCamiones.EnableHeadersVisualStyles = false;
             this.dgvCamiones.GridColor = System.Drawing.Color.Gainsboro;
-            this.dgvCamiones.Location = new System.Drawing.Point(12, 40);
+            this.dgvCamiones.Location = new System.Drawing.Point(16, 49);
+            this.dgvCamiones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvCamiones.MultiSelect = false;
             this.dgvCamiones.Name = "dgvCamiones";
             this.dgvCamiones.ReadOnly = true;
             this.dgvCamiones.RowHeadersVisible = false;
+            this.dgvCamiones.RowHeadersWidth = 51;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
             this.dgvCamiones.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvCamiones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCamiones.Size = new System.Drawing.Size(760, 244);
+            this.dgvCamiones.Size = new System.Drawing.Size(1013, 300);
             this.dgvCamiones.TabIndex = 2;
             this.dgvCamiones.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCamiones_CellDoubleClick);
             // 
@@ -130,9 +134,10 @@
             this.lblAyuda.AutoSize = true;
             this.lblAyuda.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAyuda.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblAyuda.Location = new System.Drawing.Point(12, 286);
+            this.lblAyuda.Location = new System.Drawing.Point(16, 352);
+            this.lblAyuda.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAyuda.Name = "lblAyuda";
-            this.lblAyuda.Size = new System.Drawing.Size(508, 13);
+            this.lblAyuda.Size = new System.Drawing.Size(681, 17);
             this.lblAyuda.TabIndex = 3;
             this.lblAyuda.Text = "Doble clic en un camión para ver sus pedidos. Destilda los que no se entregaron y" +
     " adjuntá el comprobante\r\n";
@@ -142,6 +147,7 @@
             this.grbEntrega.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grbEntrega.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(220)))));
             this.grbEntrega.Controls.Add(this.lblMensaje);
             this.grbEntrega.Controls.Add(this.lblResumen);
             this.grbEntrega.Controls.Add(this.lblTituloEntrega);
@@ -153,9 +159,11 @@
             this.grbEntrega.Controls.Add(this.lblArchivo);
             this.grbEntrega.Controls.Add(this.btnAdjuntar);
             this.grbEntrega.Controls.Add(this.dgvPedidosCamion);
-            this.grbEntrega.Location = new System.Drawing.Point(0, 311);
+            this.grbEntrega.Location = new System.Drawing.Point(0, 383);
+            this.grbEntrega.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.grbEntrega.Name = "grbEntrega";
-            this.grbEntrega.Size = new System.Drawing.Size(784, 250);
+            this.grbEntrega.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grbEntrega.Size = new System.Drawing.Size(1045, 308);
             this.grbEntrega.TabIndex = 4;
             this.grbEntrega.TabStop = false;
             // 
@@ -163,9 +171,10 @@
             // 
             this.lblMensaje.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMensaje.AutoSize = true;
-            this.lblMensaje.Location = new System.Drawing.Point(441, 150);
+            this.lblMensaje.Location = new System.Drawing.Point(588, 185);
+            this.lblMensaje.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMensaje.Name = "lblMensaje";
-            this.lblMensaje.Size = new System.Drawing.Size(35, 13);
+            this.lblMensaje.Size = new System.Drawing.Size(44, 16);
             this.lblMensaje.TabIndex = 34;
             this.lblMensaje.Text = "label1";
             // 
@@ -176,9 +185,10 @@
             this.lblResumen.AutoSize = true;
             this.lblResumen.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResumen.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblResumen.Location = new System.Drawing.Point(15, 186);
+            this.lblResumen.Location = new System.Drawing.Point(20, 229);
+            this.lblResumen.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResumen.Name = "lblResumen";
-            this.lblResumen.Size = new System.Drawing.Size(35, 13);
+            this.lblResumen.Size = new System.Drawing.Size(46, 17);
             this.lblResumen.TabIndex = 33;
             this.lblResumen.Text = "label1";
             // 
@@ -187,41 +197,45 @@
             this.lblTituloEntrega.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTituloEntrega.AutoSize = true;
             this.lblTituloEntrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTituloEntrega.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.lblTituloEntrega.Location = new System.Drawing.Point(12, 11);
+            this.lblTituloEntrega.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.lblTituloEntrega.Location = new System.Drawing.Point(16, 14);
+            this.lblTituloEntrega.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTituloEntrega.Name = "lblTituloEntrega";
-            this.lblTituloEntrega.Size = new System.Drawing.Size(47, 15);
+            this.lblTituloEntrega.Size = new System.Drawing.Size(52, 18);
             this.lblTituloEntrega.TabIndex = 32;
             this.lblTituloEntrega.Text = "label1";
             // 
             // btnCancelar
             // 
             this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancelar.BackColor = System.Drawing.Color.White;
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCancelar.FlatAppearance.BorderSize = 2;
             this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnCancelar.Location = new System.Drawing.Point(444, 207);
+            this.btnCancelar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnCancelar.Location = new System.Drawing.Point(592, 255);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(107, 37);
+            this.btnCancelar.Size = new System.Drawing.Size(143, 46);
             this.btnCancelar.TabIndex = 30;
             this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnConfirmarEntrega
             // 
             this.btnConfirmarEntrega.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConfirmarEntrega.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnConfirmarEntrega.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnConfirmarEntrega.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnConfirmarEntrega.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnConfirmarEntrega.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfirmarEntrega.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirmarEntrega.ForeColor = System.Drawing.Color.White;
-            this.btnConfirmarEntrega.Location = new System.Drawing.Point(576, 207);
+            this.btnConfirmarEntrega.Location = new System.Drawing.Point(768, 255);
+            this.btnConfirmarEntrega.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnConfirmarEntrega.Name = "btnConfirmarEntrega";
-            this.btnConfirmarEntrega.Size = new System.Drawing.Size(175, 37);
+            this.btnConfirmarEntrega.Size = new System.Drawing.Size(233, 46);
             this.btnConfirmarEntrega.TabIndex = 31;
             this.btnConfirmarEntrega.Text = "Confirmar Entrega";
             this.btnConfirmarEntrega.UseVisualStyleBackColor = false;
@@ -232,10 +246,11 @@
             this.lblEtiquetaAdjuntar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblEtiquetaAdjuntar.AutoSize = true;
             this.lblEtiquetaAdjuntar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEtiquetaAdjuntar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.lblEtiquetaAdjuntar.Location = new System.Drawing.Point(432, 32);
+            this.lblEtiquetaAdjuntar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.lblEtiquetaAdjuntar.Location = new System.Drawing.Point(576, 39);
+            this.lblEtiquetaAdjuntar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEtiquetaAdjuntar.Name = "lblEtiquetaAdjuntar";
-            this.lblEtiquetaAdjuntar.Size = new System.Drawing.Size(202, 15);
+            this.lblEtiquetaAdjuntar.Size = new System.Drawing.Size(249, 18);
             this.lblEtiquetaAdjuntar.TabIndex = 29;
             this.lblEtiquetaAdjuntar.Text = "COMPROBANTE DE ENTREGA";
             // 
@@ -244,10 +259,11 @@
             this.lblResponsable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblResponsable.AutoSize = true;
             this.lblResponsable.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblResponsable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.lblResponsable.Location = new System.Drawing.Point(432, 108);
+            this.lblResponsable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.lblResponsable.Location = new System.Drawing.Point(576, 133);
+            this.lblResponsable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResponsable.Name = "lblResponsable";
-            this.lblResponsable.Size = new System.Drawing.Size(349, 15);
+            this.lblResponsable.Size = new System.Drawing.Size(420, 18);
             this.lblResponsable.TabIndex = 28;
             this.lblResponsable.Text = "RESPONSABLE DE LA ENTREGA (usuario registrado)";
             // 
@@ -255,9 +271,10 @@
             // 
             this.cboResponsable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cboResponsable.FormattingEnabled = true;
-            this.cboResponsable.Location = new System.Drawing.Point(435, 126);
+            this.cboResponsable.Location = new System.Drawing.Point(580, 155);
+            this.cboResponsable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cboResponsable.Name = "cboResponsable";
-            this.cboResponsable.Size = new System.Drawing.Size(337, 21);
+            this.cboResponsable.Size = new System.Drawing.Size(448, 24);
             this.cboResponsable.TabIndex = 27;
             this.cboResponsable.SelectedIndexChanged += new System.EventHandler(this.cboResponsable_SelectedIndexChanged);
             // 
@@ -265,9 +282,10 @@
             // 
             this.lblArchivo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblArchivo.AutoSize = true;
-            this.lblArchivo.Location = new System.Drawing.Point(573, 70);
+            this.lblArchivo.Location = new System.Drawing.Point(764, 86);
+            this.lblArchivo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblArchivo.Name = "lblArchivo";
-            this.lblArchivo.Size = new System.Drawing.Size(35, 13);
+            this.lblArchivo.Size = new System.Drawing.Size(44, 16);
             this.lblArchivo.TabIndex = 26;
             this.lblArchivo.Text = "label1";
             // 
@@ -278,10 +296,11 @@
             this.btnAdjuntar.FlatAppearance.BorderSize = 2;
             this.btnAdjuntar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdjuntar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdjuntar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.btnAdjuntar.Location = new System.Drawing.Point(435, 50);
+            this.btnAdjuntar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.btnAdjuntar.Location = new System.Drawing.Point(580, 62);
+            this.btnAdjuntar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAdjuntar.Name = "btnAdjuntar";
-            this.btnAdjuntar.Size = new System.Drawing.Size(132, 33);
+            this.btnAdjuntar.Size = new System.Drawing.Size(176, 41);
             this.btnAdjuntar.TabIndex = 25;
             this.btnAdjuntar.Text = "Adjuntar Imagen ...";
             this.btnAdjuntar.UseVisualStyleBackColor = true;
@@ -300,10 +319,10 @@
             this.dgvPedidosCamion.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPedidosCamion.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvPedidosCamion.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
@@ -320,15 +339,17 @@
             this.dgvPedidosCamion.DefaultCellStyle = dataGridViewCellStyle7;
             this.dgvPedidosCamion.EnableHeadersVisualStyles = false;
             this.dgvPedidosCamion.GridColor = System.Drawing.Color.White;
-            this.dgvPedidosCamion.Location = new System.Drawing.Point(12, 32);
+            this.dgvPedidosCamion.Location = new System.Drawing.Point(16, 39);
+            this.dgvPedidosCamion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvPedidosCamion.MultiSelect = false;
             this.dgvPedidosCamion.Name = "dgvPedidosCamion";
             this.dgvPedidosCamion.RowHeadersVisible = false;
+            this.dgvPedidosCamion.RowHeadersWidth = 51;
             dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
             this.dgvPedidosCamion.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvPedidosCamion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPedidosCamion.Size = new System.Drawing.Size(417, 150);
+            this.dgvPedidosCamion.Size = new System.Drawing.Size(556, 185);
             this.dgvPedidosCamion.TabIndex = 24;
             this.dgvPedidosCamion.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPedidosCamion_CellValueChanged);
             this.dgvPedidosCamion.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvPedidosCamion_CurrentCellDirtyStateChanged);
@@ -336,13 +357,14 @@
             // btnVerHistorial
             // 
             this.btnVerHistorial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnVerHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnVerHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnVerHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVerHistorial.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVerHistorial.ForeColor = System.Drawing.Color.White;
-            this.btnVerHistorial.Location = new System.Drawing.Point(614, 5);
+            this.btnVerHistorial.Location = new System.Drawing.Point(819, 6);
+            this.btnVerHistorial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnVerHistorial.Name = "btnVerHistorial";
-            this.btnVerHistorial.Size = new System.Drawing.Size(158, 29);
+            this.btnVerHistorial.Size = new System.Drawing.Size(211, 36);
             this.btnVerHistorial.TabIndex = 5;
             this.btnVerHistorial.Text = "Ver Historial";
             this.btnVerHistorial.UseVisualStyleBackColor = false;
@@ -350,16 +372,17 @@
             // 
             // FormControlEntregas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Beige;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.BackColor = System.Drawing.Color.Ivory;
+            this.ClientSize = new System.Drawing.Size(1045, 690);
             this.Controls.Add(this.btnVerHistorial);
             this.Controls.Add(this.grbEntrega);
             this.Controls.Add(this.lblAyuda);
             this.Controls.Add(this.dgvCamiones);
             this.Controls.Add(this.picLupa);
             this.Controls.Add(this.txtBuscar);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormControlEntregas";
             this.Text = "Control Entregas de Pedidos";
             this.Load += new System.EventHandler(this.FormControlEntregas_Load);

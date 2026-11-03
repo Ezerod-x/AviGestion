@@ -259,6 +259,9 @@
     <EmbeddedResource Include="Interfaz\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaz\FormAsignarPedidos.resx">
+      <DependentUpon>FormAsignarPedidos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FormControlEntregas.resx">
       <DependentUpon>FormControlEntregas.cs</DependentUpon>
     </EmbeddedResource>
