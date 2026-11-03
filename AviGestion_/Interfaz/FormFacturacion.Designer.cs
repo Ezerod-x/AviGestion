@@ -321,11 +321,11 @@
             this.tabFacturadosDia.TabIndex = 1;
             this.tabFacturadosDia.Text = "FacturadosDelDia";
             // 
-            // lblResumenFacturados
+            // lblResumenFacturados 
             // 
             this.lblResumenFacturados.AutoSize = true;
             this.lblResumenFacturados.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblResumenFacturados.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(5)))));
+            this.lblResumenFacturados.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.lblResumenFacturados.Location = new System.Drawing.Point(279, 9);
             this.lblResumenFacturados.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResumenFacturados.Name = "lblResumenFacturados";
@@ -348,10 +348,10 @@
             this.dgvFacturados.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvFacturados.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle14.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.SteelBlue;
             dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvFacturados.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlFiltros = new System.Windows.Forms.Panel();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -85,7 +85,7 @@
             this.pnlFiltros.Controls.Add(this.btnLimpiar);
             this.pnlFiltros.Controls.Add(this.txtBusqueda);
             this.pnlFiltros.Location = new System.Drawing.Point(7, 113);
-            this.pnlFiltros.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlFiltros.Margin = new System.Windows.Forms.Padding(4);
             this.pnlFiltros.Name = "pnlFiltros";
             this.pnlFiltros.Size = new System.Drawing.Size(1209, 34);
             this.pnlFiltros.TabIndex = 12;
@@ -99,7 +99,7 @@
             this.btnLimpiar.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnLimpiar.Location = new System.Drawing.Point(1024, -1);
-            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(173, 32);
             this.btnLimpiar.TabIndex = 3;
@@ -112,7 +112,7 @@
             // txtBusqueda
             // 
             this.txtBusqueda.Location = new System.Drawing.Point(16, 5);
-            this.txtBusqueda.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBusqueda.Margin = new System.Windows.Forms.Padding(4);
             this.txtBusqueda.Name = "txtBusqueda";
             this.txtBusqueda.Size = new System.Drawing.Size(981, 22);
             this.txtBusqueda.TabIndex = 0;
@@ -139,7 +139,7 @@
             this.pnlResumen.Controls.Add(this.lblPromedioEtiqueta);
             this.pnlResumen.Controls.Add(this.lblResumenFinancieroEtiqueta);
             this.pnlResumen.Location = new System.Drawing.Point(5, 496);
-            this.pnlResumen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlResumen.Margin = new System.Windows.Forms.Padding(4);
             this.pnlResumen.Name = "pnlResumen";
             this.pnlResumen.Size = new System.Drawing.Size(1210, 132);
             this.pnlResumen.TabIndex = 10;
@@ -290,19 +290,19 @@
             // 
             // dgvHistorial
             // 
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            this.dgvHistorial.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.dgvHistorial.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHistorial.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvHistorial.BackgroundColor = System.Drawing.Color.White;
             this.dgvHistorial.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHistorial.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHistorial.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHistorial.ColumnHeadersHeight = 29;
             this.dgvHistorial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvHistorial.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -316,7 +316,7 @@
             this.colEstado});
             this.dgvHistorial.EnableHeadersVisualStyles = false;
             this.dgvHistorial.Location = new System.Drawing.Point(5, 153);
-            this.dgvHistorial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvHistorial.Margin = new System.Windows.Forms.Padding(4);
             this.dgvHistorial.MultiSelect = false;
             this.dgvHistorial.Name = "dgvHistorial";
             this.dgvHistorial.ReadOnly = true;
@@ -393,7 +393,7 @@
             this.panel1.Controls.Add(this.lblTotalPagadoEtiqueta);
             this.panel1.Controls.Add(this.lblTotalCompradoEtiqueta);
             this.panel1.Location = new System.Drawing.Point(7, 58);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1210, 48);
             this.panel1.TabIndex = 8;
@@ -475,7 +475,7 @@
             this.pnlInfoCliente.Controls.Add(this.lblClienteValor);
             this.pnlInfoCliente.Controls.Add(this.lblClienteEtiqueta);
             this.pnlInfoCliente.Location = new System.Drawing.Point(8, 4);
-            this.pnlInfoCliente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlInfoCliente.Margin = new System.Windows.Forms.Padding(4);
             this.pnlInfoCliente.Name = "pnlInfoCliente";
             this.pnlInfoCliente.Size = new System.Drawing.Size(1209, 46);
             this.pnlInfoCliente.TabIndex = 7;
@@ -557,7 +557,7 @@
             this.btnCerrar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCerrar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.btnCerrar.Location = new System.Drawing.Point(1088, 651);
-            this.btnCerrar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCerrar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(128, 43);
             this.btnCerrar.TabIndex = 13;
@@ -578,7 +578,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlInfoCliente);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormHistorialCliente";
             this.Text = "Historial Cliente";
             this.Load += new System.EventHandler(this.FormHistorialCliente_Load);

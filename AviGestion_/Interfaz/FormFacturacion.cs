@@ -13,8 +13,8 @@ namespace AviGestion_.Interfaz
         private FacturacionLogica negocio = new FacturacionLogica();
         private List<PagoPedido> listaPedidos = new List<PagoPedido>();
         private int idPedidoSeleccionado = 0;
-        private Usuario usuarioActual;
-        private static readonly Color VERDE = Color.FromArgb(46, 125, 50);
+        private Usuario usuarioActual; 
+        private static readonly Color VERDE = Color.FromArgb(46, 92, 45);
 
 
         public FormFacturacion(Usuario usuarioActual)//nuevo form
@@ -299,7 +299,7 @@ namespace AviGestion_.Interfaz
         #endregion
 
         #region Interfaz y estilo
-        // ---- Estilo (verde 46; 125; 50) ----
+        // ---- Estilo (verde 46; 92; 45) ----
         private void EstiloGrilla(DataGridView g)
         {
             g.ReadOnly = true;
