@@ -142,7 +142,7 @@
             this.pnlDetalle.Controls.Add(this.flpDetBotones);
             this.pnlDetalle.Location = new System.Drawing.Point(10, 425);
             this.pnlDetalle.Name = "pnlDetalle";
-            this.pnlDetalle.Size = new System.Drawing.Size(1040, 370);
+            this.pnlDetalle.Size = new System.Drawing.Size(1040, 320); // Reducido de 370 a 320px
             this.pnlDetalle.TabIndex = 3;
             this.pnlDetalle.Visible = false;
             // 
@@ -268,7 +268,7 @@
             this.dgvDetProductos.RowHeadersVisible = false;
             this.dgvDetProductos.RowHeadersWidth = 51;
             this.dgvDetProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDetProductos.Size = new System.Drawing.Size(510, 226);
+            this.dgvDetProductos.Size = new System.Drawing.Size(510, 180); // Reducido levemente de 226 a 180px para dar aire a los botones
             this.dgvDetProductos.TabIndex = 8;
             // 
             // colDetProducto
@@ -294,7 +294,7 @@
             this.flpDetBotones.Controls.Add(this.btnCerrarDetalle);
             this.flpDetBotones.Controls.Add(this.btnCancelarPedido);
             this.flpDetBotones.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flpDetBotones.Location = new System.Drawing.Point(14, 322);
+            this.flpDetBotones.Location = new System.Drawing.Point(14, 270);
             this.flpDetBotones.Name = "flpDetBotones";
             this.flpDetBotones.Size = new System.Drawing.Size(1010, 44);
             this.flpDetBotones.TabIndex = 9;
@@ -467,9 +467,9 @@
             this.pnlAlta.Controls.Add(this.lblDetalleTitle);
             this.pnlAlta.Controls.Add(this.dgvProductosPedido);
             this.pnlAlta.Controls.Add(this.flpAltaBotones);
-            this.pnlAlta.Location = new System.Drawing.Point(10, 425);
+            this.pnlAlta.Location = new System.Drawing.Point(14, 310);
             this.pnlAlta.Name = "pnlAlta";
-            this.pnlAlta.Size = new System.Drawing.Size(1040, 404);
+            this.pnlAlta.Size = new System.Drawing.Size(1040, 40);
             this.pnlAlta.TabIndex = 4;
             this.pnlAlta.Visible = false;
             // 

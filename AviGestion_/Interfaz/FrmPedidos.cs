@@ -52,7 +52,8 @@ namespace AviGestion_.Interfaz
         private void MostrarPanelDetalle()
         {
             pnlAlta.Visible = false;
-            dgvPedidos.Size = new System.Drawing.Size(1040, 270);
+            // Reducimos la grilla a 240px para que el panel de detalle tenga lugar completo de verse con su botonera
+            dgvPedidos.Size = new System.Drawing.Size(1040, 240);
             lblAyuda.Location = new System.Drawing.Point(12, dgvPedidos.Bottom + 4);
             pnlDetalle.Location = new System.Drawing.Point(10, lblAyuda.Bottom + 4);
             pnlDetalle.Visible = true;
@@ -62,10 +63,12 @@ namespace AviGestion_.Interfaz
         private void MostrarPanelAlta()
         {
             pnlDetalle.Visible = false;
-            dgvPedidos.Size = new System.Drawing.Size(1040, 270);
+            // Reducimos la grilla superior a 200px al dar de alta un pedido
+            dgvPedidos.Size = new System.Drawing.Size(1040, 200);
             lblAyuda.Location = new System.Drawing.Point(12, dgvPedidos.Bottom + 4);
             pnlAlta.Location = new System.Drawing.Point(10, lblAyuda.Bottom + 4);
             pnlAlta.Visible = true;
+            pnlAlta.BringToFront();
         }
         #endregion
 
