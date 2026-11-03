@@ -142,7 +142,7 @@
             this.pnlDetalle.Controls.Add(this.flpDetBotones);
             this.pnlDetalle.Location = new System.Drawing.Point(10, 425);
             this.pnlDetalle.Name = "pnlDetalle";
-            this.pnlDetalle.Size = new System.Drawing.Size(1040, 320); // Reducido de 370 a 320px
+            this.pnlDetalle.Size = new System.Drawing.Size(1040, 320);
             this.pnlDetalle.TabIndex = 3;
             this.pnlDetalle.Visible = false;
             // 
@@ -268,7 +268,7 @@
             this.dgvDetProductos.RowHeadersVisible = false;
             this.dgvDetProductos.RowHeadersWidth = 51;
             this.dgvDetProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDetProductos.Size = new System.Drawing.Size(510, 180); // Reducido levemente de 226 a 180px para dar aire a los botones
+            this.dgvDetProductos.Size = new System.Drawing.Size(510, 180);
             this.dgvDetProductos.TabIndex = 8;
             // 
             // colDetProducto
@@ -365,7 +365,7 @@
             this.dgvPedidos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPedidos.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 9F);
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.SteelBlue;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -393,7 +393,7 @@
             this.dgvPedidos.RowHeadersVisible = false;
             this.dgvPedidos.RowHeadersWidth = 51;
             this.dgvPedidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPedidos.Size = new System.Drawing.Size(1040, 560);
+            this.dgvPedidos.Size = new System.Drawing.Size(1040, 180);
             this.dgvPedidos.TabIndex = 1;
             this.dgvPedidos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPedidos_CellDoubleClick);
             // 
@@ -467,9 +467,9 @@
             this.pnlAlta.Controls.Add(this.lblDetalleTitle);
             this.pnlAlta.Controls.Add(this.dgvProductosPedido);
             this.pnlAlta.Controls.Add(this.flpAltaBotones);
-            this.pnlAlta.Location = new System.Drawing.Point(14, 310);
+            this.pnlAlta.Location = new System.Drawing.Point(14, 245);
             this.pnlAlta.Name = "pnlAlta";
-            this.pnlAlta.Size = new System.Drawing.Size(1040, 410);
+            this.pnlAlta.Size = new System.Drawing.Size(1040, 380);
             this.pnlAlta.TabIndex = 4;
             this.pnlAlta.Visible = false;
             // 
@@ -567,7 +567,7 @@
             this.lstProductos.ItemHeight = 18;
             this.lstProductos.Location = new System.Drawing.Point(14, 190);
             this.lstProductos.Name = "lstProductos";
-            this.lstProductos.Size = new System.Drawing.Size(480, 92);
+            this.lstProductos.Size = new System.Drawing.Size(480, 72);
             this.lstProductos.TabIndex = 8;
             // 
             // lblCantidad
@@ -575,7 +575,7 @@
             this.lblCantidad.AutoSize = true;
             this.lblCantidad.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold);
             this.lblCantidad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblCantidad.Location = new System.Drawing.Point(14, 298);
+            this.lblCantidad.Location = new System.Drawing.Point(14, 272);
             this.lblCantidad.Name = "lblCantidad";
             this.lblCantidad.Size = new System.Drawing.Size(97, 18);
             this.lblCantidad.TabIndex = 9;
@@ -584,7 +584,7 @@
             // nudCantidad
             // 
             this.nudCantidad.Font = new System.Drawing.Font("Verdana", 9F);
-            this.nudCantidad.Location = new System.Drawing.Point(14, 320);
+            this.nudCantidad.Location = new System.Drawing.Point(14, 294);
             this.nudCantidad.Name = "nudCantidad";
             this.nudCantidad.Size = new System.Drawing.Size(100, 26);
             this.nudCantidad.TabIndex = 10;
@@ -595,7 +595,7 @@
             this.btnAgregarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAgregarProducto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAgregarProducto.ForeColor = System.Drawing.Color.White;
-            this.btnAgregarProducto.Location = new System.Drawing.Point(124, 318);
+            this.btnAgregarProducto.Location = new System.Drawing.Point(124, 294);
             this.btnAgregarProducto.Name = "btnAgregarProducto";
             this.btnAgregarProducto.Size = new System.Drawing.Size(110, 30);
             this.btnAgregarProducto.TabIndex = 11;
@@ -657,7 +657,7 @@
             this.dgvProductosPedido.RowHeadersVisible = false;
             this.dgvProductosPedido.RowHeadersWidth = 51;
             this.dgvProductosPedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProductosPedido.Size = new System.Drawing.Size(510, 160);
+            this.dgvProductosPedido.Size = new System.Drawing.Size(510, 130);
             this.dgvProductosPedido.TabIndex = 13;
             this.dgvProductosPedido.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProductosPedido_CellContentClick);
             // 
@@ -697,7 +697,7 @@
             this.flpAltaBotones.Controls.Add(this.btnRegistrar);
             this.flpAltaBotones.Controls.Add(this.btnCancelarAlta);
             this.flpAltaBotones.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flpAltaBotones.Location = new System.Drawing.Point(14, 356);
+            this.flpAltaBotones.Location = new System.Drawing.Point(14, 330);
             this.flpAltaBotones.Name = "flpAltaBotones";
             this.flpAltaBotones.Size = new System.Drawing.Size(1010, 40);
             this.flpAltaBotones.TabIndex = 14;

@@ -608,7 +608,10 @@ namespace AviGestion_.UI
         #endregion
 
         #region Evento enlazado desde el Designer (dejar vacío)
-        private void FormMenu_Load(object sender, EventArgs e) { }
+        private void FormMenu_Load(object sender, EventArgs e) {
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new Size(1024, 768);
+        }
         #endregion
 
         #region Arreglo de Lag
