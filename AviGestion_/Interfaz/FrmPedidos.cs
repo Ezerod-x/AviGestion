@@ -51,8 +51,7 @@ namespace AviGestion_.Interfaz
 
         private void MostrarPanelDetalle()
         {
-            pnlAlta.Visible = false;
-            // Reducimos la grilla a 240px para que el panel de detalle tenga lugar completo de verse con su botonera
+            pnlAlta.Visible = false; // Nos aseguramos de ocultar la vista de alta
             dgvPedidos.Size = new System.Drawing.Size(1040, 240);
             lblAyuda.Location = new System.Drawing.Point(12, dgvPedidos.Bottom + 4);
             pnlDetalle.Location = new System.Drawing.Point(10, lblAyuda.Bottom + 4);
@@ -63,8 +62,8 @@ namespace AviGestion_.Interfaz
         private void MostrarPanelAlta()
         {
             pnlDetalle.Visible = false;
-            // Reducimos la grilla superior a 200px al dar de alta un pedido
-            dgvPedidos.Size = new System.Drawing.Size(1040, 200);
+            // Achicamos la grilla superior a 160px para que entre cómodo el panel de alta
+            dgvPedidos.Size = new System.Drawing.Size(1040, 160);
             lblAyuda.Location = new System.Drawing.Point(12, dgvPedidos.Bottom + 4);
             pnlAlta.Location = new System.Drawing.Point(10, lblAyuda.Bottom + 4);
             pnlAlta.Visible = true;
@@ -307,7 +306,12 @@ namespace AviGestion_.Interfaz
             _codigoPorNombre.Clear();
             nudCantidad.Value = 1;
             dtpFecha.Value = DateTime.Today;
-            MostrarPanelAlta();
+
+            // Aseguramos que el panel de detalle esté oculto y el de alta visible
+            pnlDetalle.Visible = false;
+            pnlAlta.Visible = true;
+            pnlAlta.BringToFront();
+
             cboCliente.Focus();
         }
 
@@ -445,7 +449,7 @@ namespace AviGestion_.Interfaz
                 MessageBox.Show("Pedido registrado exitosamente con estado Pendiente.",
                     "Pedido registrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                BitacoraLogica.Registrar(usuarioActual.Nombre, "Alta", "Pedidos", "Alta de un nuevo Pedido #"+_idPedidoDetalle+".");
+                BitacoraLogica.Registrar(usuarioActual.Nombre, "Alta", "Pedidos", "Alta de un nuevo Pedido #" + idPedido + ".");
                 OcultarPaneles();
                 _codigoPorNombre.Clear();
                 CargarPedidos();

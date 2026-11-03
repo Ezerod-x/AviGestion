@@ -25,8 +25,6 @@
             this.colCapacidadMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCapacidadActual = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEditar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colBaja = new System.Windows.Forms.DataGridViewButtonColumn();
             this.pnlAltaModificacion = new System.Windows.Forms.Panel();
             this.lblAltaModificacion = new System.Windows.Forms.Label();
             this.lblRegistrarVehiculo = new System.Windows.Forms.Label();
@@ -49,7 +47,7 @@
             // 
             // txtBuscar
             // 
-            this.txtBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtBuscar.Location = new System.Drawing.Point(12, 12);
@@ -77,7 +75,7 @@
             // 
             this.dgvVehiculos.AllowUserToAddRows = false;
             this.dgvVehiculos.AllowUserToDeleteRows = false;
-            this.dgvVehiculos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvVehiculos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvVehiculos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvVehiculos.BackgroundColor = System.Drawing.Color.White;
@@ -96,9 +94,7 @@
             this.colPatente,
             this.colCapacidadMax,
             this.colCapacidadActual,
-            this.colEstado,
-            this.colEditar,
-            this.colBaja});
+            this.colEstado});
             this.dgvVehiculos.EnableHeadersVisualStyles = false;
             this.dgvVehiculos.Location = new System.Drawing.Point(12, 50);
             this.dgvVehiculos.MultiSelect = false;
@@ -109,7 +105,7 @@
             this.dgvVehiculos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvVehiculos.Size = new System.Drawing.Size(880, 190);
             this.dgvVehiculos.TabIndex = 3;
-            this.dgvVehiculos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVehiculos_CellContentClick);
+            this.dgvVehiculos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVehiculos_CellDoubleClick);
             this.dgvVehiculos.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvVehiculos_CellFormatting);
             // 
             // colMarca
@@ -158,27 +154,9 @@
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
             // 
-            // colEditar
-            // 
-            this.colEditar.FillWeight = 85F;
-            this.colEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.colEditar.HeaderText = "Acción";
-            this.colEditar.MinimumWidth = 6;
-            this.colEditar.Name = "colEditar";
-            this.colEditar.ReadOnly = true;
-            // 
-            // colBaja
-            // 
-            this.colBaja.FillWeight = 95F;
-            this.colBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.colBaja.HeaderText = "";
-            this.colBaja.MinimumWidth = 6;
-            this.colBaja.Name = "colBaja";
-            this.colBaja.ReadOnly = true;
-            // 
             // pnlAltaModificacion
             // 
-            this.pnlAltaModificacion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlAltaModificacion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlAltaModificacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(220)))));
             this.pnlAltaModificacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -225,6 +203,7 @@
             // 
             // lblMarca
             // 
+            this.cmbMarca.SelectedIndexChanged += new System.EventHandler(this.cmbMarca_SelectedIndexChanged);
             this.lblMarca.AutoSize = true;
             this.lblMarca.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblMarca.Location = new System.Drawing.Point(20, 80);
@@ -241,7 +220,8 @@
             "Toyota",
             "Ford",
             "Iveco",
-            "Volkswagen"});
+            "Volkswagen",
+            "+ Agregar nueva marca"}); // <- Opción añadida
             this.cmbMarca.Location = new System.Drawing.Point(20, 98);
             this.cmbMarca.Name = "cmbMarca";
             this.cmbMarca.Size = new System.Drawing.Size(250, 24);
@@ -318,7 +298,7 @@
             // 
             this.cmbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbEstado.Items.AddRange(new object[] {
-            "Activo",
+            "Disponible",
             "Inactivo"});
             this.cmbEstado.Location = new System.Drawing.Point(300, 153);
             this.cmbEstado.Name = "cmbEstado";
@@ -365,13 +345,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sistema AviGestión";
             ((System.ComponentModel.ISupportInitialize)(this.dgvVehiculos)).EndInit();
-            this.pnlAltaModificacion.ResumeLayout(false);
-            this.pnlAltaModificacion.PerformLayout();
+            this.pnlAltaModificacion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCapacidadMax)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Button btnAgregarVehiculo;
         private System.Windows.Forms.DataGridView dgvVehiculos;
@@ -381,8 +361,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colCapacidadMax;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCapacidadActual;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
-        private System.Windows.Forms.DataGridViewButtonColumn colEditar;
-        private System.Windows.Forms.DataGridViewButtonColumn colBaja;
         private System.Windows.Forms.Panel pnlAltaModificacion;
         private System.Windows.Forms.Label lblAltaModificacion;
         private System.Windows.Forms.Label lblRegistrarVehiculo;

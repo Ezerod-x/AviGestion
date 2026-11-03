@@ -18,7 +18,7 @@ namespace AviGestion_.Logica
     {
         private const string Activo = "Activo";
         private const string Inactivo = "Inactivo";
-
+        
         private readonly VehiculoDAL _dal = new VehiculoDAL();
 
         public List<Vehiculo> ObtenerVehiculos()
@@ -100,8 +100,9 @@ namespace AviGestion_.Logica
                 throw new ReglaNegocioException(
                     "La capacidad máxima no puede ser menor a la capacidad actual (" + v.CapacidadActual + " Kg).");
 
-            if (v.Estado != Activo && v.Estado != Inactivo)
-                throw new ReglaNegocioException("El estado debe ser Activo o Inactivo.");
+            // Agregamos Disponible a las opciones válidas
+            if (v.Estado != Activo && v.Estado != Inactivo && v.Estado != "Disponible")
+                throw new ReglaNegocioException("El estado debe ser Activo, Inactivo o Disponible.");
         }
     }
 }

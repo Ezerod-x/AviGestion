@@ -1,4 +1,6 @@
 <Solution>
-  <Project Path="AvigestionInstaller/AvigestionInstaller.vdproj" Type="Installer" />
+  <Project Path="AvigestionInstaller/AvigestionInstaller.vdproj" Type="Installer">
+    <Build />
+  </Project>
   <Project Path="AviGestion_/AviGestion_.csproj" Id="c7f9ab71-3932-43fc-8c86-6cb86ede34b7" />
 </Solution>

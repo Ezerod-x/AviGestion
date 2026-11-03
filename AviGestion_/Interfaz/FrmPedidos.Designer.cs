@@ -469,7 +469,7 @@
             this.pnlAlta.Controls.Add(this.flpAltaBotones);
             this.pnlAlta.Location = new System.Drawing.Point(14, 310);
             this.pnlAlta.Name = "pnlAlta";
-            this.pnlAlta.Size = new System.Drawing.Size(1040, 40);
+            this.pnlAlta.Size = new System.Drawing.Size(1040, 410);
             this.pnlAlta.TabIndex = 4;
             this.pnlAlta.Visible = false;
             // 
