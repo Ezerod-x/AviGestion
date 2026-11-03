@@ -148,6 +148,7 @@ namespace AviGestion_.UI
                     logica.Insertar(usuario);
                     MessageBox.Show("Usuario registrado exitosamente.", "Alta exitosa",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    BitacoraLogica.Registrar(usuarioActual.Nombre, "Alta", "Usuarios", "Registro exitoso de nuevo usuario");
                 }
                 else
                 {
@@ -155,6 +156,7 @@ namespace AviGestion_.UI
                     logica.Actualizar(usuario);
                     MessageBox.Show("Usuario modificado exitosamente.", "Modificación exitosa",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    BitacoraLogica.Registrar(usuarioActual.Nombre, "Modificación", "Usuarios", "Se guardaron correctamente los cambios");
                 }
 
                 OcultarPanelDetalle();
@@ -163,6 +165,7 @@ namespace AviGestion_.UI
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                BitacoraLogica.Registrar(usuarioActual.Nombre, "Error", "Usuarios", "Error en módulo usuarios");
             }
         }
         #endregion

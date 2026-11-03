@@ -304,12 +304,12 @@ namespace AviGestion_.Interfaz
                 int idResponsable = Convert.ToInt32(cboResponsable.SelectedValue);
                 negocio.RegistrarEntrega(idVehiculoSeleccionado, idResponsable, entregados, noEntregados, rutaComprobante);
 
+                
+                MessageBox.Show("La entrega fue registrada correctamente.", "Entrega registrada",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                 BitacoraLogica.Registrar(usuarioActual.Nombre,
                     "Registró la entrega del vehículo " + patenteSeleccionada + ": " + entregados.Count
                     + " entregado(s), " + noEntregados.Count + " vuelven a En preparación", "Pedidos");
-
-                MessageBox.Show("La entrega fue registrada correctamente.", "Entrega registrada",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LimpiarPanel();
                 CargarCamiones();
@@ -317,6 +317,9 @@ namespace AviGestion_.Interfaz
             catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message, "No se pudo registrar la entrega", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                BitacoraLogica.Registrar(usuarioActual.Nombre,
+                    "Error en registro de Entrega", "Pedidos", "Ocurrió un error en el registro de la entrega realizada por le vehiculo " + patenteSeleccionada + ".");
+
                 LimpiarPanel();
                 CargarCamiones();
             }

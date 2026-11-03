@@ -81,7 +81,7 @@ namespace AviGestion_.UI
             items.Add(new ItemDeMenu { Texto = "Inicio", Accion = MostrarInicio });
 
             items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Clientes", Titulo = "Gestión de Clientes", Roles = pedidos, Crear = () => new FormClientes(usuarioActual) });
-            items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Pedidos", Titulo = "Gestión de Pedidos", Roles = pedidos, Crear = () => new FrmPedidos() });
+            items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Pedidos", Titulo = "Gestión de Pedidos", Roles = pedidos, Crear = () => new FrmPedidos(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Facturación", Titulo = "Facturación y Despacho de Pedidos", Roles = pedidos, Crear = () => new FormFacturacion(usuarioActual) });
             items.Add(new ItemDeMenu { Seccion = "VENTAS", Texto = "Registrar Pagos", Titulo = "Registrar Pago", Roles = pedidos, Crear = () => new FormRegistrarPago(usuarioActual) });
 

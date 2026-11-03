@@ -586,7 +586,7 @@ namespace AviGestion_.Interfaz
             }
 
             BitacoraLogica.Registrar(usuarioActual.Nombre,
-                "Cargó el pedido #" + idPedido + " en el vehículo " + camion.Patente, "Pedidos");
+                "Cargó el pedido #" + idPedido + " en el vehículo " + camion.Patente, "Pedidos", "Carga exitosa del pedido #"+idPedido+" en el vehiculo");
 
             // Se recarga después del evento para no destruir el combo mientras se usa
             BeginInvoke((Action)CargarTablero);
