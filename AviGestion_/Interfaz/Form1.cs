@@ -11,6 +11,7 @@ namespace AviGestion_
         public Form1()
         {
             InitializeComponent();
+            Idioma.Aplicar(this);
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
