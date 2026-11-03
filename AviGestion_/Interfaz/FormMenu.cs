@@ -31,6 +31,7 @@ namespace AviGestion_.UI
 
         private const int ANCHO_BOTON = 170;     // ancho de botones y títulos del menú lateral
         private const int PAD_MENU = 8;          // margen interno de flpSidebar
+
         #endregion
 
         #region Constructor
@@ -280,7 +281,6 @@ namespace AviGestion_.UI
         #region Panel de fondo y panel de contenido
         // Calcula el tamaño de pnlContenido. En el inicio usa el tamaño estándar con marco para el fondo.
         // Con una pantalla abierta, se adapta a su tamaño de diseño sin pasarse del espacio libre.
-
         private void AjustarContenido()
         {
             if (pnlFondo.AutoScroll)
@@ -300,22 +300,20 @@ namespace AviGestion_.UI
             }
             else
             {
-                // El panel toma las dimensiones nativas exactas solicitadas por la pantalla + la holgura
+                // El panel toma el ancho/alto nativo deseado
                 w = tamanoDeseado.Width;
                 h = tamanoDeseado.Height;
 
-                // Si el ANCHO supera al monitor, se limita para que no tape el menú lateral
+                // Limitar ancho si supera la pantalla disponible
                 if (w > dispW - 2 * MARGEN_MIN_X)
                 {
                     w = dispW - 2 * MARGEN_MIN_X;
                 }
 
-                // Si el ALTO supera al monitor no se recorta
-                // Se mantiene su altura completa para que 'pnlFondo' active la barra de scroll.
-                // Solo se recorta si superara el máximo histórico configurado (MAX_ALTO)
-                if (h > MAX_ALTO)
+                // Permite que h mantenga su altura real para que pnlFondo active AutoScroll si el monitor es chico
+                if (dispH > h && h < MIN_ALTO)
                 {
-                    h = MAX_ALTO;
+                    h = MIN_ALTO;
                 }
             }
 
@@ -325,8 +323,6 @@ namespace AviGestion_.UI
             int contenedorW = pnlFondo.ClientSize.Width;
             int contenedorH = pnlFondo.ClientSize.Height;
 
-            // Si la pantalla es más alta que el monitor, la posición 'Y' arranca arriba de todo (MARGEN_MIN_Y)
-            // para que el usuario pueda empezar a leer desde el principio y hacer scroll hacia abajo.
             int posY = (contenedorH > h) ? (contenedorH - h) / 2 : MARGEN_MIN_Y;
 
             pnlContenido.Location = new Point(
@@ -339,15 +335,14 @@ namespace AviGestion_.UI
                 pantallaActual.Size = pnlContenido.ClientSize;
             }
         }
-
         #endregion
 
         #region Pantallas incrustadas en el panel de contenido
-        //Muestra un formulario dentro de pnlContenido (no como ventana aparte), cambia el título
+        // Muestra un formulario dentro de pnlContenido (no como ventana aparte), cambia el título
         // del header por el de la gestión y resalta el botón del menú.
         private void AbrirEnPanel(Form pantalla, string titulo, Control botonMenu)
         {
-            // Esto fuerza a Windows a dibujar la pantalla en memoria antes de mostrarla, eliminando el lag.
+            // 1. Doble búfer en la pantalla para evitar parpadeos
             typeof(Form).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
                 null, pantalla, new object[] { true });
@@ -359,57 +354,39 @@ namespace AviGestion_.UI
             {
                 pnlFondo.AutoScrollPosition = new Point(0, 0);
             }
+
             CerrarPantalla();
             pantallaActual = pantalla;
 
-            Size disenio = pantalla.ClientSize;
-
+            // 2. OBLIGATORIO: Configurar como control hijo ANTES de agregar al panel o medir
             pantalla.TopLevel = false;
             pantalla.FormBorderStyle = FormBorderStyle.None;
             pantalla.MaximumSize = Size.Empty;
 
-            int altoEncabezado = OcultarEncabezadoPropio(pantalla);       // devuelve el alto que se liberó
-            disenio.Height -= altoEncabezado;
+            // 3. Ocultar encabezado y medir dimensiones reales
+            int altoEncabezado = OcultarEncabezadoPropio(pantalla);
+            Size disenio = pantalla.PreferredSize != Size.Empty ? pantalla.PreferredSize : pantalla.Size;
+            int altoFinal = Math.Max(disenio.Height - altoEncabezado, 680); // Alto mínimo de 680px
 
-            tamanoDeseado = new Size(disenio.Width, disenio.Height);      // el panel se adapta a la pantalla
+            // 4. Asignar tamaño deseado y ajustar el contenedor
+            tamanoDeseado = new Size(Math.Max(disenio.Width, 1000), altoFinal);
             AjustarContenido();
 
-            pantalla.AutoScroll = true;
-            pantalla.Dock = DockStyle.None;
-            pantalla.Location = new Point(0, 0);
-            pantalla.Size = pnlContenido.ClientSize;                      // Toma exactamente el tamaño del panel calculado
-
+            // 5. Configurar desacople y agregar al contenedor
+            pantalla.Dock = DockStyle.Fill;
             pnlContenido.Controls.Add(pantalla);
 
-            Idioma.Aplicar(pantalla);                                  // <-- nuevo
-            pantalla.FormClosed += Pantalla_FormClosed;                // al cerrarse, vuelve al inicio
-
-           
+            Idioma.Aplicar(pantalla);
+            pantalla.FormClosed += Pantalla_FormClosed;
 
             pantalla.Show();
             pantalla.BringToFront();
 
-            lblTitulo.Text = Idioma.T(titulo);                         // <-- cambiado
+            lblTitulo.Text = Idioma.T(titulo);
             Resaltar(botonMenu);
+
             pnlContenido.ResumeLayout(true);
             pnlFondo.ResumeLayout(true);
-        }
-
-        // Todas las grillas: una sola fila seleccionable y sin redimensionar ni mover filas o columnas
-        private void BloquearGrillas(Control padre)
-        {
-            foreach (Control c in padre.Controls)
-            {
-                DataGridView dgv = c as DataGridView;
-                if (dgv != null)
-                {
-                    dgv.MultiSelect = false;
-                    dgv.AllowUserToResizeRows = false;
-                    dgv.AllowUserToResizeColumns = false;
-                    dgv.AllowUserToOrderColumns = false;
-                }
-                if (c.HasChildren) BloquearGrillas(c);
-            }
         }
 
         // Cuando se cierra la pantalla incrustada, vuelve al inicio.
@@ -426,15 +403,15 @@ namespace AviGestion_.UI
         private void CerrarPantalla()
         {
             Form f = pantallaActual;
-            pantallaActual = null;                                     // evita que FormClosed dispare MostrarInicio
+            pantallaActual = null; // evita que FormClosed dispare MostrarInicio
             if (f != null) { f.Close(); f.Dispose(); }
         }
 
-        //Vuelve al panel de inicio: título original, sin botón resaltado y gráficos actualizados.
+        // Vuelve al panel de inicio: título original, sin botón resaltado y gráficos actualizados.
         private void MostrarInicio()
         {
             CerrarPantalla();
-            tamanoDeseado = Size.Empty;                //el inicio vuelve al tamaño estándar
+            tamanoDeseado = Size.Empty; // el inicio vuelve al tamaño estándar
             AjustarContenido();
             MostrarPanelesInicio(true);
             lblTitulo.Text = Idioma.T(TITULO_INICIO);

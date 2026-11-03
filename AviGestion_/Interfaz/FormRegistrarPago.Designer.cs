@@ -85,19 +85,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBuscar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBuscar.Location = new System.Drawing.Point(59, 15);
-            this.txtBuscar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(742, 22);
             this.txtBuscar.TabIndex = 1;
             // 
             // splitPagos
             // 
-            this.splitPagos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitPagos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitPagos.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitPagos.IsSplitterFixed = true;
             this.splitPagos.Location = new System.Drawing.Point(0, 0);
-            this.splitPagos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitPagos.Margin = new System.Windows.Forms.Padding(4);
             this.splitPagos.Name = "splitPagos";
             this.splitPagos.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -115,6 +114,7 @@
             this.splitPagos.Panel2.Controls.Add(this.label2);
             this.splitPagos.Panel2.Controls.Add(this.btnConfirmarPago);
             this.splitPagos.Panel2.Controls.Add(this.btnCancelarPago);
+            
             this.splitPagos.Panel2.Controls.Add(this.lblCapImporte);
             this.splitPagos.Panel2.Controls.Add(this.lblCapSaldo);
             this.splitPagos.Panel2.Controls.Add(this.nudImporte);
@@ -123,7 +123,7 @@
             this.splitPagos.Panel2.Controls.Add(this.lblCapTotal);
             this.splitPagos.Panel2.Controls.Add(this.lblPedidoCliente);
             this.splitPagos.Size = new System.Drawing.Size(1152, 574);
-            this.splitPagos.SplitterDistance = 372;
+            this.splitPagos.SplitterDistance = 279;
             this.splitPagos.SplitterWidth = 5;
             this.splitPagos.TabIndex = 13;
             // 
@@ -153,13 +153,13 @@
             this.colMetodoPago});
             this.dgvListadoPedidos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvListadoPedidos.Location = new System.Drawing.Point(0, 58);
-            this.dgvListadoPedidos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvListadoPedidos.Margin = new System.Windows.Forms.Padding(4);
             this.dgvListadoPedidos.MultiSelect = false;
             this.dgvListadoPedidos.Name = "dgvListadoPedidos";
             this.dgvListadoPedidos.ReadOnly = true;
             this.dgvListadoPedidos.RowHeadersWidth = 51;
             this.dgvListadoPedidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvListadoPedidos.Size = new System.Drawing.Size(1152, 298);
+            this.dgvListadoPedidos.Size = new System.Drawing.Size(1152, 205);
             this.dgvListadoPedidos.TabIndex = 2;
             // 
             // colIdPedido
@@ -235,7 +235,7 @@
             // 
             this.lblAyuda.AutoSize = true;
             this.lblAyuda.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblAyuda.Location = new System.Drawing.Point(0, 356);
+            this.lblAyuda.Location = new System.Drawing.Point(0, 263);
             this.lblAyuda.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAyuda.Name = "lblAyuda";
             this.lblAyuda.Size = new System.Drawing.Size(44, 16);
@@ -249,7 +249,7 @@
             this.pnlBuscarPagos.Controls.Add(this.txtBuscar);
             this.pnlBuscarPagos.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlBuscarPagos.Location = new System.Drawing.Point(0, 0);
-            this.pnlBuscarPagos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlBuscarPagos.Margin = new System.Windows.Forms.Padding(4);
             this.pnlBuscarPagos.Name = "pnlBuscarPagos";
             this.pnlBuscarPagos.Size = new System.Drawing.Size(1152, 58);
             this.pnlBuscarPagos.TabIndex = 15;
@@ -259,7 +259,7 @@
             this.cboMetodoPago.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.cboMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMetodoPago.FormattingEnabled = true;
-            this.cboMetodoPago.Location = new System.Drawing.Point(160, 151);
+            this.cboMetodoPago.Location = new System.Drawing.Point(160, 150);
             this.cboMetodoPago.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cboMetodoPago.Name = "cboMetodoPago";
             this.cboMetodoPago.Size = new System.Drawing.Size(121, 24);
@@ -271,7 +271,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.label2.Location = new System.Drawing.Point(156, 125);
+            this.label2.Location = new System.Drawing.Point(156, 124);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(161, 18);
             this.label2.TabIndex = 31;
@@ -279,16 +279,15 @@
             // 
             // btnConfirmarPago
             // 
-            this.btnConfirmarPago.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnConfirmarPago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.btnConfirmarPago.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConfirmarPago.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnConfirmarPago.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnConfirmarPago.Font = new System.Drawing.Font("Verdana", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirmarPago.ForeColor = System.Drawing.Color.White;
-            this.btnConfirmarPago.Location = new System.Drawing.Point(941, 142);
-            this.btnConfirmarPago.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnConfirmarPago.Location = new System.Drawing.Point(380, 150);
+            this.btnConfirmarPago.Margin = new System.Windows.Forms.Padding(4);
             this.btnConfirmarPago.Name = "btnConfirmarPago";
-            this.btnConfirmarPago.Size = new System.Drawing.Size(195, 41);
+            this.btnConfirmarPago.Size = new System.Drawing.Size(120, 38);
             this.btnConfirmarPago.TabIndex = 5;
             this.btnConfirmarPago.Text = "Confirmar Pago";
             this.btnConfirmarPago.UseVisualStyleBackColor = false;
@@ -296,17 +295,17 @@
             // 
             // btnCancelarPago
             // 
-            this.btnCancelarPago.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnCancelarPago.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancelarPago.BackColor = System.Drawing.Color.White;
             this.btnCancelarPago.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelarPago.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCancelarPago.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelarPago.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelarPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.btnCancelarPago.Location = new System.Drawing.Point(804, 142);
-            this.btnCancelarPago.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancelarPago.Location = new System.Drawing.Point(510, 150);
+            this.btnCancelarPago.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelarPago.Name = "btnCancelarPago";
-            this.btnCancelarPago.Size = new System.Drawing.Size(131, 41);
+            this.btnCancelarPago.Size = new System.Drawing.Size(170, 38);
             this.btnCancelarPago.TabIndex = 4;
             this.btnCancelarPago.Text = "Cancelar";
             this.btnCancelarPago.UseVisualStyleBackColor = false;
@@ -318,7 +317,7 @@
             this.lblCapImporte.AutoSize = true;
             this.lblCapImporte.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCapImporte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblCapImporte.Location = new System.Drawing.Point(411, 125);
+            this.lblCapImporte.Location = new System.Drawing.Point(411, 124);
             this.lblCapImporte.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCapImporte.Name = "lblCapImporte";
             this.lblCapImporte.Size = new System.Drawing.Size(233, 18);
@@ -331,7 +330,7 @@
             this.lblCapSaldo.AutoSize = true;
             this.lblCapSaldo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCapSaldo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblCapSaldo.Location = new System.Drawing.Point(411, 55);
+            this.lblCapSaldo.Location = new System.Drawing.Point(411, 54);
             this.lblCapSaldo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCapSaldo.Name = "lblCapSaldo";
             this.lblCapSaldo.Size = new System.Drawing.Size(162, 18);
@@ -344,8 +343,8 @@
             this.nudImporte.BackColor = System.Drawing.Color.White;
             this.nudImporte.DecimalPlaces = 2;
             this.nudImporte.ForeColor = System.Drawing.Color.Black;
-            this.nudImporte.Location = new System.Drawing.Point(415, 151);
-            this.nudImporte.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudImporte.Location = new System.Drawing.Point(415, 150);
+            this.nudImporte.Margin = new System.Windows.Forms.Padding(4);
             this.nudImporte.Maximum = new decimal(new int[] {
             999999999,
             0,
@@ -364,7 +363,7 @@
             this.lblTotalPedido.BackColor = System.Drawing.Color.Beige;
             this.lblTotalPedido.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalPedido.ForeColor = System.Drawing.Color.Black;
-            this.lblTotalPedido.Location = new System.Drawing.Point(155, 83);
+            this.lblTotalPedido.Location = new System.Drawing.Point(155, 82);
             this.lblTotalPedido.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalPedido.Name = "lblTotalPedido";
             this.lblTotalPedido.Size = new System.Drawing.Size(90, 29);
@@ -378,7 +377,7 @@
             this.lblSaldoPendiente.BackColor = System.Drawing.Color.Beige;
             this.lblSaldoPendiente.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSaldoPendiente.ForeColor = System.Drawing.Color.Black;
-            this.lblSaldoPendiente.Location = new System.Drawing.Point(409, 83);
+            this.lblSaldoPendiente.Location = new System.Drawing.Point(409, 82);
             this.lblSaldoPendiente.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSaldoPendiente.Name = "lblSaldoPendiente";
             this.lblSaldoPendiente.Size = new System.Drawing.Size(90, 29);
@@ -391,7 +390,7 @@
             this.lblCapTotal.AutoSize = true;
             this.lblCapTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCapTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblCapTotal.Location = new System.Drawing.Point(156, 55);
+            this.lblCapTotal.Location = new System.Drawing.Point(156, 54);
             this.lblCapTotal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCapTotal.Name = "lblCapTotal";
             this.lblCapTotal.Size = new System.Drawing.Size(60, 18);
@@ -417,7 +416,7 @@
             this.BackColor = System.Drawing.Color.Beige;
             this.ClientSize = new System.Drawing.Size(1152, 574);
             this.Controls.Add(this.splitPagos);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormRegistrarPago";
             this.Text = "FormRegistrarPago";
             this.Load += new System.EventHandler(this.FormRegistrarPago_Load);
