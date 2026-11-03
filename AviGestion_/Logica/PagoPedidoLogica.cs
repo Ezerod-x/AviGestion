@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AviGestion_.Logica
 {
-    public class PagoPedidoLogica //nuevo
+    public class PagoPedidoLogica
     {
         private PagosPedidoDatos _pagosDatos = new PagosPedidoDatos();
 
@@ -29,7 +29,7 @@ namespace AviGestion_.Logica
             int resultado = _pagosDatos.RegistrarPagoTransaccional(idPedido, importeAbonar, metodoPago);
 
             if (resultado == 1)
-                throw new ArgumentException("El pedido ya no está disponible para cobro (cancelado o sin compra registrada).");
+                throw new ArgumentException("El pedido ya no está disponible para cobro: solo se pueden cobrar pedidos entregados.");
             if (resultado == 2)
                 throw new ArgumentException("El monto supera el saldo pendiente actual. Se actualizó el listado.");
             if (resultado == 3)

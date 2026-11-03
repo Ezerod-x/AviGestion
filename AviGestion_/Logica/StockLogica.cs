@@ -40,10 +40,7 @@ namespace AviGestion_.Logica
             int nuevoStock = producto.Stock + cantidadIngresada;
             datos.ActualizarStockProducto(producto.Id, nuevoStock);
 
-            // Actualizamos el producto en memoria y usamos SU MISMA propiedad EstadoStock
-            // (la que ya usa la grilla) para calcular el estado. Antes esta lógica estaba
-            // duplicada acá con strings sin tilde, lo que hacía que nunca coincidiera con
-            // lo que se mostraba en pantalla ni con lo que se guardaba como alerta.
+            
             producto.Stock = nuevoStock;
             string estado = producto.EstadoStock;
 
@@ -60,11 +57,7 @@ namespace AviGestion_.Logica
             };
         }
 
-        // Revisa TODOS los productos activos y deja las alertas al día:
-        //  - crea la alerta de Stock Mínimo / Máximo si corresponde y todavía no existe,
-        //  - resuelve las alertas que ya no corresponden.
-        // Se llama al abrir Gestión de Alertas y al guardar un producto, porque el stock también
-        // cambia por fuera de la pantalla de Stock (pedidos, alta de productos, etc.).
+        
         public void SincronizarAlertas()
         {
             foreach (var p in datos.ListarProductosConStock())
@@ -76,8 +69,7 @@ namespace AviGestion_.Logica
 
         private void ActualizarAlertas(int idProducto, string estadoActual)
         {
-            // Según el CU-05, solo "Stock Mínimo" y "Stock Máximo" generan alerta.
-            // "Próx. a Máximo" y "Normal" son solo indicadores visuales, no alertas.
+            
             if (estadoActual != "Stock Mínimo")
                 datos.ResolverAlertasActivas(idProducto, "Stock Mínimo");
 

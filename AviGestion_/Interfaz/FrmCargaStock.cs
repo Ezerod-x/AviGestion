@@ -20,11 +20,10 @@ namespace AviGestion_.UI
         }
 
 
-        // ---- Texto de ayuda dentro del buscador ----
+        
         private const string PH_BUSCAR = "Buscar producto...";
-        private bool inicializando = true;     // evita consultas mientras se arma la pantalla
-
-        // Texto que realmente se usa para buscar (el texto de ayuda no cuenta como búsqueda)
+        private bool inicializando = true;   
+       
         private string TextoBusqueda
         {
             get { return txtBuscar.Text == PH_BUSCAR ? "" : txtBuscar.Text; }
@@ -91,7 +90,7 @@ namespace AviGestion_.UI
             }
         }
 
-        // Doble clic en una fila = seleccionar el producto para registrar el ingreso
+       
         private void dgvStock_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;

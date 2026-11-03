@@ -18,11 +18,11 @@ namespace AviGestion_.UI
         }
 
 
-        // ---- Texto de ayuda dentro del buscador ----
+        
         private const string PH_BUSCAR = "Buscar por usuario...";
-        private bool inicializando = true;     // evita consultas mientras se arma la pantalla
+        private bool inicializando = true;     
 
-        // Texto que realmente se usa para buscar (el texto de ayuda no cuenta como búsqueda)
+       
         private string TextoBusqueda
         {
             get { return txtBuscarUsuario.Text == PH_BUSCAR ? "" : txtBuscarUsuario.Text; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using AviGestion_.Datos;
 using AviGestion_.Logica;
@@ -46,12 +47,44 @@ namespace AviGestion_.UI
 
         private void FormProducto_Load(object sender, EventArgs e)
         {
-            try { logica.VincularCategorias(); } catch { }   // completa el vínculo en productos viejos
+            try { logica.VincularCategorias(); } catch { }   
             CargarCategorias();
+            CargarCodigos();
             CargarGrilla();
         }
 
-        // Las categorías salen de la tabla Categorias: las que se cargan en el módulo de Categorías
+        
+        private void CargarCodigos()
+        {
+            try
+            {
+                string actual = cmbCodigo.Text;
+                var codigos = logica.ListarProductos()
+                                    .Select(p => p.Codigo)
+                                    .Where(cod => !string.IsNullOrWhiteSpace(cod))
+                                    .Distinct()
+                                    .OrderBy(cod => cod)
+                                    .ToArray();
+
+                cmbCodigo.Items.Clear();
+                cmbCodigo.Items.AddRange(codigos);
+                cmbCodigo.Text = actual;
+            }
+            catch { }
+        }
+
+      
+        private void cmbCodigo_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            string codigo = cmbCodigo.SelectedItem as string;
+            if (string.IsNullOrEmpty(codigo)) return;
+
+            var producto = logica.ListarProductos()
+                                 .FirstOrDefault(p => string.Equals(p.Codigo, codigo, StringComparison.OrdinalIgnoreCase));
+            if (producto != null) CargarEnFormulario(producto);
+        }
+
+       
         private void CargarCategorias()
         {
             try
@@ -89,20 +122,24 @@ namespace AviGestion_.UI
             LimpiarFormulario();
         }
 
-        // Doble clic en una fila = seleccionar el producto y cargarlo en el formulario
+       
         private void dgvProductos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
             var producto = (Producto)dgvProductos.Rows[e.RowIndex].DataBoundItem;
+            CargarEnFormulario(producto);
+        }
 
+        private void CargarEnFormulario(Producto producto)
+        {
             idSeleccionado = producto.Id;
-            txtCodigo.Text = producto.Codigo;
+            cmbCodigo.Text = producto.Codigo;
             txtDescripcion.Text = producto.Descripcion;
             if (producto.Id_Categoria > 0)
                 cmbCategoria.SelectedValue = producto.Id_Categoria;
             else
-                cmbCategoria.SelectedIndex = -1;   // producto viejo sin categoría vinculada: elegir una
+                cmbCategoria.SelectedIndex = -1;   
             nudPrecio.Value = producto.Precio;
             nudStock.Value = producto.Stock;
             nudStockMinimo.Value = producto.StockMinimo;
@@ -117,7 +154,7 @@ namespace AviGestion_.UI
                 var producto = new Producto
                 {
                     Id = idSeleccionado,
-                    Codigo = txtCodigo.Text.Trim(),
+                    Codigo = cmbCodigo.Text.Trim(),
                     Descripcion = txtDescripcion.Text.Trim(),
                     Id_Categoria = cmbCategoria.SelectedValue is int ? (int)cmbCategoria.SelectedValue : 0,
                     Categoria = cmbCategoria.SelectedItem is Categoria ? ((Categoria)cmbCategoria.SelectedItem).Nombre : "",
@@ -133,6 +170,7 @@ namespace AviGestion_.UI
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LimpiarFormulario();
+                CargarCodigos();
                 CargarGrilla();
             }
             catch (Exception ex)
@@ -162,6 +200,7 @@ namespace AviGestion_.UI
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LimpiarFormulario();
+                CargarCodigos();
                 CargarGrilla();
             }
             catch (Exception ex)
@@ -178,7 +217,7 @@ namespace AviGestion_.UI
         private void LimpiarFormulario()
         {
             idSeleccionado = 0;
-            txtCodigo.Clear();
+            cmbCodigo.Text = "";
             txtDescripcion.Clear();
             cmbCategoria.SelectedIndex = -1;
             nudPrecio.Value = 0;
