@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlFiltros = new System.Windows.Forms.Panel();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -80,26 +80,28 @@
             // 
             // pnlFiltros
             // 
-            this.pnlFiltros.BackColor = System.Drawing.Color.White;
+            this.pnlFiltros.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(220)))));
             this.pnlFiltros.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlFiltros.Controls.Add(this.btnLimpiar);
             this.pnlFiltros.Controls.Add(this.txtBusqueda);
-            this.pnlFiltros.Location = new System.Drawing.Point(5, 92);
+            this.pnlFiltros.Location = new System.Drawing.Point(7, 113);
+            this.pnlFiltros.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlFiltros.Name = "pnlFiltros";
-            this.pnlFiltros.Size = new System.Drawing.Size(907, 28);
+            this.pnlFiltros.Size = new System.Drawing.Size(1209, 34);
             this.pnlFiltros.TabIndex = 12;
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.BackColor = System.Drawing.Color.Beige;
+            this.btnLimpiar.BackColor = System.Drawing.Color.White;
             this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.ForestGreen;
             this.btnLimpiar.FlatAppearance.BorderSize = 2;
             this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiar.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.ForeColor = System.Drawing.Color.ForestGreen;
-            this.btnLimpiar.Location = new System.Drawing.Point(768, -1);
+            this.btnLimpiar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.btnLimpiar.Location = new System.Drawing.Point(1024, -1);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(130, 26);
+            this.btnLimpiar.Size = new System.Drawing.Size(173, 32);
             this.btnLimpiar.TabIndex = 3;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -109,9 +111,10 @@
             // 
             // txtBusqueda
             // 
-            this.txtBusqueda.Location = new System.Drawing.Point(12, 4);
+            this.txtBusqueda.Location = new System.Drawing.Point(16, 5);
+            this.txtBusqueda.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBusqueda.Name = "txtBusqueda";
-            this.txtBusqueda.Size = new System.Drawing.Size(737, 20);
+            this.txtBusqueda.Size = new System.Drawing.Size(981, 22);
             this.txtBusqueda.TabIndex = 0;
             this.txtBusqueda.Text = "Filtrar por N°Pedido, Fecha...";
             this.txtBusqueda.TextChanged += new System.EventHandler(this.txtBusqueda_TextChanged);
@@ -135,18 +138,20 @@
             this.pnlResumen.Controls.Add(this.lblPromedioValor);
             this.pnlResumen.Controls.Add(this.lblPromedioEtiqueta);
             this.pnlResumen.Controls.Add(this.lblResumenFinancieroEtiqueta);
-            this.pnlResumen.Location = new System.Drawing.Point(4, 403);
+            this.pnlResumen.Location = new System.Drawing.Point(5, 496);
+            this.pnlResumen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlResumen.Name = "pnlResumen";
-            this.pnlResumen.Size = new System.Drawing.Size(908, 108);
+            this.pnlResumen.Size = new System.Drawing.Size(1210, 132);
             this.pnlResumen.TabIndex = 10;
             // 
             // lblUltimaCompraValor
             // 
             this.lblUltimaCompraValor.AutoSize = true;
             this.lblUltimaCompraValor.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUltimaCompraValor.Location = new System.Drawing.Point(756, 79);
+            this.lblUltimaCompraValor.Location = new System.Drawing.Point(1008, 97);
+            this.lblUltimaCompraValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUltimaCompraValor.Name = "lblUltimaCompraValor";
-            this.lblUltimaCompraValor.Size = new System.Drawing.Size(11, 16);
+            this.lblUltimaCompraValor.Size = new System.Drawing.Size(15, 19);
             this.lblUltimaCompraValor.TabIndex = 22;
             this.lblUltimaCompraValor.Text = "-";
             // 
@@ -154,9 +159,10 @@
             // 
             this.lblUltimaCompra.AutoSize = true;
             this.lblUltimaCompra.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUltimaCompra.Location = new System.Drawing.Point(657, 79);
+            this.lblUltimaCompra.Location = new System.Drawing.Point(876, 97);
+            this.lblUltimaCompra.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUltimaCompra.Name = "lblUltimaCompra";
-            this.lblUltimaCompra.Size = new System.Drawing.Size(93, 16);
+            this.lblUltimaCompra.Size = new System.Drawing.Size(116, 19);
             this.lblUltimaCompra.TabIndex = 21;
             this.lblUltimaCompra.Text = "Última Compra";
             // 
@@ -164,9 +170,10 @@
             // 
             this.lblMontoMaximoValor.AutoSize = true;
             this.lblMontoMaximoValor.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMontoMaximoValor.Location = new System.Drawing.Point(523, 79);
+            this.lblMontoMaximoValor.Location = new System.Drawing.Point(697, 97);
+            this.lblMontoMaximoValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMontoMaximoValor.Name = "lblMontoMaximoValor";
-            this.lblMontoMaximoValor.Size = new System.Drawing.Size(11, 16);
+            this.lblMontoMaximoValor.Size = new System.Drawing.Size(15, 19);
             this.lblMontoMaximoValor.TabIndex = 20;
             this.lblMontoMaximoValor.Text = "-";
             // 
@@ -174,9 +181,10 @@
             // 
             this.lblMontoMaximo.AutoSize = true;
             this.lblMontoMaximo.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMontoMaximo.Location = new System.Drawing.Point(371, 79);
+            this.lblMontoMaximo.Location = new System.Drawing.Point(495, 97);
+            this.lblMontoMaximo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMontoMaximo.Name = "lblMontoMaximo";
-            this.lblMontoMaximo.Size = new System.Drawing.Size(93, 16);
+            this.lblMontoMaximo.Size = new System.Drawing.Size(113, 19);
             this.lblMontoMaximo.TabIndex = 19;
             this.lblMontoMaximo.Text = "Monto Máximo";
             // 
@@ -184,9 +192,10 @@
             // 
             this.lblMontoMinimoValor.AutoSize = true;
             this.lblMontoMinimoValor.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMontoMinimoValor.Location = new System.Drawing.Point(245, 79);
+            this.lblMontoMinimoValor.Location = new System.Drawing.Point(327, 97);
+            this.lblMontoMinimoValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMontoMinimoValor.Name = "lblMontoMinimoValor";
-            this.lblMontoMinimoValor.Size = new System.Drawing.Size(11, 16);
+            this.lblMontoMinimoValor.Size = new System.Drawing.Size(15, 19);
             this.lblMontoMinimoValor.TabIndex = 18;
             this.lblMontoMinimoValor.Text = "-";
             // 
@@ -194,9 +203,10 @@
             // 
             this.lblMontoMinimo.AutoSize = true;
             this.lblMontoMinimo.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMontoMinimo.Location = new System.Drawing.Point(95, 79);
+            this.lblMontoMinimo.Location = new System.Drawing.Point(127, 97);
+            this.lblMontoMinimo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMontoMinimo.Name = "lblMontoMinimo";
-            this.lblMontoMinimo.Size = new System.Drawing.Size(89, 16);
+            this.lblMontoMinimo.Size = new System.Drawing.Size(111, 19);
             this.lblMontoMinimo.TabIndex = 17;
             this.lblMontoMinimo.Text = "Monto Mínimo";
             // 
@@ -204,9 +214,10 @@
             // 
             this.lblAntiguedadValor.AutoSize = true;
             this.lblAntiguedadValor.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAntiguedadValor.Location = new System.Drawing.Point(749, 39);
+            this.lblAntiguedadValor.Location = new System.Drawing.Point(999, 48);
+            this.lblAntiguedadValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAntiguedadValor.Name = "lblAntiguedadValor";
-            this.lblAntiguedadValor.Size = new System.Drawing.Size(11, 16);
+            this.lblAntiguedadValor.Size = new System.Drawing.Size(15, 19);
             this.lblAntiguedadValor.TabIndex = 16;
             this.lblAntiguedadValor.Text = "-";
             // 
@@ -214,9 +225,10 @@
             // 
             this.lblAntiguedadEtiqueta.AutoSize = true;
             this.lblAntiguedadEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAntiguedadEtiqueta.Location = new System.Drawing.Point(657, 39);
+            this.lblAntiguedadEtiqueta.Location = new System.Drawing.Point(876, 48);
+            this.lblAntiguedadEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAntiguedadEtiqueta.Name = "lblAntiguedadEtiqueta";
-            this.lblAntiguedadEtiqueta.Size = new System.Drawing.Size(72, 16);
+            this.lblAntiguedadEtiqueta.Size = new System.Drawing.Size(91, 19);
             this.lblAntiguedadEtiqueta.TabIndex = 15;
             this.lblAntiguedadEtiqueta.Text = "Antigüedad";
             // 
@@ -224,9 +236,10 @@
             // 
             this.lblPorcentajeValor.AutoSize = true;
             this.lblPorcentajeValor.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPorcentajeValor.Location = new System.Drawing.Point(464, 39);
+            this.lblPorcentajeValor.Location = new System.Drawing.Point(619, 48);
+            this.lblPorcentajeValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPorcentajeValor.Name = "lblPorcentajeValor";
-            this.lblPorcentajeValor.Size = new System.Drawing.Size(11, 16);
+            this.lblPorcentajeValor.Size = new System.Drawing.Size(15, 19);
             this.lblPorcentajeValor.TabIndex = 14;
             this.lblPorcentajeValor.Text = "-";
             // 
@@ -234,9 +247,10 @@
             // 
             this.lblPorcentajeEtiqueta.AutoSize = true;
             this.lblPorcentajeEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPorcentajeEtiqueta.Location = new System.Drawing.Point(371, 39);
+            this.lblPorcentajeEtiqueta.Location = new System.Drawing.Point(495, 48);
+            this.lblPorcentajeEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPorcentajeEtiqueta.Name = "lblPorcentajeEtiqueta";
-            this.lblPorcentajeEtiqueta.Size = new System.Drawing.Size(67, 16);
+            this.lblPorcentajeEtiqueta.Size = new System.Drawing.Size(85, 19);
             this.lblPorcentajeEtiqueta.TabIndex = 13;
             this.lblPorcentajeEtiqueta.Text = "% Pagado";
             // 
@@ -244,9 +258,10 @@
             // 
             this.lblPromedioValor.AutoSize = true;
             this.lblPromedioValor.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPromedioValor.Location = new System.Drawing.Point(247, 39);
+            this.lblPromedioValor.Location = new System.Drawing.Point(329, 48);
+            this.lblPromedioValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPromedioValor.Name = "lblPromedioValor";
-            this.lblPromedioValor.Size = new System.Drawing.Size(11, 16);
+            this.lblPromedioValor.Size = new System.Drawing.Size(15, 19);
             this.lblPromedioValor.TabIndex = 12;
             this.lblPromedioValor.Text = "-";
             // 
@@ -254,9 +269,10 @@
             // 
             this.lblPromedioEtiqueta.AutoSize = true;
             this.lblPromedioEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPromedioEtiqueta.Location = new System.Drawing.Point(95, 39);
+            this.lblPromedioEtiqueta.Location = new System.Drawing.Point(127, 48);
+            this.lblPromedioEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPromedioEtiqueta.Name = "lblPromedioEtiqueta";
-            this.lblPromedioEtiqueta.Size = new System.Drawing.Size(129, 16);
+            this.lblPromedioEtiqueta.Size = new System.Drawing.Size(165, 19);
             this.lblPromedioEtiqueta.TabIndex = 11;
             this.lblPromedioEtiqueta.Text = "Promedio de Compra";
             // 
@@ -264,28 +280,30 @@
             // 
             this.lblResumenFinancieroEtiqueta.AutoSize = true;
             this.lblResumenFinancieroEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblResumenFinancieroEtiqueta.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lblResumenFinancieroEtiqueta.Location = new System.Drawing.Point(9, 11);
+            this.lblResumenFinancieroEtiqueta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.lblResumenFinancieroEtiqueta.Location = new System.Drawing.Point(12, 14);
+            this.lblResumenFinancieroEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResumenFinancieroEtiqueta.Name = "lblResumenFinancieroEtiqueta";
-            this.lblResumenFinancieroEtiqueta.Size = new System.Drawing.Size(153, 16);
+            this.lblResumenFinancieroEtiqueta.Size = new System.Drawing.Size(197, 19);
             this.lblResumenFinancieroEtiqueta.TabIndex = 10;
             this.lblResumenFinancieroEtiqueta.Text = "RESUMEN FINANCIERO";
             // 
             // dgvHistorial
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.dgvHistorial.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            this.dgvHistorial.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvHistorial.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvHistorial.BackgroundColor = System.Drawing.Color.White;
             this.dgvHistorial.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHistorial.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHistorial.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvHistorial.ColumnHeadersHeight = 29;
             this.dgvHistorial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvHistorial.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colN,
@@ -297,60 +315,70 @@
             this.colSaldo,
             this.colEstado});
             this.dgvHistorial.EnableHeadersVisualStyles = false;
-            this.dgvHistorial.Location = new System.Drawing.Point(4, 124);
+            this.dgvHistorial.Location = new System.Drawing.Point(5, 153);
+            this.dgvHistorial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvHistorial.MultiSelect = false;
             this.dgvHistorial.Name = "dgvHistorial";
             this.dgvHistorial.ReadOnly = true;
             this.dgvHistorial.RowHeadersVisible = false;
+            this.dgvHistorial.RowHeadersWidth = 51;
             this.dgvHistorial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvHistorial.Size = new System.Drawing.Size(908, 273);
+            this.dgvHistorial.Size = new System.Drawing.Size(1211, 336);
             this.dgvHistorial.TabIndex = 9;
             // 
             // colN
             // 
             this.colN.HeaderText = "NumeroFila";
+            this.colN.MinimumWidth = 6;
             this.colN.Name = "colN";
             this.colN.ReadOnly = true;
             // 
             // colNumPedidos
             // 
             this.colNumPedidos.HeaderText = "N°Pedido";
+            this.colNumPedidos.MinimumWidth = 6;
             this.colNumPedidos.Name = "colNumPedidos";
             this.colNumPedidos.ReadOnly = true;
             // 
             // colFecha
             // 
             this.colFecha.HeaderText = "Fecha";
+            this.colFecha.MinimumWidth = 6;
             this.colFecha.Name = "colFecha";
             this.colFecha.ReadOnly = true;
             // 
             // colProducto
             // 
             this.colProducto.HeaderText = "Productos";
+            this.colProducto.MinimumWidth = 6;
             this.colProducto.Name = "colProducto";
             this.colProducto.ReadOnly = true;
             // 
             // colMonto
             // 
             this.colMonto.HeaderText = "Monto";
+            this.colMonto.MinimumWidth = 6;
             this.colMonto.Name = "colMonto";
             this.colMonto.ReadOnly = true;
             // 
             // colPagado
             // 
             this.colPagado.HeaderText = "Pagado";
+            this.colPagado.MinimumWidth = 6;
             this.colPagado.Name = "colPagado";
             this.colPagado.ReadOnly = true;
             // 
             // colSaldo
             // 
             this.colSaldo.HeaderText = "Saldo";
+            this.colSaldo.MinimumWidth = 6;
             this.colSaldo.Name = "colSaldo";
             this.colSaldo.ReadOnly = true;
             // 
             // colEstado
             // 
             this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 6;
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
             // 
@@ -364,17 +392,19 @@
             this.panel1.Controls.Add(this.lblTotalCompradoValor);
             this.panel1.Controls.Add(this.lblTotalPagadoEtiqueta);
             this.panel1.Controls.Add(this.lblTotalCompradoEtiqueta);
-            this.panel1.Location = new System.Drawing.Point(5, 47);
+            this.panel1.Location = new System.Drawing.Point(7, 58);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(908, 39);
+            this.panel1.Size = new System.Drawing.Size(1210, 48);
             this.panel1.TabIndex = 8;
             // 
             // lblSaldoPendienteValor
             // 
             this.lblSaldoPendienteValor.AutoSize = true;
-            this.lblSaldoPendienteValor.Location = new System.Drawing.Point(790, 11);
+            this.lblSaldoPendienteValor.Location = new System.Drawing.Point(1053, 14);
+            this.lblSaldoPendienteValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSaldoPendienteValor.Name = "lblSaldoPendienteValor";
-            this.lblSaldoPendienteValor.Size = new System.Drawing.Size(10, 13);
+            this.lblSaldoPendienteValor.Size = new System.Drawing.Size(11, 16);
             this.lblSaldoPendienteValor.TabIndex = 9;
             this.lblSaldoPendienteValor.Text = "-";
             // 
@@ -382,28 +412,31 @@
             // 
             this.lblSaldoPendienteEtiqueta.AutoSize = true;
             this.lblSaldoPendienteEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSaldoPendienteEtiqueta.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lblSaldoPendienteEtiqueta.Location = new System.Drawing.Point(646, 10);
+            this.lblSaldoPendienteEtiqueta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.lblSaldoPendienteEtiqueta.Location = new System.Drawing.Point(861, 12);
+            this.lblSaldoPendienteEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSaldoPendienteEtiqueta.Name = "lblSaldoPendienteEtiqueta";
-            this.lblSaldoPendienteEtiqueta.Size = new System.Drawing.Size(128, 16);
+            this.lblSaldoPendienteEtiqueta.Size = new System.Drawing.Size(165, 19);
             this.lblSaldoPendienteEtiqueta.TabIndex = 8;
             this.lblSaldoPendienteEtiqueta.Text = "SALDO PENDIENTE";
             // 
             // lblTotalPagadoValor
             // 
             this.lblTotalPagadoValor.AutoSize = true;
-            this.lblTotalPagadoValor.Location = new System.Drawing.Point(472, 13);
+            this.lblTotalPagadoValor.Location = new System.Drawing.Point(629, 16);
+            this.lblTotalPagadoValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalPagadoValor.Name = "lblTotalPagadoValor";
-            this.lblTotalPagadoValor.Size = new System.Drawing.Size(10, 13);
+            this.lblTotalPagadoValor.Size = new System.Drawing.Size(11, 16);
             this.lblTotalPagadoValor.TabIndex = 7;
             this.lblTotalPagadoValor.Text = "-";
             // 
             // lblTotalCompradoValor
             // 
             this.lblTotalCompradoValor.AutoSize = true;
-            this.lblTotalCompradoValor.Location = new System.Drawing.Point(159, 14);
+            this.lblTotalCompradoValor.Location = new System.Drawing.Point(212, 17);
+            this.lblTotalCompradoValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalCompradoValor.Name = "lblTotalCompradoValor";
-            this.lblTotalCompradoValor.Size = new System.Drawing.Size(10, 13);
+            this.lblTotalCompradoValor.Size = new System.Drawing.Size(11, 16);
             this.lblTotalCompradoValor.TabIndex = 6;
             this.lblTotalCompradoValor.Text = "-";
             // 
@@ -411,10 +444,11 @@
             // 
             this.lblTotalPagadoEtiqueta.AutoSize = true;
             this.lblTotalPagadoEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalPagadoEtiqueta.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lblTotalPagadoEtiqueta.Location = new System.Drawing.Point(346, 11);
+            this.lblTotalPagadoEtiqueta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.lblTotalPagadoEtiqueta.Location = new System.Drawing.Point(461, 14);
+            this.lblTotalPagadoEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalPagadoEtiqueta.Name = "lblTotalPagadoEtiqueta";
-            this.lblTotalPagadoEtiqueta.Size = new System.Drawing.Size(108, 16);
+            this.lblTotalPagadoEtiqueta.Size = new System.Drawing.Size(137, 19);
             this.lblTotalPagadoEtiqueta.TabIndex = 6;
             this.lblTotalPagadoEtiqueta.Text = "TOTAL PAGADO";
             // 
@@ -422,16 +456,17 @@
             // 
             this.lblTotalCompradoEtiqueta.AutoSize = true;
             this.lblTotalCompradoEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalCompradoEtiqueta.ForeColor = System.Drawing.Color.ForestGreen;
-            this.lblTotalCompradoEtiqueta.Location = new System.Drawing.Point(12, 11);
+            this.lblTotalCompradoEtiqueta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
+            this.lblTotalCompradoEtiqueta.Location = new System.Drawing.Point(16, 14);
+            this.lblTotalCompradoEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalCompradoEtiqueta.Name = "lblTotalCompradoEtiqueta";
-            this.lblTotalCompradoEtiqueta.Size = new System.Drawing.Size(129, 16);
+            this.lblTotalCompradoEtiqueta.Size = new System.Drawing.Size(164, 19);
             this.lblTotalCompradoEtiqueta.TabIndex = 6;
             this.lblTotalCompradoEtiqueta.Text = "TOTAL COMPRADO";
             // 
             // pnlInfoCliente
             // 
-            this.pnlInfoCliente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.pnlInfoCliente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.pnlInfoCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlInfoCliente.Controls.Add(this.lblDireccionValor);
             this.pnlInfoCliente.Controls.Add(this.lblDireccionEtiqueta);
@@ -439,18 +474,20 @@
             this.pnlInfoCliente.Controls.Add(this.lblContactoEtiqueta);
             this.pnlInfoCliente.Controls.Add(this.lblClienteValor);
             this.pnlInfoCliente.Controls.Add(this.lblClienteEtiqueta);
-            this.pnlInfoCliente.Location = new System.Drawing.Point(6, 3);
+            this.pnlInfoCliente.Location = new System.Drawing.Point(8, 4);
+            this.pnlInfoCliente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlInfoCliente.Name = "pnlInfoCliente";
-            this.pnlInfoCliente.Size = new System.Drawing.Size(907, 38);
+            this.pnlInfoCliente.Size = new System.Drawing.Size(1209, 46);
             this.pnlInfoCliente.TabIndex = 7;
             // 
             // lblDireccionValor
             // 
             this.lblDireccionValor.AutoSize = true;
             this.lblDireccionValor.ForeColor = System.Drawing.Color.White;
-            this.lblDireccionValor.Location = new System.Drawing.Point(729, 6);
+            this.lblDireccionValor.Location = new System.Drawing.Point(972, 7);
+            this.lblDireccionValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDireccionValor.Name = "lblDireccionValor";
-            this.lblDireccionValor.Size = new System.Drawing.Size(10, 13);
+            this.lblDireccionValor.Size = new System.Drawing.Size(11, 16);
             this.lblDireccionValor.TabIndex = 5;
             this.lblDireccionValor.Text = "-";
             // 
@@ -459,9 +496,10 @@
             this.lblDireccionEtiqueta.AutoSize = true;
             this.lblDireccionEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDireccionEtiqueta.ForeColor = System.Drawing.Color.White;
-            this.lblDireccionEtiqueta.Location = new System.Drawing.Point(645, 4);
+            this.lblDireccionEtiqueta.Location = new System.Drawing.Point(860, 5);
+            this.lblDireccionEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDireccionEtiqueta.Name = "lblDireccionEtiqueta";
-            this.lblDireccionEtiqueta.Size = new System.Drawing.Size(78, 16);
+            this.lblDireccionEtiqueta.Size = new System.Drawing.Size(101, 19);
             this.lblDireccionEtiqueta.TabIndex = 4;
             this.lblDireccionEtiqueta.Text = "DIRECCIÓN";
             // 
@@ -469,9 +507,10 @@
             // 
             this.lblContactoValor.AutoSize = true;
             this.lblContactoValor.ForeColor = System.Drawing.Color.White;
-            this.lblContactoValor.Location = new System.Drawing.Point(428, 8);
+            this.lblContactoValor.Location = new System.Drawing.Point(571, 10);
+            this.lblContactoValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblContactoValor.Name = "lblContactoValor";
-            this.lblContactoValor.Size = new System.Drawing.Size(10, 13);
+            this.lblContactoValor.Size = new System.Drawing.Size(11, 16);
             this.lblContactoValor.TabIndex = 3;
             this.lblContactoValor.Text = "-";
             // 
@@ -480,9 +519,10 @@
             this.lblContactoEtiqueta.AutoSize = true;
             this.lblContactoEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblContactoEtiqueta.ForeColor = System.Drawing.Color.White;
-            this.lblContactoEtiqueta.Location = new System.Drawing.Point(326, 6);
+            this.lblContactoEtiqueta.Location = new System.Drawing.Point(435, 7);
+            this.lblContactoEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblContactoEtiqueta.Name = "lblContactoEtiqueta";
-            this.lblContactoEtiqueta.Size = new System.Drawing.Size(78, 16);
+            this.lblContactoEtiqueta.Size = new System.Drawing.Size(101, 19);
             this.lblContactoEtiqueta.TabIndex = 2;
             this.lblContactoEtiqueta.Text = "CONTACTO";
             // 
@@ -490,9 +530,10 @@
             // 
             this.lblClienteValor.AutoSize = true;
             this.lblClienteValor.ForeColor = System.Drawing.Color.White;
-            this.lblClienteValor.Location = new System.Drawing.Point(93, 6);
+            this.lblClienteValor.Location = new System.Drawing.Point(124, 7);
+            this.lblClienteValor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblClienteValor.Name = "lblClienteValor";
-            this.lblClienteValor.Size = new System.Drawing.Size(10, 13);
+            this.lblClienteValor.Size = new System.Drawing.Size(11, 16);
             this.lblClienteValor.TabIndex = 1;
             this.lblClienteValor.Text = "-";
             // 
@@ -501,9 +542,10 @@
             this.lblClienteEtiqueta.AutoSize = true;
             this.lblClienteEtiqueta.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClienteEtiqueta.ForeColor = System.Drawing.Color.White;
-            this.lblClienteEtiqueta.Location = new System.Drawing.Point(9, 4);
+            this.lblClienteEtiqueta.Location = new System.Drawing.Point(12, 5);
+            this.lblClienteEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblClienteEtiqueta.Name = "lblClienteEtiqueta";
-            this.lblClienteEtiqueta.Size = new System.Drawing.Size(61, 16);
+            this.lblClienteEtiqueta.Size = new System.Drawing.Size(79, 19);
             this.lblClienteEtiqueta.TabIndex = 0;
             this.lblClienteEtiqueta.Text = "CLIENTE";
             // 
@@ -513,10 +555,11 @@
             this.btnCerrar.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnCerrar.FlatAppearance.BorderSize = 2;
             this.btnCerrar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCerrar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
-            this.btnCerrar.Location = new System.Drawing.Point(816, 529);
+            this.btnCerrar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.btnCerrar.Location = new System.Drawing.Point(1088, 651);
+            this.btnCerrar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(96, 35);
+            this.btnCerrar.Size = new System.Drawing.Size(128, 43);
             this.btnCerrar.TabIndex = 13;
             this.btnCerrar.Text = "Cerrar";
             this.btnCerrar.UseVisualStyleBackColor = false;
@@ -524,10 +567,10 @@
             // 
             // FormHistorialCliente
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Beige;
-            this.ClientSize = new System.Drawing.Size(920, 576);
+            this.BackColor = System.Drawing.Color.Ivory;
+            this.ClientSize = new System.Drawing.Size(1227, 709);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.pnlFiltros);
             this.Controls.Add(this.pnlResumen);
@@ -535,6 +578,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlInfoCliente);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormHistorialCliente";
             this.Text = "Historial Cliente";
             this.Load += new System.EventHandler(this.FormHistorialCliente_Load);

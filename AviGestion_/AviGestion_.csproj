@@ -271,6 +271,9 @@
     <EmbeddedResource Include="Interfaz\FormHistorialEntrega.resx">
       <DependentUpon>FormHistorialEntrega.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Interfaz\FormRecuperoContrasena.resx">
+      <DependentUpon>FormRecuperoContrasena.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FormRegistrarPago.resx">
       <DependentUpon>FormRegistrarPago.cs</DependentUpon>
     </EmbeddedResource>
@@ -279,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FrmAgregarCliente.resx">
       <DependentUpon>FrmAgregarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interfaz\FrmCambiarContrasena.resx">
+      <DependentUpon>FrmCambiarContrasena.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FrmCargaStock.resx">
       <DependentUpon>FrmCargaStock.cs</DependentUpon>
