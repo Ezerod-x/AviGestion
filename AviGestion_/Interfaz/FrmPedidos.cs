@@ -9,6 +9,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using PdfDocument = iTextSharp.text.Document;
 using PdfFont = iTextSharp.text.Font;
+using System.Globalization;
+using System.Linq;
 
 namespace AviGestion_.Interfaz
 {
@@ -33,6 +35,8 @@ namespace AviGestion_.Interfaz
             nudCantidad.Maximum = 999;
             nudCantidad.Value = 1;
             OcultarPaneles();
+            cboCliente.DropDownStyle = ComboBoxStyle.DropDown;
+            cboCliente.TextUpdate += cboCliente_TextUpdate;
             dgvDetProductos.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(245, 245, 220);
             dgvDetProductos.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             usuarioActual = usuario;
@@ -91,20 +95,59 @@ namespace AviGestion_.Interfaz
         #endregion
 
         #region Carga de datos
+        
+
+        private const string OPCION_NUEVO_CLIENTE = "+ Agregar nuevo cliente";
+        private List<ClienteItem> _clientes = new List<ClienteItem>();
+        private bool _filtrandoClientes = false;
+
         private void CargarClientes()
         {
             try
             {
-                cboCliente.Items.Clear();
-                foreach (var c in logica.ObtenerClientes())
-                    cboCliente.Items.Add(c);
-                cboCliente.Items.Add("+ Agregar nuevo cliente");
-                cboCliente.DisplayMember = "Nombre";
+                _clientes = logica.ObtenerClientes();
+                FiltrarClientes("");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void FiltrarClientes(string texto)
+        {
+            _filtrandoClientes = true;
+            cboCliente.BeginUpdate();
+            cboCliente.Items.Clear();
+
+            var comparador = CultureInfo.CurrentCulture.CompareInfo;
+            foreach (var c in _clientes)
+            {
+                if (string.IsNullOrWhiteSpace(texto) ||
+                    comparador.IndexOf(c.Nombre, texto.Trim(),
+                        CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace) >= 0)
+                    cboCliente.Items.Add(c);
+            }
+            cboCliente.Items.Add(OPCION_NUEVO_CLIENTE);
+
+            cboCliente.EndUpdate();
+            _filtrandoClientes = false;
+        }
+
+        private void cboCliente_TextUpdate(object sender, EventArgs e)
+        {
+            string texto = cboCliente.Text;
+            int pos = cboCliente.SelectionStart;
+
+            FiltrarClientes(texto);
+
+            _filtrandoClientes = true;
+            cboCliente.Text = texto;               // al limpiar la lista se borra el texto: lo restauramos
+            cboCliente.SelectionStart = pos;       // y dejamos el cursor donde estaba
+            cboCliente.SelectionLength = 0;
+            cboCliente.DroppedDown = true;         // abre la lista con los resultados
+            Cursor.Current = Cursors.Default;
+            _filtrandoClientes = false;
         }
 
         private void CargarProductos()
@@ -320,7 +363,9 @@ namespace AviGestion_.Interfaz
         #region Panel Alta
         private void btnAgregarPedido_Click(object sender, EventArgs e)
         {
+            FiltrarClientes("");
             cboCliente.SelectedIndex = -1;
+            cboCliente.Text = "";
             dgvProductosPedido.Rows.Clear();
             _codigoPorNombre.Clear();
             nudCantidad.Value = 1;
@@ -354,11 +399,18 @@ namespace AviGestion_.Interfaz
                         if (frmAlta.ShowDialog() == DialogResult.OK)
                         {
                             CargarClientes();
-                            cboCliente.SelectedItem = frmAlta.NuevoClienteNombre;
+                            var nuevo = _clientes
+                                .Where(c => c.Nombre.EndsWith(" - " + frmAlta.NuevoClienteNombre))
+                                .OrderByDescending(c => c.Id)
+                                .FirstOrDefault();
+                            cboCliente.SelectedItem = nuevo;
                         }
                         else
+                        {
                             cboCliente.SelectedIndex = -1;
-                        
+                            cboCliente.Text = "";
+                        }
+
                     }
                 }
             }
@@ -431,10 +483,10 @@ namespace AviGestion_.Interfaz
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            if (cboCliente.SelectedItem == null ||
-                cboCliente.SelectedItem.ToString() == "+ Agregar nuevo cliente")
+            ClienteItem cliente = cboCliente.SelectedItem as ClienteItem;
+            if (cliente == null)
             {
-                MessageBox.Show("Seleccioná un cliente.", "Campo obligatorio",
+                MessageBox.Show("Seleccioná un cliente de la lista.", "Campo obligatorio",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -447,7 +499,6 @@ namespace AviGestion_.Interfaz
 
             try
             {
-                ClienteItem cliente = (ClienteItem)cboCliente.SelectedItem;
                 var productos = new List<(string Codigo, int Cantidad)>();
                 string prodTexto = "";
 
