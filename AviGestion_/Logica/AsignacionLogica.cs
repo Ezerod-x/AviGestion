@@ -21,7 +21,7 @@ namespace AviGestion_.Logica
         public DataTable PedidosEnEspera() { return datos.PedidosPorEstado(EstadoEspera); }
         public DataTable PedidosEnCamion() { return datos.PedidosPorEstado(EstadoEnCamion); }
         public DataTable PedidosEnCamino() { return datos.PedidosPorEstado(EstadoEnCamino); }
-        public DataTable PedidosEntregados() { return datos.PedidosPorEstado(EstadoEntregado); }
+        public DataTable PedidosEntregados() { return datos.PedidosEntregadosHoy(EstadoEntregado); }
 
         public DataTable Vehiculos() { return datos.Vehiculos(); }
 

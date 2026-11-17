@@ -35,7 +35,37 @@ namespace AviGestion_.Datos
             }
             return tabla;
         }
+        // Pedidos entregados hoy (para la columna "Entregados" del tablero)
+        public DataTable PedidosEntregadosHoy(string estado)
+        {
+            string sql = @"
+        SELECT pc.Id_Pedido,
+               CONCAT(c.Nombre, ' ', ISNULL(c.Apellido, '')) AS Cliente,
+               pc.Fecha,
+               ISNULL((SELECT SUM(d.Cantidad)
+                       FROM DetallePedidoCompra d
+                       WHERE d.Id_Pedido = pc.Id_Pedido), 0) AS Cajas,
+               pc.Id_Vehiculo,
+               v.Patente, v.Marca, v.Modelo
+        FROM PedidosCompra pc
+        INNER JOIN Cliente c ON pc.Id_Cliente = c.Id_Cliente
+        LEFT JOIN Vehiculos v ON pc.Id_Vehiculo = v.Id
+        WHERE pc.Estado = @Estado
+          AND CAST(pc.FechaEntrega AS date) = CAST(GETDATE() AS date)
+        ORDER BY pc.Id_Pedido DESC";
 
+            var tabla = new DataTable();
+            using (SqlConnection cn = Conexion.ObtenerConexion())
+            using (var cmd = new SqlCommand(sql, cn))
+            {
+                cmd.Parameters.AddWithValue("@Estado", estado);
+                using (var da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(tabla);
+                }
+            }
+            return tabla;
+        }
         // Vehículos con su estado y las cajas que todavía les entran (Libres)
         public DataTable Vehiculos()
         {

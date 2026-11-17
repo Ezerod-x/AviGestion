@@ -75,7 +75,7 @@ namespace AviGestion_.Interfaz
                 lblEspera.Text = "En preparación (" + espera.Rows.Count + ")";
                 lblCamiones.Text = "Camiones en depósito (" + enDeposito.Length + ")";
                 lblEnCamino.Text = "En camino (" + enCamino.Rows.Count + ")";
-                lblEntregados.Text = "Entregados (" + entregados.Rows.Count + ")";
+                lblEntregados.Text = "Entregados hoy (" + entregados.Rows.Count + ")";
             }
             catch (Exception ex)
             {
@@ -111,7 +111,7 @@ namespace AviGestion_.Interfaz
             LimpiarColumna(flp);
 
             if (pedidos.Rows.Count == 0)
-                AgregarMensajeVacio(flp, "No hay pedidos");
+                AgregarMensajeVacio(flp, conSelector ? "No hay pedidos" : "No hay pedidos entregados hoy"); ;
 
             foreach (DataRow fila in pedidos.Rows)
                 flp.Controls.Add(CrearTarjeta(fila, conSelector, AnchoTarjeta(flp)));
