@@ -203,7 +203,7 @@ namespace AviGestion_.Interfaz
                                     "Confirmar pago", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                     return;
 
-                splitPagos.Panel2.Enabled = false;             // evita un segundo clic mientras se procesa
+                HabilitarPago (false);             // evita un segundo clic mientras se procesa
                 pagosLogica.RegistrarPago(pedidoSeleccionado.NºPedido, importeABonar, metodoPago);
                 MessageBox.Show("El pago fue registrado correctamente en la base de datos.", "Pago Registrado",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -220,7 +220,7 @@ namespace AviGestion_.Interfaz
             }
             catch (Exception ex)
             {
-                splitPagos.Panel2.Enabled = true;              // falló: se puede reintentar
+                HabilitarPago(true);              // falló: se puede reintentar
                 MessageBox.Show("Error al procesar el abono: " + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 BitacoraLogica.Registrar(usuarioActual.Nombre,

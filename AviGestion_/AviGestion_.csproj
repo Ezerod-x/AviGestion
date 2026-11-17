@@ -240,11 +240,11 @@
     <Compile Include="MultiIdioma\Idioma .cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interfaz\FormMenu.cs">
+    <Compile Include="Interfaz\Sistema Avigestion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interfaz\FormMenu.Designer.cs">
-      <DependentUpon>FormMenu.cs</DependentUpon>
+    <Compile Include="Interfaz\Sistema Avigestion.Designer.cs">
+      <DependentUpon>Sistema Avigestion.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaz\FormProducto.cs">
       <SubType>Form</SubType>
@@ -316,8 +316,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Interfaz\FormMenu.resx">
-      <DependentUpon>FormMenu.cs</DependentUpon>
+    <EmbeddedResource Include="Interfaz\Sistema Avigestion.resx">
+      <DependentUpon>Sistema Avigestion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interfaz\FormProducto.resx">
       <DependentUpon>FormProducto.cs</DependentUpon>

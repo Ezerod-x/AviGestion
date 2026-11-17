@@ -316,7 +316,7 @@
             this.lblEtiqueta.AutoSize = true;
             this.lblEtiqueta.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEtiqueta.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.lblEtiqueta.Location = new System.Drawing.Point(420, 254);
+            this.lblEtiqueta.Location = new System.Drawing.Point(40, 220);
             this.lblEtiqueta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEtiqueta.Name = "lblEtiqueta";
             this.lblEtiqueta.Size = new System.Drawing.Size(217, 17);
@@ -330,7 +330,7 @@
             this.btnVerHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVerHistorial.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVerHistorial.ForeColor = System.Drawing.Color.White;
-            this.btnVerHistorial.Location = new System.Drawing.Point(31, 244);
+            this.btnVerHistorial.Location = new System.Drawing.Point(40, 244);
             this.btnVerHistorial.Margin = new System.Windows.Forms.Padding(4);
             this.btnVerHistorial.Name = "btnVerHistorial";
             this.btnVerHistorial.Size = new System.Drawing.Size(144, 34);
@@ -341,11 +341,11 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.btnCancelar.Location = new System.Drawing.Point(780, 244);
+            this.btnCancelar.Location = new System.Drawing.Point(706, 244);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(133, 34);
@@ -356,13 +356,13 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
             this.btnGuardar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardar.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
-            this.btnGuardar.Location = new System.Drawing.Point(921, 244);
+            this.btnGuardar.Location = new System.Drawing.Point(847, 244);
             this.btnGuardar.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(193, 34);
@@ -373,63 +373,58 @@
             // 
             // txtDireccion
             // 
-            this.txtDireccion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDireccion.Location = new System.Drawing.Point(635, 196);
+            this.txtDireccion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
+            this.txtDireccion.Font = new System.Drawing.Font("Verdana", 9.75F);   // antes era Microsoft Sans Serif
+            this.txtDireccion.Location = new System.Drawing.Point(560, 188);
             this.txtDireccion.Margin = new System.Windows.Forms.Padding(4);
             this.txtDireccion.Name = "txtDireccion";
-            this.txtDireccion.Size = new System.Drawing.Size(329, 26);
+            this.txtDireccion.Size = new System.Drawing.Size(480, 27);
             this.txtDireccion.TabIndex = 12;
             // 
             // txtDniCuil
             // 
-            this.txtDniCuil.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDniCuil.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDniCuil.Location = new System.Drawing.Point(635, 129);
+            this.txtDniCuil.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
+            this.txtDniCuil.Font = new System.Drawing.Font("Verdana", 9.75F);
+            this.txtDniCuil.Location = new System.Drawing.Point(560, 130);
             this.txtDniCuil.Margin = new System.Windows.Forms.Padding(4);
             this.txtDniCuil.Name = "txtDniCuil";
-            this.txtDniCuil.Size = new System.Drawing.Size(329, 27);
+            this.txtDniCuil.Size = new System.Drawing.Size(480, 27);
             this.txtDniCuil.TabIndex = 11;
             // 
             // txtEmail
             // 
-            this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.txtEmail.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(183, 196);
+            this.txtEmail.Location = new System.Drawing.Point(40, 188);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(329, 27);
+            this.txtEmail.Size = new System.Drawing.Size(480, 27);
             this.txtEmail.TabIndex = 10;
             // 
             // txtTelefono
             // 
-            this.txtTelefono.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTelefono.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.txtTelefono.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTelefono.Location = new System.Drawing.Point(183, 130);
+            this.txtTelefono.Location = new System.Drawing.Point(40, 130);
             this.txtTelefono.Margin = new System.Windows.Forms.Padding(4);
             this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(329, 27);
+            this.txtTelefono.Size = new System.Drawing.Size(480, 27);
             this.txtTelefono.TabIndex = 9;
             this.txtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SoloNumerosYGuiones_KeyPress);
             // 
             // lblDireccion
             // 
-            this.lblDireccion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDireccion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.lblDireccion.AutoSize = true;
             this.lblDireccion.BackColor = System.Drawing.Color.Beige;
             this.lblDireccion.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDireccion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblDireccion.Location = new System.Drawing.Point(631, 175);
+            this.lblDireccion.Location = new System.Drawing.Point(560, 166);
             this.lblDireccion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDireccion.Name = "lblDireccion";
             this.lblDireccion.Size = new System.Drawing.Size(102, 17);
@@ -438,14 +433,13 @@
             // 
             // lblCorreo
             // 
-            this.lblCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCorreo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.lblCorreo.AutoSize = true;
             this.lblCorreo.BackColor = System.Drawing.Color.Beige;
             this.lblCorreo.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCorreo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblCorreo.Location = new System.Drawing.Point(179, 175);
+            this.lblCorreo.Location = new System.Drawing.Point(40, 166);
             this.lblCorreo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCorreo.Name = "lblCorreo";
             this.lblCorreo.Size = new System.Drawing.Size(197, 17);
@@ -454,30 +448,28 @@
             // 
             // lblDniCuil
             // 
-            this.lblDniCuil.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDniCuil.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.lblDniCuil.AutoSize = true;
             this.lblDniCuil.BackColor = System.Drawing.Color.Beige;
-            this.lblDniCuil.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDniCuil.Font = new System.Drawing.Font("Verdana", 9.75F);
             this.lblDniCuil.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblDniCuil.Location = new System.Drawing.Point(631, 108);
+            this.lblDniCuil.Location = new System.Drawing.Point(560, 108);
             this.lblDniCuil.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDniCuil.Name = "lblDniCuil";
-            this.lblDniCuil.Size = new System.Drawing.Size(90, 17);
+            this.lblDniCuil.Size = new System.Drawing.Size(480, 17);
             this.lblDniCuil.TabIndex = 6;
             this.lblDniCuil.Text = "*DNI / CUIL";
             // 
             // lblTelefono
             // 
-            this.lblTelefono.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTelefono.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.lblTelefono.AutoSize = true;
             this.lblTelefono.BackColor = System.Drawing.Color.Beige;
             this.lblTelefono.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTelefono.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblTelefono.Location = new System.Drawing.Point(179, 110);
+            this.lblTelefono.Location = new System.Drawing.Point(40, 108);
             this.lblTelefono.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTelefono.Name = "lblTelefono";
             this.lblTelefono.Size = new System.Drawing.Size(97, 17);
@@ -486,26 +478,24 @@
             // 
             // txtResponsable
             // 
-            this.txtResponsable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtResponsable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.txtResponsable.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtResponsable.Location = new System.Drawing.Point(635, 68);
+            this.txtResponsable.Location = new System.Drawing.Point(560, 72);
             this.txtResponsable.Margin = new System.Windows.Forms.Padding(4);
             this.txtResponsable.Name = "txtResponsable";
-            this.txtResponsable.Size = new System.Drawing.Size(329, 27);
+            this.txtResponsable.Size = new System.Drawing.Size(480, 27);
             this.txtResponsable.TabIndex = 4;
             // 
             // lblResponsable
             // 
-            this.lblResponsable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblResponsable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.lblResponsable.AutoSize = true;
             this.lblResponsable.BackColor = System.Drawing.Color.Beige;
             this.lblResponsable.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResponsable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblResponsable.Location = new System.Drawing.Point(631, 47);
+            this.lblResponsable.Location = new System.Drawing.Point(560, 50);
             this.lblResponsable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResponsable.Name = "lblResponsable";
             this.lblResponsable.Size = new System.Drawing.Size(273, 17);
@@ -514,26 +504,24 @@
             // 
             // txtNombreNegocio
             // 
-            this.txtNombreNegocio.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNombreNegocio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.txtNombreNegocio.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombreNegocio.Location = new System.Drawing.Point(183, 69);
+            this.txtNombreNegocio.Location = new System.Drawing.Point(40, 72);
             this.txtNombreNegocio.Margin = new System.Windows.Forms.Padding(4);
             this.txtNombreNegocio.Name = "txtNombreNegocio";
-            this.txtNombreNegocio.Size = new System.Drawing.Size(329, 27);
+            this.txtNombreNegocio.Size = new System.Drawing.Size(480, 27);
             this.txtNombreNegocio.TabIndex = 2;
             // 
             // lblNombreNegocio
             // 
-            this.lblNombreNegocio.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNombreNegocio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+
             this.lblNombreNegocio.AutoSize = true;
             this.lblNombreNegocio.BackColor = System.Drawing.Color.Beige;
             this.lblNombreNegocio.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombreNegocio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(92)))), ((int)(((byte)(45)))));
-            this.lblNombreNegocio.Location = new System.Drawing.Point(179, 48);
+            this.lblNombreNegocio.Location = new System.Drawing.Point(40, 50);
             this.lblNombreNegocio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNombreNegocio.Name = "lblNombreNegocio";
             this.lblNombreNegocio.Size = new System.Drawing.Size(193, 17);
@@ -545,11 +533,13 @@
             this.lblRegistrarModificar.BackColor = System.Drawing.Color.Beige;
             this.lblRegistrarModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.lblRegistrarModificar.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistrarModificar.Location = new System.Drawing.Point(13, 20);
+            this.lblRegistrarModificar.Location = new System.Drawing.Point(40, 14);
             this.lblRegistrarModificar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRegistrarModificar.Name = "lblRegistrarModificar";
-            this.lblRegistrarModificar.Size = new System.Drawing.Size(340, 32);
+            this.lblRegistrarModificar.Size = new System.Drawing.Size(500, 30);
             this.lblRegistrarModificar.TabIndex = 0;
+            this.lblRegistrarModificar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
             // 
             // FormClientes
             // 
